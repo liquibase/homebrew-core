@@ -34,8 +34,6 @@ class Wrk < Formula
   depends_on "luajit"
   depends_on "openssl@3"
 
-  conflicts_with "wrk-trello", because: "both install `wrk` binaries"
-
   def install
     ENV.deparallelize
     ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version.to_s if OS.mac?
@@ -44,7 +42,7 @@ class Wrk < Formula
       WITH_LUAJIT=#{Formula["luajit"].opt_prefix}
       WITH_OPENSSL=#{Formula["openssl@3"].opt_prefix}
     ]
-    args << "VER=#{version}" unless build.head?
+    args << "VER=#{version}" if build.stable?
     system "make", *args
     bin.install "wrk"
   end

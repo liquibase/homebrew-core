@@ -1,8 +1,8 @@
 class Bitrise < Formula
   desc "Command-line automation tool"
   homepage "https://github.com/bitrise-io/bitrise"
-  url "https://github.com/bitrise-io/bitrise/archive/refs/tags/v2.31.3.tar.gz"
-  sha256 "bf97c16707897cab16b14719ed0fab6243925d2e66bf1a1878f1f12e16b30868"
+  url "https://github.com/bitrise-io/bitrise/archive/refs/tags/v2.34.1.tar.gz"
+  sha256 "71a5c6b93687970d224e57eeb621fa820fcbf838cbfdc81fc8697a2b74483475"
   license "MIT"
   head "https://github.com/bitrise-io/bitrise.git", branch: "master"
 
@@ -12,12 +12,12 @@ class Bitrise < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "188092ac74ea977c22f2084cb737566003a32c307e7782917ba7bf9f19b4bd35"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "188092ac74ea977c22f2084cb737566003a32c307e7782917ba7bf9f19b4bd35"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "188092ac74ea977c22f2084cb737566003a32c307e7782917ba7bf9f19b4bd35"
-    sha256 cellar: :any_skip_relocation, sonoma:        "d406cd3b043183711750089ed2c17657197c43f976f4a1314c1015b833406129"
-    sha256 cellar: :any_skip_relocation, ventura:       "d406cd3b043183711750089ed2c17657197c43f976f4a1314c1015b833406129"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ead533648fba8e4d7844aea2791e7629078f5749adf294f2bb6c8bb99ab8f636"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4814a097ba2d3498ed79909b5e1f4d2f68bee141c7f6563a8c4f71fbc2295db9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4814a097ba2d3498ed79909b5e1f4d2f68bee141c7f6563a8c4f71fbc2295db9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4814a097ba2d3498ed79909b5e1f4d2f68bee141c7f6563a8c4f71fbc2295db9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bbeba2f1a30296acb31bfdc55ea408ac21a2c603e0fc3643191fe22e33cc6c85"
+    sha256 cellar: :any_skip_relocation, ventura:       "bbeba2f1a30296acb31bfdc55ea408ac21a2c603e0fc3643191fe22e33cc6c85"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "84adaab54a7804630489ff48a675b9da0a5659c0f7d41e434a2b2bfa905d9b74"
   end
 
   depends_on "go" => :build

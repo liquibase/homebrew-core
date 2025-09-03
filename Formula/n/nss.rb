@@ -1,8 +1,8 @@
 class Nss < Formula
   desc "Libraries for security-enabled client and server applications"
   homepage "https://firefox-source-docs.mozilla.org/security/nss/index.html"
-  url "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_113_1_RTM/src/nss-3.113.1.tar.gz"
-  sha256 "b8c586cc0ac60b76477f62483f664f119c26000a8189dd9ef417df7dbd33a2cc"
+  url "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_115_1_RTM/src/nss-3.115.1.tar.gz"
+  sha256 "b8189c030b528e57dc5290023c07eea429ce242912a51a0388c184c75a257bcf"
   license "MPL-2.0"
 
   livecheck do
@@ -16,13 +16,13 @@ class Nss < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "fdea505585252257661eb4d72cf867381bdbe5c97c21a69dd7d5fa54e2452eb3"
-    sha256 cellar: :any,                 arm64_sonoma:  "686c0fbc7123453c6b1ffd18e576e1167b46689e3b021ba5c702b10cde3be65b"
-    sha256 cellar: :any,                 arm64_ventura: "71379675a0c549e5f3b8d58a30175806f08f48e87e849d678b0424a9c0ad74f0"
-    sha256 cellar: :any,                 sonoma:        "b7bfd5b20426eb1f7d07b6287f6e2bc146197de3dbe4040c2fb562241ffc9480"
-    sha256 cellar: :any,                 ventura:       "9353174d336d9be23059571eeabf809e6c1e1a9904f1ca1be0111067e2a1fcd9"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "3912dc84056410724b397eb5f3b451b74e0828fe3faf1a75276bf0e9c7a1c6ff"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8c202c797802eebbaa78c2724a723383cfea2b41b524dae0abb53c9aac2b9726"
+    sha256 cellar: :any,                 arm64_sequoia: "16be7e36b934557b910b7b3068e29ff6c709bf946930c62e578ec60115a87600"
+    sha256 cellar: :any,                 arm64_sonoma:  "402c2044387b479fd052a16850917e15c2597262f99fcb0239056aa6c34e3898"
+    sha256 cellar: :any,                 arm64_ventura: "5d9383f5752744105eb49dabd1898e81f357f9f98883f4deab54f189550811ef"
+    sha256 cellar: :any,                 sonoma:        "351a27ba72c48a82714be3b00f61cde66bb5c72d85d8e252009936fc1304bc63"
+    sha256 cellar: :any,                 ventura:       "4e8bde62417f820e42aaf931f57036e57e6d1e2a8498be90f67d43c63e68c648"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "98a4f160f3a1c30d5d5f8c493769e1f2957f1d15f19c12e39c2331c1c90bd065"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "12c24f10b5766d597031f2878029ab8f5a3ced6b9ef1bd873c56acd24b1ad180"
   end
 
   depends_on "nspr"
@@ -66,7 +66,7 @@ class Nss < Formula
       cp file, bin unless file.include? ".dylib"
     end
 
-    include_target = include + "nss"
+    include_target = include/"nss"
     include_target.mkpath
     Dir.glob("public/{dbm,nss}/*") { |file| cp file, include_target }
 

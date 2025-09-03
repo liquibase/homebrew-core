@@ -1,25 +1,39 @@
 class Jsrepo < Formula
   desc "Build and distribute your code"
   homepage "https://jsrepo.dev/"
-  url "https://registry.npmjs.org/jsrepo/-/jsrepo-2.4.2.tgz"
-  sha256 "cb48a4f074c11c95618150f3e27b43dcdb2f6bfabf65a38075021d40e6a7edd4"
+  url "https://registry.npmjs.org/jsrepo/-/jsrepo-2.4.5.tgz"
+  sha256 "7b833899ca60a142b338c73a9cc3d216dd0690ffad68ff31c951a3de8269cd56"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "2249b7c538846b9f248f0ff6e3025470629a25809ad9d596f345e45ab14cad77"
-    sha256 cellar: :any,                 arm64_sonoma:  "2249b7c538846b9f248f0ff6e3025470629a25809ad9d596f345e45ab14cad77"
-    sha256 cellar: :any,                 arm64_ventura: "2249b7c538846b9f248f0ff6e3025470629a25809ad9d596f345e45ab14cad77"
-    sha256 cellar: :any,                 sonoma:        "0e9cd7d9521894d382abdd663f43d321831395fcf38d567d58f5bae6b70ded85"
-    sha256 cellar: :any,                 ventura:       "0e9cd7d9521894d382abdd663f43d321831395fcf38d567d58f5bae6b70ded85"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "d9d133046eeffd2c34af38db6ad08f9e589f31a68f478791c4e20e7294776c28"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "eaf4dc44ea9cec86bf7a5ae3a42b7247e46b466fb65e2f032912df384b327fba"
+    sha256 cellar: :any,                 arm64_sequoia: "406bbade2f2aa698d1c73481c71488b326403cbbb928f23eef126d380b506f36"
+    sha256 cellar: :any,                 arm64_sonoma:  "406bbade2f2aa698d1c73481c71488b326403cbbb928f23eef126d380b506f36"
+    sha256 cellar: :any,                 arm64_ventura: "406bbade2f2aa698d1c73481c71488b326403cbbb928f23eef126d380b506f36"
+    sha256 cellar: :any,                 sonoma:        "0f3df6244e338bed2cdb76c34e7d07ef05d2c83e90c106f4d79a85b9120aab10"
+    sha256 cellar: :any,                 ventura:       "0f3df6244e338bed2cdb76c34e7d07ef05d2c83e90c106f4d79a85b9120aab10"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "f8e958a0bc6fe5e9e409c2d6ab4bebff9209b8df1eac058e8219eb22147eef62"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "58dd64948c9b48d1c551f41f502e23272ed9f067e49ee7274942d0f62faef80e"
   end
 
   depends_on "node"
 
+  on_macos do
+    depends_on "macos-term-size"
+  end
+
   def install
     system "npm", "install", *std_npm_args
     bin.install_symlink libexec.glob("bin/*")
+
+    term_size_vendor_dir = libexec/"lib/node_modules/jsrepo/node_modules/term-size/vendor"
+    rm_r(term_size_vendor_dir) # remove pre-built binaries
+
+    if OS.mac?
+      macos_dir = term_size_vendor_dir/"macos"
+      macos_dir.mkpath
+      # Replace the vendored pre-built term-size with one we build ourselves
+      ln_sf (Formula["macos-term-size"].opt_bin/"term-size").relative_path_from(macos_dir), macos_dir
+    end
   end
 
   test do

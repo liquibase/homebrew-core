@@ -1,8 +1,8 @@
 class GitAnnex < Formula
   desc "Manage files with git without checking in file contents"
   homepage "https://git-annex.branchable.com/"
-  url "https://hackage.haskell.org/package/git-annex-10.20250630/git-annex-10.20250630.tar.gz"
-  sha256 "03df602f2f72110d5a782a760399b64a57d37661f84aed6612d9d62d727459ed"
+  url "https://hackage.haskell.org/package/git-annex-10.20250828/git-annex-10.20250828.tar.gz"
+  sha256 "a4fa952cd35a548182965507a6bccddc1c0acfaa31aa2ef49c176b10edc13187"
   license all_of: ["AGPL-3.0-or-later", "BSD-2-Clause", "BSD-3-Clause",
                    "GPL-2.0-only", "GPL-3.0-or-later", "MIT"]
   head "git://git-annex.branchable.com/", branch: "master"
@@ -13,17 +13,17 @@ class GitAnnex < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "479b8a4312236700a75f5d7ce9f978e4caf3a0dc557733c27d28360e040a4692"
-    sha256 cellar: :any,                 arm64_sonoma:  "cf852d739508cb7be0e0916bb7d03f0773d5cd79a5be8da3631c83a13dfd4106"
-    sha256 cellar: :any,                 arm64_ventura: "dbcc125879a94b74f26022518f64ad975c88bf794e6ef3689345167f1e81d7b9"
-    sha256 cellar: :any,                 sonoma:        "74c4a5a1283979814b7a0e2541d635b6ba1bb862257251857d7e6aa954b60287"
-    sha256 cellar: :any,                 ventura:       "3667b98e16d8908e73276a28d8d4da1881e505a38a2ee838ff79abc36b831b53"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "466998bdc019abab7b61e99bb150b3b334b69a2f9b2770ec82e36b371fed1f74"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "573e3a965f1333a85422a93acf8eeda885019b2d8f60c710e8d8c58d32344669"
+    sha256 cellar: :any,                 arm64_sequoia: "8561c60c88793801ac71225bdda9241ccb3cb1445458eb7d6d0b1bcc82cb3824"
+    sha256 cellar: :any,                 arm64_sonoma:  "b89cfccefbc9a0ca1cf54b18f314cad05f182ecc58e679d6d67fe793bb95a31e"
+    sha256 cellar: :any,                 arm64_ventura: "d8c71ff887cb7937bf32552777f3fa793329d00e16c78bfa801cce064e9f0e12"
+    sha256 cellar: :any,                 sonoma:        "0f3195af84dbb1d3a2a3709ee9ab2358350c634a768eb2b1b8d3a580091941b6"
+    sha256 cellar: :any,                 ventura:       "07b6bbcbc4dd3358ee2f5e1a73bb4cf8bceb56daaeac4f40a5780b61b12fd9be"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "df3d7e2758537deda6e58bc68526e13d436ff17c76d0e880310391546e57f301"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f90f7266472ea1e67a66d4930a290e01c39c5eab820676393d51c02f3519f0d6"
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc@9.8" => :build
+  depends_on "ghc@9.10" => :build
   depends_on "pkgconf" => :build
   depends_on "libmagic"
 
@@ -31,10 +31,10 @@ class GitAnnex < Formula
 
   def install
     system "cabal", "v2-update"
-    # Work around https://github.com/yesodweb/yesod/issues/1854 with constraint
-    # TODO: Remove once fixed upstream
-    system "cabal", "v2-install", *std_cabal_v2_args, "--flags=+S3", "--constraint=wai-extra<3.1.17"
+    system "cabal", "v2-install", *std_cabal_v2_args, "--flags=+S3 +Servant"
     bin.install_symlink "git-annex" => "git-annex-shell"
+    bin.install_symlink "git-annex" => "git-remote-annex"
+    bin.install_symlink "git-annex" => "git-remote-tor-annex"
   end
 
   service do

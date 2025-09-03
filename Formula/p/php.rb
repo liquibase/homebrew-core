@@ -2,24 +2,24 @@ class Php < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.4.10.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.4.10.tar.xz"
-  sha256 "14983a9ef8800e6bc2d920739fd386054402f7976ca9cd7f711509496f0d2632"
+  url "https://www.php.net/distributions/php-8.4.12.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.4.12.tar.xz"
+  sha256 "c1b7978cbb5054eed6c749bde4444afc16a3f2268101fb70a7d5d9b1083b12ad"
   license "PHP-3.01"
 
   livecheck do
-    url "https://www.php.net/downloads"
+    url "https://www.php.net/downloads?source=Y"
     regex(/href=.*?php[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_sequoia: "5d403269c3e5fa04f68e4f28519397296ce3f45ac2db8281a7209f588ebd006b"
-    sha256 arm64_sonoma:  "a7dffde58ee8f719f8cdd308899a3c8b06e68be641d2da677f71d7d5257722cc"
-    sha256 arm64_ventura: "b69d9e806b3988024b2a749af99a396f2becec72292953ee5747bc98d261f203"
-    sha256 sonoma:        "bb18360cf0086c7552f047bd50019c2731fc89daf7a4d5cc62c2f77b2230a75b"
-    sha256 ventura:       "7fd93c3d044bdea04eaca3dd7cdc2f13987ed46266421e1b59b479390d0fefdc"
-    sha256 arm64_linux:   "0c1b114f76e7044f000f577649c866ee795a02535736c3c091f7001b79400956"
-    sha256 x86_64_linux:  "b1b01ca728b54e271f058c979a02d2516d01892c823960ec7f766b7644a5a974"
+    sha256 arm64_sequoia: "c62fdee438afbb9e33381580e432c9236056857eaa7c76ab4c19b4fdaf5af37d"
+    sha256 arm64_sonoma:  "789d0f14ad631b134824afcd07bf2cfce86cc7b4925337abd963e18781184c96"
+    sha256 arm64_ventura: "ad109a984eb2661709965afcdcb2ae29b90deb57c15b5d4b323205c7e34443fa"
+    sha256 sonoma:        "4f130559607b83929c4e67a9ba0393a6de5257abbe83c36cc67b680764bd7dd8"
+    sha256 ventura:       "e7989142b87cef473aa43eaed8819ab8d1bd9d227207a8568b2ebe2b94fef6a9"
+    sha256 arm64_linux:   "b8b2c352e75b0a5465cc1d3e995bb2e1cf8a40b642c5a098eb8602208eecd993"
+    sha256 x86_64_linux:  "1a56495239428155e35655738404aa3c8756320a44e5c56aba9a1bc3cc9255ff"
   end
 
   head do

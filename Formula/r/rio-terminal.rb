@@ -1,8 +1,8 @@
 class RioTerminal < Formula
   desc "Hardware-accelerated GPU terminal emulator powered by WebGPU"
-  homepage "https://raphamorim.io/rio/"
-  url "https://github.com/raphamorim/rio/archive/refs/tags/v0.2.20.tar.gz"
-  sha256 "10c70fe13c4261593359fcf9ec489770cb056d07153d790193bfa8621ac4ca42"
+  homepage "https://rioterm.com/"
+  url "https://github.com/raphamorim/rio/archive/refs/tags/v0.2.29.tar.gz"
+  sha256 "2f6568bafc80c3b171e70098037469d567512281ba6e5b6bca17f53849cbaf99"
   license "MIT"
   head "https://github.com/raphamorim/rio.git", branch: "main"
 
@@ -12,11 +12,11 @@ class RioTerminal < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "63e09e743db4330037115be47c3a07574f783f3879e7f0ceda64b228ea26334a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "aa14fdda5addcc287151a57650214e38be7ab91a2d0ba81f3c4d16bfb1ae2981"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "072d52ac1161c68b075aff880a50733aa9e9c05d30c9ba20984912e1efdf9e2d"
-    sha256 cellar: :any_skip_relocation, sonoma:        "86b53b046508dcd7a6e4ada2c3399e413f7a716053cb26d4bd1b49996368c7d5"
-    sha256 cellar: :any_skip_relocation, ventura:       "0407e0ab3bc337af5587784cbec9f49c5da133377a9e15323aeb9e7d28edd2e6"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b90acd15699488d882f24d1ee1f24665a3a31d5c87e6abfdfcb4037a9d3ad5e9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "66f43bbc225d7a8e8a6513a8e5bd97d0ddc0f6537060675da98161e57ff92a4c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7d03c70ede339f0a1f6fae2aa2495bf6c42f41afd086d42abfc1855e1a3aa7ac"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7fc87bb0059b7accb23e4fa39e998c42e9f496c7db189c87b1eb8bde5b6123c1"
+    sha256 cellar: :any_skip_relocation, ventura:       "8141447d33cdbe8ae9ab5ee49ea9e98ea0043daac31ce7b0768ea2acd915150a"
   end
 
   depends_on "rust" => :build
@@ -33,12 +33,8 @@ class RioTerminal < Formula
 
   test do
     assert_match version.to_s, shell_output("#{bin}/rio --version")
-    return if Hardware::CPU.intel? && ENV["HOMEBREW_GITHUB_ACTIONS"].present?
 
-    # This test does pass locally for x86 but it fails for containers
-    # which is the case of x86 in the CI
-
-    system bin/"rio", "-e", "touch", testpath/"testfile"
-    assert_path_exists testpath/"testfile"
+    system bin/"rio", "--write-config", testpath/"rio.toml"
+    assert_match "enable-log-file = false", (testpath/"rio.toml").read
   end
 end

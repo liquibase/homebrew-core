@@ -1,8 +1,8 @@
 class Gh < Formula
   desc "GitHub command-line tool"
   homepage "https://cli.github.com/"
-  url "https://github.com/cli/cli/archive/refs/tags/v2.75.0.tar.gz"
-  sha256 "a99fce70ccb8e0a311a504eda0cfd24e23431e158bf136d81ac7ad25f0431597"
+  url "https://github.com/cli/cli/archive/refs/tags/v2.78.0.tar.gz"
+  sha256 "9eeb969222a92bdad47dded2527649cd467a6e2321643cc30e1f12d00490befe"
   license "MIT"
   head "https://github.com/cli/cli.git", branch: "trunk"
 
@@ -14,12 +14,12 @@ class Gh < Formula
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b4d1cb36d01b6bc0dc765c80d0ab9dff0e26c176bae7b26a2f4bcdc02c3af646"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b4d1cb36d01b6bc0dc765c80d0ab9dff0e26c176bae7b26a2f4bcdc02c3af646"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "b4d1cb36d01b6bc0dc765c80d0ab9dff0e26c176bae7b26a2f4bcdc02c3af646"
-    sha256 cellar: :any_skip_relocation, sonoma:        "78a6877fad9e8813d130fae384a2b868408a9d2ddf9aa203910ea3020dd67b7e"
-    sha256 cellar: :any_skip_relocation, ventura:       "5c5e76ca78ad78de1c784fb893fb25cdec9dfcf50f23afaaac5072e98222f066"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e010e955a02836a96a692f587acbc55a44ee58e8a267615ad44a76731c8e674"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "100a42a5352dfb76c01872ead02b29c38608ff05e4101265172d2fae10df74bb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "100a42a5352dfb76c01872ead02b29c38608ff05e4101265172d2fae10df74bb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "100a42a5352dfb76c01872ead02b29c38608ff05e4101265172d2fae10df74bb"
+    sha256 cellar: :any_skip_relocation, sonoma:        "4b709ac98289122fdc1dbcc8a4ff5866fd47c3b0849879a542c93175698cc406"
+    sha256 cellar: :any_skip_relocation, ventura:       "06972d10ce5be93c27e229a773711ebe00f5e5965327ea71a6a8974d66478a69"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5f44d5467727bd0bda7d4f54304fdb7d848e531202a0449f54bb66461512b3aa"
   end
 
   depends_on "go" => :build
@@ -33,9 +33,14 @@ class Gh < Formula
       Utils.safe_popen_read("git", "describe", "--tags", "--dirty").chomp
     end
 
+    ldflags = %w[-s -w]
+
+    # FIXME: we shouldn't need this, but patchelf.rb does not seem to work well with the layout of Aarch64 ELF files
+    ldflags += ["-extld", ENV.cc] if OS.linux? && Hardware::CPU.arm?
+
     with_env(
       "GH_VERSION"   => gh_version,
-      "GO_LDFLAGS"   => "-s -w",
+      "GO_LDFLAGS"   => ldflags.join(" "),
       "GO_BUILDTAGS" => "updateable",
     ) do
       system "make", "bin/gh", "manpages"

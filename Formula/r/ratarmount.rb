@@ -3,21 +3,14 @@ class Ratarmount < Formula
 
   desc "Mount and efficiently access archives as filesystems"
   homepage "https://github.com/mxmlnkn/ratarmount"
-  url "https://github.com/mxmlnkn/ratarmount/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "0a3aa8606ed732f4fda11883590112aa51616c467da5a0b372867e13f37d112b"
+  url "https://files.pythonhosted.org/packages/e0/5c/ffddb34553d65cb9bf1a0baa59bb61fcf3beebab0e0a944347a501b2e258/ratarmount-1.2.0.tar.gz"
+  sha256 "acca4e5803c75f50f94d4c75ead5f44aa4c4661c9e77d50eb25d1876e6f4dec9"
   license "MIT"
-
-  # Upstream creates releases that use a stable tag (e.g., `v1.2.3`) but are
-  # labeled as "pre-release" on GitHub before the version is released, so it's
-  # necessary to use the `GithubLatest` strategy.
-  livecheck do
-    url :stable
-    strategy :github_latest
-  end
+  head "https://github.com/mxmlnkn/ratarmount.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_linux:  "75c2fb63ec64abd1254c92cd05e4f3f220ff471f2d2f1b0a43f8359c50978b57"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "c658441bdda3c1dfe3a20c01e8215bd5569793320488b65635219e6bb7144a11"
+    sha256 cellar: :any_skip_relocation, arm64_linux:  "a2cbf6c298da3347b8d7f4cffd240518783716a732ed96e40925a03219103669"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "7d517c03dc5d4d9b8fcfeeeb33e189e0163b79c5cf1566a7b85d0014e5ff7180"
   end
 
   depends_on "libffi"
@@ -39,8 +32,8 @@ class Ratarmount < Formula
   end
 
   resource "indexed-gzip" do
-    url "https://files.pythonhosted.org/packages/e7/c4/54bb145774c8b1563308899580142dd17ff6da584ee8c8c6ee307733d14e/indexed_gzip-1.9.5.tar.gz"
-    sha256 "105366567759db6c7df866d869611ded3bb83d5c0e50fbb01d02c1922b98b457"
+    url "https://files.pythonhosted.org/packages/d4/22/e9e94407bae83444adf598535b684d28cfbbcbe19f58eeba46f4db7bc0f3/indexed_gzip-1.10.1.tar.gz"
+    sha256 "3993fd72570b254045d2361d937a984350719f2205066f4e4c16435a1df361e3"
   end
 
   resource "indexed-zstd" do
@@ -59,8 +52,8 @@ class Ratarmount < Formula
   end
 
   resource "mfusepy" do
-    url "https://files.pythonhosted.org/packages/8b/37/b29c414d76e8d709b6e28b1ee18e6d4c6a605abca79c86e549aab9a6eea9/mfusepy-1.1.0.tar.gz"
-    sha256 "299926c1bb788fef3bea038b4a91109567c4f2a18f4ac05971dfcb00eba73c77"
+    url "https://files.pythonhosted.org/packages/1c/94/c9d5dcba4a6a2b32ba23e22fd13ca08e6f5408420b2dfe42984af22277b6/mfusepy-3.0.0.tar.gz"
+    sha256 "eddade33e427bac9c455464cd0a7d12d63c033255ec6b1e0d6ada143a945c6f2"
   end
 
   resource "multivolumefile" do
@@ -104,8 +97,8 @@ class Ratarmount < Formula
   end
 
   resource "rapidgzip" do
-    url "https://files.pythonhosted.org/packages/0b/ac/0eee3d3279618a3c3810ac6b012b8ee7c1a9f239c9fa37529e619a31bb93/rapidgzip-0.14.3.tar.gz"
-    sha256 "7d35f0af1657b4051a90c3c0c2c0d2433f3ce839db930fdbed3d6516de2a5df1"
+    url "https://files.pythonhosted.org/packages/fa/df/f4abf845cb27f60156b124af95f483d2861cd607811120650293a1835327/rapidgzip-0.15.0.tar.gz"
+    sha256 "e81079c190c458652076f3667f90aa5886fbf2c92a5a3d0169cfb1faf1e45dfa"
   end
 
   resource "rarfile" do
@@ -114,8 +107,8 @@ class Ratarmount < Formula
   end
 
   resource "ratarmountcore" do
-    url "https://files.pythonhosted.org/packages/c6/71/f2fcb98674e9a9ecbd5db2fbb90c5cf95c69dd8c43c6684dd33c4a2d41ca/ratarmountcore-0.9.0.tar.gz"
-    sha256 "14f2e8bb9b61fe626085215c72e8bd2ad6a1ab021302fdfaf69fbc2fe525ba2f"
+    url "https://files.pythonhosted.org/packages/60/ab/3f75901c28a4680d0e416b3e618587e25422613dd4735ad98cad74a40a7e/ratarmountcore-0.10.0.tar.gz"
+    sha256 "178d8f6be572e22847264f34c4b0d2166bec8b6de650b69e485b60e98a7c1ba0"
   end
 
   resource "texttable" do
@@ -124,7 +117,13 @@ class Ratarmount < Formula
   end
 
   def install
-    virtualenv_install_with_resources
+    venv = virtualenv_install_with_resources without: "pyzstd"
+    # We need to build separately to link to our `zstd`.
+    resource("pyzstd").stage do
+      system_zstd = "--config-settings=--build-option=--dynamic-link-zstd"
+      system venv.root/"bin/python", "-m", "pip", "install", system_zstd,
+                                     *std_pip_args(prefix: false, build_isolation: true), "."
+    end
   end
 
   test do

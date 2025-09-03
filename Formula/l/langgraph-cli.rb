@@ -3,31 +3,31 @@ class LanggraphCli < Formula
 
   desc "Command-line interface for deploying apps to the LangGraph platform"
   homepage "https://www.github.com/langchain-ai/langgraph"
-  url "https://files.pythonhosted.org/packages/fe/ee/41f54032b2ab64c06e66e7f5e7a6c22d9159f2bff6bf08a38c9f11f84753/langgraph_cli-0.3.4.tar.gz"
-  sha256 "6300df4fc6f7106fd5fcdba2cbec9e8b1158daa6760d41333d1b3b5999280ad0"
+  url "https://files.pythonhosted.org/packages/56/b9/b9386748fee6061340a84c8eac33e3fb39861f9cbf95dd135e8d96399bca/langgraph_cli-0.4.0.tar.gz"
+  sha256 "0478989dd1d90c42449f0cc5e7ae6fc57e6031104a600195810d848dbc7f6fde"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "ec94b2c43b7d856cce1628a10de396fbae974533c3cb0497bd20395c3f8c6472"
-    sha256 cellar: :any,                 arm64_sonoma:  "3e50f46f5a398cbb3a6b865df1138020e6b712cc01868d8ee03bcae797186f97"
-    sha256 cellar: :any,                 arm64_ventura: "08a63c00d66d15f11a209dc31590d350433243aaa14c5b0320b44e5c028d944a"
-    sha256 cellar: :any,                 sonoma:        "50703849f2a9510196fd6da7a882ca17d1633d98177034d8bf6d76700dbac4a8"
-    sha256 cellar: :any,                 ventura:       "4e3261426855219d406f8c25fb8047598fe426c58ea33cd3933ae664445c4c8b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "6ebde5934b9ba0fbc575ca6d4e8607899ce22a221341e67b8b27255c180ead5e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "915dc1aff2721b3e76b5137de7dc9788618294231d04210435534916495c3e12"
+    sha256 cellar: :any,                 arm64_sequoia: "ca38c1545affa2e9e9587de24e9c06ddc09d7abf6afae6892d0a74a21d123ebc"
+    sha256 cellar: :any,                 arm64_sonoma:  "8568a401c012b922e8e3da43d2d0d7552dd8ffdc88f2025e63411d3ec2f483f2"
+    sha256 cellar: :any,                 arm64_ventura: "7ae156eb5b09ebc90d13815c05bcc57545923c8fe2cfd408bfbf5a83f9212147"
+    sha256 cellar: :any,                 sonoma:        "7442a8cd35daefd0c9c46cfb14934958775a2face485cf450b9643eff158e3a6"
+    sha256 cellar: :any,                 ventura:       "8815c4b9b3b98465a82452a446ebb51403b4cf4b73653f43e317243aa297e45b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "dfa08f095623b931ea81f17880293ed0750fbac85b385c8df086116e15fee452"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d9116f77ca826e44d69602c7d20d533b0142a8e2e64bd5e0325116fe449da60c"
   end
 
   depends_on "rust" => :build # for orjson
   depends_on "python@3.13"
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/95/7d/4c1bd541d4dffa1b52bd83fb8527089e097a106fc90b467a7313b105f840/anyio-4.9.0.tar.gz"
-    sha256 "673c0c244e15788651a4ff38710fea9675823028a6f08a5eda409e0c9840a028"
+    url "https://files.pythonhosted.org/packages/f1/b4/636b3b65173d3ce9a38ef5f0522789614e590dab6a8d505340a4efe4c567/anyio-4.10.0.tar.gz"
+    sha256 "3f3fae35c96039744587aa5b8371e7e8e603c0702999535961dd336026973ba6"
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/73/f7/f14b46d4bcd21092d7d3ccef689615220d8a08fb25e564b65d20738e672e/certifi-2025.6.15.tar.gz"
-    sha256 "d747aa5a8b9bbbb1bb8c22bb13e22bd1f18e9796defa16bab421f7f7a317323b"
+    url "https://files.pythonhosted.org/packages/dc/67/960ebe6bf230a96cda2e0abcf73af550ec4f090005363542f0765df162e0/certifi-2025.8.3.tar.gz"
+    sha256 "e564105f78ded564e3ae7c923924435e1daa7463faeab5bb932bc53ffae63407"
   end
 
   resource "click" do
@@ -56,13 +56,13 @@ class LanggraphCli < Formula
   end
 
   resource "langgraph-sdk" do
-    url "https://files.pythonhosted.org/packages/c0/a6/cf13ace9bc7f0e8b13852ced0b37ece97f3140e232821c28bc852f8c1ea2/langgraph_sdk-0.1.72.tar.gz"
-    sha256 "396d8195881830700e2d54a0a9ee273e8b1173428e667502ef9c182a3cec7ab7"
+    url "https://files.pythonhosted.org/packages/4e/50/1f5e4d129e3969973674db01bf5dcb85e2233e5e4fdffa53eefff1399902/langgraph_sdk-0.2.3.tar.gz"
+    sha256 "17398aeae0f937cae1c8eb9027ada2969abdb50fe8ed3246c78f543b679cf959"
   end
 
   resource "orjson" do
-    url "https://files.pythonhosted.org/packages/81/0b/fea456a3ffe74e70ba30e01ec183a9b26bec4d497f61dcfce1b601059c60/orjson-3.10.18.tar.gz"
-    sha256 "e8da3947d92123eda795b68228cafe2724815621fe35e8e320a9e9593a4bcd53"
+    url "https://files.pythonhosted.org/packages/df/1d/5e0ae38788bdf0721326695e65fdf41405ed535f633eb0df0f06f57552fa/orjson-3.11.2.tar.gz"
+    sha256 "91bdcf5e69a8fd8e8bdb3de32b31ff01d2bd60c1e8d5fe7d5afabdcf19920309"
   end
 
   resource "sniffio" do
@@ -73,7 +73,7 @@ class LanggraphCli < Formula
   def install
     virtualenv_install_with_resources
 
-    generate_completions_from_executable(bin/"langgraph", shells: [:fish, :zsh], shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"langgraph", shell_parameter_format: :click)
   end
 
   test do

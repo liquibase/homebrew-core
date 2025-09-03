@@ -60,7 +60,7 @@ jobs:
         run: |
           BREW_BUMP=(brew bump --no-fork --open-pr --formulae --bump-synced)
           if [[ -n "${FORMULAE-}" ]]; then
-            xargs "${BREW_BUMP[@]}" <<<"${FORMULAE}"
+            xargs -t "${BREW_BUMP[@]}" <<<"${FORMULAE}"
           else
             "${BREW_BUMP[@]}" --auto --tap=Homebrew/core
           fi

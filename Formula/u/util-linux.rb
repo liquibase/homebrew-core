@@ -107,7 +107,10 @@ class UtilLinux < Formula
     end
 
     system "./configure", *args, *std_configure_args
-    system "make", "install"
+
+    install_args = []
+    install_args << "LDFLAGS=-lm" if OS.linux?
+    system "make", "install", *install_args
   end
 
   def caveats

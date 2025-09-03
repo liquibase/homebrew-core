@@ -5,8 +5,6 @@ class PyqtAT5 < Formula
   sha256 "fda45743ebb4a27b4b1a51c6d8ef455c4c1b5d610c90d2934c7802b5c1557c52"
   license "GPL-3.0-only"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 cellar: :any,                 arm64_sequoia: "ee754605e872d1b42d4dafe9b53980d4917a49003f4b54c32d282fafbc2dbe25"
     sha256 cellar: :any,                 arm64_sonoma:  "4d1a259a2b1c7e926f1b84f60bf574348ce11d148e75ab7f47ca1f1310d696b2"
@@ -15,6 +13,8 @@ class PyqtAT5 < Formula
     sha256 cellar: :any,                 ventura:       "751f0e1bd98b6beae7643760f65ab8ae33a992010e5265fbddeb4c9c012b676b"
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "4f6a880862f2f69cc6fad70b2e6ca750bdfe8bb19ad41d41568cdeb4497d7278"
   end
+
+  deprecate! date: "2026-05-19", because: "is for end-of-life Qt 5"
 
   depends_on "pyqt-builder" => :build
   depends_on "python@3.13"

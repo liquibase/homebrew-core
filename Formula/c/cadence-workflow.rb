@@ -2,8 +2,8 @@ class CadenceWorkflow < Formula
   desc "Distributed, scalable, durable, and highly available orchestration engine"
   homepage "https://cadenceworkflow.io/"
   url "https://github.com/uber/cadence.git",
-      tag:      "v1.3.2",
-      revision: "ec5588f2f0658f9cb10d1a3fd83935134271e2e3"
+      tag:      "v1.3.4",
+      revision: "d0d0a12c18f2839b7342711a0e030f9a497919de"
   license "Apache-2.0"
   head "https://github.com/uber/cadence.git", branch: "master"
 
@@ -16,12 +16,12 @@ class CadenceWorkflow < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c38d1ddfc25574a171718aa9c3b2883480529e2bbc33c11123b00431076141a7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9b834a124096d6ffef2037d9dbf109437d60c314ed5dcb3d0a257258c872f604"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "13c1f49c24bb2e19f7a6b2c3a4a2a61f699cb44a94ea4e3591f5dc3d21bfd02c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ea8f99436fedcc52f9c091a5606eafcfaa889c6bd7f57026586776f365d6d69a"
-    sha256 cellar: :any_skip_relocation, ventura:       "21e3eba05735d677450753ab1f50cdfcb357c72a2c97de40ce1870cc76a9cddd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7380d5f7f8fe41547759c05d0109db9437cdb58dfac55190bdac2be6bc7aa50d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4eb5919cd1d6822d328819e2b899d28f3a1e42804ce86cce12fecba09cb9de84"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "bf6ebca800e4e2c152aa2399e4ed52c70b52275f192a300132893485ab7ff4fe"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "41b893829c73e3ada29870b2f52f3118b2b9a24ec07312f98002b361aa7c97e2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "08b8d6ee1e5f5454d7a81f5259397bead8512ee78020f02d98727f858596c7ba"
+    sha256 cellar: :any_skip_relocation, ventura:       "202b552ae8c047ffefeab511b5a0500afda246936eaf43fe616b0fa7169636ea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bcc94d41871ba78412b70cacfbf10d2b5f481d4bebbd16c19bbf858cdbb6a688"
   end
 
   depends_on "go" => :build

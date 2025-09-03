@@ -4,6 +4,7 @@ class Clazy < Formula
   url "https://download.kde.org/stable/clazy/1.15/src/clazy-1.15.tar.xz"
   sha256 "43189460b366ea3126242878c36ee8a403e37ec4baef7e61ccfa124b1414e7a9"
   license "LGPL-2.0-or-later"
+  revision 1
   head "https://invent.kde.org/sdk/clazy.git", branch: "master"
 
   livecheck do
@@ -12,18 +13,18 @@ class Clazy < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "03d60e08e418660c7286774c37b3bd17b730ddda664361fe419c82162b66c1e7"
-    sha256 cellar: :any,                 arm64_sonoma:  "9d2d6f1982fc14742465c4987b402c8e691d60f84de7fe7dd86e10e7549019d1"
-    sha256 cellar: :any,                 arm64_ventura: "cd2063fd4fe49132e6c30ee4c0ac300bb1a6241524207f9a88627ed91f18351b"
-    sha256 cellar: :any,                 sonoma:        "23bd208dc64c9845af740359e2f6872d7c2e00a577fda9f33bab3c9b268cfc53"
-    sha256 cellar: :any,                 ventura:       "f2b30c57b2197c7bce742653499cc63f655809deb8debc231db200b2569f900b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c88959211e64d00f133d5bfa4f4889c63a04aebc646f5d6fc8301677c6c8abfc"
+    sha256 cellar: :any,                 arm64_sequoia: "92b3ccdbef548d7966861ace46c31f90af6e8c0c641f68f1a0768fa817c5f862"
+    sha256 cellar: :any,                 arm64_sonoma:  "33da10d4e320a5730af1514d6e00ac84bc8d354b8a6d69a4e2578aa9524b7473"
+    sha256 cellar: :any,                 arm64_ventura: "f6af64aef4696d355d87c6def7d18b3cc7cd6d36a5a2932bccecc3d893371d99"
+    sha256 cellar: :any,                 sonoma:        "cf75552ce773a8e7b822c4b2f7c6bbbaef2b1977ed6715c022de3769fb0ff906"
+    sha256 cellar: :any,                 ventura:       "5152cbc2134bfcb219b9e0c95ec62500910cd775248a8168db30fe09057b8ddc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1ec42d9e2bb8e000491b657536396520554521bc03cf1d6f41638af98b007e20"
   end
 
   depends_on "cmake" => [:build, :test]
   depends_on "qt" => :test
   depends_on "coreutils"
-  depends_on "llvm@19" # LLVM 20 issue: https://invent.kde.org/sdk/clazy/-/issues/27
+  depends_on "llvm"
 
   uses_from_macos "libxml2"
   uses_from_macos "ncurses"

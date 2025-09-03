@@ -3,18 +3,18 @@ class Esptool < Formula
 
   desc "ESP8266 and ESP32 serial bootloader utility"
   homepage "https://docs.espressif.com/projects/esptool/en/latest/esp32/"
-  url "https://files.pythonhosted.org/packages/e4/63/920df5fc3c9aed8ec6543ed0669036f3585bb9dbaca94616463afb5d1ea2/esptool-5.0.0.tar.gz"
-  sha256 "cee2259c868a91c99962b557b463398d024c3610ff721ac1058cb13144686ead"
+  url "https://files.pythonhosted.org/packages/6c/d1/92d407cffc2d7d0113ba965a1b79bf80c1ccfdb9f86495e31de07669472f/esptool-5.0.2.tar.gz"
+  sha256 "05cc4732eb2a9a7766c9e3531f7943d76ff0ca06dc9cd308d1d3d0b72f74aac2"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "a3d6ff11b002bfb8420e0c12a946a4f2c566a203d86cf28bf283142229a7620c"
-    sha256 cellar: :any,                 arm64_sonoma:  "4d90b480c72b52c94333a35787d83483c38775d2b4d1387652abc15d60be481a"
-    sha256 cellar: :any,                 arm64_ventura: "d53f72338a83d776780fa75dc6bd406bd98b2b404999cda67bbfb7fee1d9c506"
-    sha256 cellar: :any,                 sonoma:        "5f5b0987afb61892681f5ce8be6000038bd9c4fccfa23ede528be503c1af53cf"
-    sha256 cellar: :any,                 ventura:       "2775222b278b874ad08aae6227488ed1eed4d1952911372d1927b8afc901e143"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f25b49f660fe3125d942ff71864751a02619b514b2b73131feb95b0e3eea3759"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "92ea7f9e00f0202a7485131318174a5835011432be455da97c13fc92fe32f68c"
+    sha256 cellar: :any,                 arm64_sequoia: "c4c0b829cb6a40b00ed709a16f672900ea0c78028c5fffaf4362d3c93cb656bc"
+    sha256 cellar: :any,                 arm64_sonoma:  "0620d85ed8f210deb1d517d97a8d5347f34254e5631fd1e9e496051217b0eb9e"
+    sha256 cellar: :any,                 arm64_ventura: "11db7398183d5ee30c8a51a7dec42bbee02d99625c81f7459cdc25ec54eb0da7"
+    sha256 cellar: :any,                 sonoma:        "03eafa96d26f68d1cd86e470a11aaaea025583a419e877a9ccaf2bf95f65f468"
+    sha256 cellar: :any,                 ventura:       "762db54cfd2ae29954ca7c1cbce31c5fdb97c27f881146d641b781059e971b40"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "668dfc6f2393bb32a7eb37e2d1bd53e2375adf81971854a87f2a861939eb99d9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a96f7744bdd8e4cc7ec11deee625ecd61aac1fa0cfc762fdecced831bf59ff6e"
   end
 
   depends_on "cryptography"
@@ -22,8 +22,8 @@ class Esptool < Formula
   depends_on "python@3.13"
 
   resource "bitarray" do
-    url "https://files.pythonhosted.org/packages/02/36/eef91e03e44be4b96a613333acfc0c636af2f3f3033b17e08e2052b649c5/bitarray-3.4.3.tar.gz"
-    sha256 "dddfb2bf086b66aec1c0110dc46642b7161f587a6441cfe74da9e323975f62f0"
+    url "https://files.pythonhosted.org/packages/e5/ee/3b2fcbac3a4192e5d079aaa1850dff2f9ac625861c4c644819c2b34292ec/bitarray-3.6.0.tar.gz"
+    sha256 "20febc849a1f858e6a57a7d47b323fe9e727c579ddd526d317ad8831748a66a8"
   end
 
   resource "bitstring" do
@@ -32,8 +32,8 @@ class Esptool < Formula
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz"
-    sha256 "ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"
+    url "https://files.pythonhosted.org/packages/60/6c/8ca2efa64cf75a977a0d7fac081354553ebe483345c734fb6b6515d96bbc/click-8.2.1.tar.gz"
+    sha256 "27c491cc05d968d271d5a1db13e3b5a184636d9d930f148c50b038f0d0646202"
   end
 
   resource "intelhex" do
@@ -72,8 +72,8 @@ class Esptool < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/a1/53/830aa4c3066a8ab0ae9a9955976fb770fe9c6102117c8ec4ab3ea62d89e8/rich-14.0.0.tar.gz"
-    sha256 "82f1bc23a6a21ebca4ae0c45af9bdbc492ed20231dcb63f297d6d1021a9d5725"
+    url "https://files.pythonhosted.org/packages/fe/75/af448d8e52bf1d8fa6a9d089ca6c07ff4453d86c65c145d0a300bb073b9b/rich-14.1.0.tar.gz"
+    sha256 "e497a48b844b0320d45007cdebfeaeed8db2a4f4bcf49f15e455cfc4af11eaa8"
   end
 
   resource "rich-click" do
@@ -82,8 +82,8 @@ class Esptool < Formula
   end
 
   resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/d1/bc/51647cd02527e87d05cb083ccc402f93e441606ff1f01739a62c8ad09ba5/typing_extensions-4.14.0.tar.gz"
-    sha256 "8676b788e32f02ab42d9e7c61324048ae4c6d844a399eebace3d4979d75ceef4"
+    url "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz"
+    sha256 "38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36"
   end
 
   def install

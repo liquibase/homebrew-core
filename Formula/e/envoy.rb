@@ -1,8 +1,8 @@
 class Envoy < Formula
   desc "Cloud-native high-performance edge/middle/service proxy"
   homepage "https://www.envoyproxy.io/index.html"
-  url "https://github.com/envoyproxy/envoy/archive/refs/tags/v1.33.2.tar.gz"
-  sha256 "e54d444a8d4197c1dca56e7f6e7bc3b7d83c1695197f5699f62e250ecbece169"
+  url "https://github.com/envoyproxy/envoy/archive/refs/tags/v1.35.1.tar.gz"
+  sha256 "bdd9d646b30a3d048f1ff6b2719f81b9e14c0e187950ea8f4812bf5207f42bfc"
   license "Apache-2.0"
   head "https://github.com/envoyproxy/envoy.git", branch: "main"
 
@@ -12,12 +12,12 @@ class Envoy < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5e150c63d6060aceeafe7a53ad19af6e849e5698b0c4efd21297611c9681963b"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f719f8850ccd293a12bb1da640773197dcb3b08013f900f509dd12566720884c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4ddd7d90ee1f9d92e14bbe9cd1ae85ea4c7675c771ca990a9cf325327f9a611c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "bee7826424b1d75e9617c88530ae01a127bc52321aca6738b6e40eb095dc2a88"
-    sha256 cellar: :any_skip_relocation, ventura:       "879dac6ca9ca1bd679de9180c96691439188b1ed5eb84b5cb66c9260f538afcc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1c0d398820c2ffd6cb4f2472f8b3029f874546c0eb6648295699e23668a39b8d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cc4c484d8913a88d5036a25613ef80835e3817a23d5b7458b6532713d259d8c2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "934778c2d7d7796c3c312ed2163ae97366dd7977054e1a5d31d81dbdcb9fc260"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7b7e98ccfe84f4373ae3e53a2debd76e12d71cb8db41cbb5264803daf1ffbd75"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bf89b41a6db2dad33020a8e8974fd1c646424667dd6ebde5f9c887ee7b19704d"
+    sha256 cellar: :any_skip_relocation, ventura:       "5193aee05fe54295e29def10d997f9854edcd4455683b011c5ea234a49fa16ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f420ac4cca2f1956d3556d74012ced602df25cf1e8cfa6eb0f51366d0e38d132"
   end
 
   depends_on "automake" => :build
@@ -53,25 +53,20 @@ class Envoy < Formula
       --verbose_failures
       --action_env=PATH=#{env_path}
       --host_action_env=PATH=#{env_path}
-      --define=wasm=disabled
+      --define=wasm=wamr
     ]
 
     if OS.linux?
       # GCC/ld.gold had some issues while building envoy so use clang/lld instead
-      args << "--config=clang"
+      args << "--config=clang-common"
 
-      # clang 18 introduced stricter thread safety analysis. Remove once release that supports clang 18
-      # https://github.com/envoyproxy/envoy/issues/37911
-      args << "--copt=-Wno-thread-safety-reference-return"
-
-      # Workaround to build with Clang 19 until envoy uses newer tcmalloc
-      # https://github.com/google/tcmalloc/commit/a37da0243b83bd2a7b1b53c187efd4fbf46e6e38
-      args << "--copt=-Wno-unused-but-set-variable"
-
-      # Workaround to build with Clang 19 until envoy uses newer grpc
-      # https://github.com/grpc/grpc/commit/e55f69cedd0ef7344e0bcb64b5ec9205e6aa4f04
-      args << "--copt=-Wno-missing-template-arg-list-after-template-kw"
+      # Workaround to build with Clang 20 until envoy uses newer dd-trace-cpp (with newer nlohmann-json)
+      # https://github.com/DataDog/dd-trace-cpp/commit/a7d71b5e0599125d5957f7b8d3d56f0bcc6ae485
+      args << "--copt=-Wno-deprecated-literal-operator"
     end
+
+    # Workaround to build with Xcode 16.3 / Clang 19
+    args << "--copt=-Wno-nullability-completeness" if OS.linux? || DevelopmentTools.clang_build_version >= 1700
 
     # Write the current version SOURCE_VERSION.
     system "python3", "tools/github/write_current_source_version.py", "--skip_error_in_git"

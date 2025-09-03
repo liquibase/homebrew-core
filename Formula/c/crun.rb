@@ -1,13 +1,13 @@
 class Crun < Formula
   desc "Fast and lightweight fully featured OCI runtime and C library"
   homepage "https://github.com/containers/crun"
-  url "https://github.com/containers/crun/releases/download/1.21/crun-1.21.tar.zst"
-  sha256 "d3a4ce8af89125851b2bbfe2375f4050c7eca837021043c5628172feacdb88a4"
+  url "https://github.com/containers/crun/releases/download/1.23.1/crun-1.23.1.tar.zst"
+  sha256 "6cea8d41e4be425ba2fa55587e16e44ddbe2fa333b367024e68235b922e26056"
   license any_of: ["GPL-2.0-or-later", "LGPL-2.1-or-later"]
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_linux:  "48e6dfa33d60b46d20b19ee5a93df7ca7b6b4f327f3cf022fe7986c9650d0d72"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "7cb1901a9b6a7cbd680882e65ef2965a4d4f2e736441a563258e57ff9ea63519"
+    sha256 cellar: :any_skip_relocation, arm64_linux:  "fe682495a48fa0ba3ec701b385065a92faaa70cc0336bc74d5d03cc80d3a8252"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "bcc1475a36dd4caacbda18bde7afb604ba5d57ed5d2e8549479a33b55be3af0d"
   end
 
   depends_on "autoconf" => :build
@@ -31,6 +31,6 @@ class Crun < Formula
   end
 
   test do
-    assert_empty shell_output("#{bin}/crun --rootless=true list -q").strip
+    assert_empty shell_output("#{bin}/crun --root=#{testpath} list -q").strip
   end
 end

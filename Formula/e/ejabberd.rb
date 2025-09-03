@@ -1,8 +1,8 @@
 class Ejabberd < Formula
   desc "XMPP application server"
   homepage "https://www.ejabberd.im"
-  url "https://github.com/processone/ejabberd/archive/refs/tags/25.04.tar.gz"
-  sha256 "54beae3e7729fdaab1d578a9d59046f31d8ce31c851ae5aca9532821ff22cb45"
+  url "https://github.com/processone/ejabberd/archive/refs/tags/25.08.tar.gz"
+  sha256 "edc95cff239d74bfb16e437f7cf84f0e86144e5fe764d7ee7dc248b2d59778f1"
   license "GPL-2.0-only"
   head "https://github.com/processone/ejabberd.git", branch: "master"
 
@@ -15,19 +15,18 @@ class Ejabberd < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia: "67076a615179ef3c1dd45faef296c14cbc9f4dee06e410c7b6211d3b54085d52"
-    sha256 cellar: :any,                 arm64_sonoma:  "7570204be8347f68e4af4d0ff2f90fd5647176afffb736c72889dfd78aa20721"
-    sha256 cellar: :any,                 arm64_ventura: "22fbe091ca7bd864c5dd6675f7502eb980d15673c2070092ad534a9a42657a15"
-    sha256 cellar: :any,                 sonoma:        "93f654bbfa377040b85833fc42c0dd78f0900e659a830badae2a13b5e920cc17"
-    sha256 cellar: :any,                 ventura:       "795e5517d4db61c6f1a3587390a86abfd170517e783e2c31fcf6f886fd681cf4"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5cdfb5ee00a14b740d6123f99b57e791e1f09915790a0bc6d248d94656f9c8df"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf2a76d61c04d535e3183a9db385199f852a8437eda93e8c8d5e0a0dddf200fa"
+    sha256 cellar: :any,                 arm64_sequoia: "04ef35f86b87b1e83c9ef82de30b418a7effe4745725cc33a04f2696c569cc1d"
+    sha256 cellar: :any,                 arm64_sonoma:  "3b51176e909eb1e14f27fbf51e836905b5768126464b7c23125e2c00bf54cdb4"
+    sha256 cellar: :any,                 arm64_ventura: "bc5a0c0a5e1022f9f57b7f179447c1111b352045886a19a04611e3b678658807"
+    sha256 cellar: :any,                 sonoma:        "3b52f941d9f4e9f71a9bb7456a0cbd4b81771a6326884d17da34ecdafe68e496"
+    sha256 cellar: :any,                 ventura:       "7af2770db7fed11d93a7a3dda7895cdbe1d8300608fcbd023af3ab7723e07532"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "71bb656be7d9b889df61d0d3771769a97371e867543891e6f9e1ae3b42aadf23"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3fb2592163e17b031217ecfddd0d91bdf4d1f990dbd59b518e131a2216226e58"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "erlang@27" # https://github.com/processone/ejabberd/issues/4354
+  depends_on "erlang"
   depends_on "gd"
   depends_on "libyaml"
   depends_on "openssl@3"

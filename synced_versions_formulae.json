@@ -1,13 +1,5 @@
 [
   [
-    "aarch64-elf-gcc",
-    "arm-none-eabi-gcc",
-    "i686-elf-gcc",
-    "m68k-elf-gcc",
-    "riscv64-elf-gcc",
-    "x86_64-elf-gcc"
-  ],
-  [
     "aarch64-elf-binutils",
     "arm-linux-gnueabihf-binutils",
     "arm-none-eabi-binutils",
@@ -22,7 +14,7 @@
   ["avro-c", "avro-cpp", "avro-tools"],
   ["b3sum", "blake3"],
   ["baresip", "libre"],
-  ["bcftools", "htslib", "samtools"],
+  ["htslib", "samtools"],
   ["boost", "boost-bcp", "boost-build", "boost-mpi", "boost-python3"],
   ["bundler-completion", "gem-completion", "rails-completion", "rake-completion", "ruby-completion"],
   ["cmake", "cmake-docs"],
@@ -45,6 +37,7 @@
   ["libngspice", "ngspice"],
   ["libnice", "libnice-gstreamer"],
   ["libtorrent-rakshasa", "rtorrent"],
+  ["lima", "lima-additional-guestagents"],
   ["llvm", "lld", "flang", "wasi-runtimes"],
   ["logcli", "loki", "promtail"],
   ["qalculate-gtk", "qalculate-qt"],
@@ -70,6 +63,7 @@
   ["surelog", "uhdm"],
   ["technitium-dns", "technitium-library"],
   ["tmuxinator", "tmuxinator-completion"],
-  ["vulkan-headers", "vulkan-loader", "vulkan-tools", "vulkan-utility-libraries"],
+  ["tree-sitter", "tree-sitter-cli"],
+  ["vulkan-headers", "vulkan-loader", "vulkan-profiles", "vulkan-tools", "vulkan-utility-libraries", "vulkan-validationlayers"],
   ["wp-cli", "wp-cli-completion"]
 ]

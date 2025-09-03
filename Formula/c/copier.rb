@@ -3,18 +3,18 @@ class Copier < Formula
 
   desc "Utility for rendering projects templates"
   homepage "https://copier.readthedocs.io/"
-  url "https://files.pythonhosted.org/packages/9d/78/1246b4a1ddeb404037f76efedab9b42ada4e6ba56c574d8846e2a6b8f498/copier-9.8.0.tar.gz"
-  sha256 "343ac1eb65e678aa355690d7f19869ef07cabf837f511a87ed452443c085ec58"
+  url "https://files.pythonhosted.org/packages/36/a5/0cf693f3fa51cba1d36765939e0d9956c0487426ad581868a2507c208bad/copier-9.10.1.tar.gz"
+  sha256 "ba2d729465508da04a62bc9b76eed13d952aa7634a74a69519252fcf8a54d94e"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "894ecee377456e3021fc5f60e67aea3b90f89516459ea0d25bab131af024d386"
-    sha256 cellar: :any,                 arm64_sonoma:  "6fa9d969ac35a6950a6f1372f25069bcab6570118f3fc99dea99f3adc6ffff43"
-    sha256 cellar: :any,                 arm64_ventura: "028c21c5614633279fabce0be74aaac22d255f2b29e0dd86f9571d651591ffa6"
-    sha256 cellar: :any,                 sonoma:        "f92227821d990c2ade3944225df56918d99ce60fc66f1aea9866ad64a09dabf2"
-    sha256 cellar: :any,                 ventura:       "403edada715b5bea627872636b0cdefb0c0d16dde2f04a0eafc54a5451524fc3"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b14129d93298baf08677fa92b7e4bbd7e08b2e93677e46b9421dba848f2d11d2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d8db26922c79d98411c67105b411dcd6d92efc252e8ef184301252cab705b07"
+    sha256 cellar: :any,                 arm64_sequoia: "5f38bbafcfb3adac75bee7fe1cc3596e0034683b66f739b4d6863d562295a8ca"
+    sha256 cellar: :any,                 arm64_sonoma:  "4ad14da43e03f616ed3ea19902d7f481f493e1e73cfdd2d45eaf2f21a82dffff"
+    sha256 cellar: :any,                 arm64_ventura: "6fdcbb835a1a0dfca2edc41fe02b5dda52d01e6c3179da70b5d63286050f463b"
+    sha256 cellar: :any,                 sonoma:        "f1da607d7900f550993720f07606a4fea9a14d7b172459acbcf9ddc622221d13"
+    sha256 cellar: :any,                 ventura:       "073a937e255cbdce6442cdc5d468a2985d7f24d901b3fb4efdcecfe39c413098"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "db7910e756f959d28018a18282583f314db645a1a7a55e4316440f3d05361773"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f0a3565f9fd1e22d5b51f2022ac1f4ad973f0aa03d72b311cd0420a8d57be636"
   end
 
   depends_on "rust" => :build
@@ -67,8 +67,8 @@ class Copier < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/fe/8b/3c73abc9c759ecd3f1f7ceff6685840859e8070c4d947c93fae71f6a0bf2/platformdirs-4.3.8.tar.gz"
-    sha256 "3d512d96e16bcb959a814c9f348431070822a6496326a4be0911c40b5a74c2bc"
+    url "https://files.pythonhosted.org/packages/23/e8/21db9c9987b0e728855bd57bff6984f67952bea55d6f75e055c46b5383e8/platformdirs-4.4.0.tar.gz"
+    sha256 "ca753cf4d81dc309bc67b0ea38fd15dc97bc30ce419a7f58d13eb3bf14c4febf"
   end
 
   resource "plumbum" do
@@ -107,8 +107,8 @@ class Copier < Formula
   end
 
   resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz"
-    sha256 "38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36"
+    url "https://files.pythonhosted.org/packages/72/94/1a15dd82efb362ac84269196e94cf00f187f7ed21c242792a923cdb1c61f/typing_extensions-4.15.0.tar.gz"
+    sha256 "0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"
   end
 
   resource "typing-inspection" do

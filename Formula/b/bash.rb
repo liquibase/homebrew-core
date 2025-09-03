@@ -5,11 +5,12 @@ class Bash < Formula
   head "https://git.savannah.gnu.org/git/bash.git", branch: "master"
 
   stable do
-    url "https://ftp.gnu.org/gnu/bash/bash-5.3.tar.gz"
-    mirror "https://ftpmirror.gnu.org/bash/bash-5.3.tar.gz"
+    url "https://ftpmirror.gnu.org/gnu/bash/bash-5.3.tar.gz"
+    mirror "https://ftp.gnu.org/gnu/bash/bash-5.3.tar.gz"
     mirror "https://mirrors.kernel.org/gnu/bash/bash-5.3.tar.gz"
     mirror "https://mirrors.ocf.berkeley.edu/gnu/bash/bash-5.3.tar.gz"
-    sha256 "62dd49c44c399ed1b3f7f731e87a782334d834f08e098a35f2c87547d5dbb269"
+    sha256 "0d5cd86965f869a26cf64f4b71be7b96f90a3ba8b3d74e27e8e9d9d5550f31ba"
+    version "5.3.3"
 
     # Add new patches using this format:
     #
@@ -19,12 +20,16 @@ class Bash < Formula
     #   ...
     # ]
 
-    patch_checksum_pairs = %w[]
+    patch_checksum_pairs = %w[
+      001 1f608434364af86b9b45c8b0ea3fb3b165fb830d27697e6cdfc7ac17dee3287f
+      002 e385548a00130765ec7938a56fbdca52447ab41fabc95a25f19ade527e282001
+      003 f245d9c7dc3f5a20d84b53d249334747940936f09dc97e1dcb89fc3ab37d60ed
+    ]
 
     patch_checksum_pairs.each_slice(2) do |p, checksum|
       patch :p0 do
-        url "https://ftp.gnu.org/gnu/bash/bash-5.3-patches/bash53-#{p}"
-        mirror "https://ftpmirror.gnu.org/bash/bash-5.3-patches/bash53-#{p}"
+        url "https://ftpmirror.gnu.org/gnu/bash/bash-5.3-patches/bash53-#{p}"
+        mirror "https://ftp.gnu.org/gnu/bash/bash-5.3-patches/bash53-#{p}"
         mirror "https://mirrors.kernel.org/gnu/bash/bash-5.3-patches/bash53-#{p}"
         mirror "https://mirrors.ocf.berkeley.edu/gnu/bash/bash-5.3-patches/bash53-#{p}"
         sha256 checksum
@@ -35,7 +40,7 @@ class Bash < Formula
   # We're not using `url :stable` here because we need `url` to be a string
   # when we use it in the `strategy` block.
   livecheck do
-    url "https://ftp.gnu.org/gnu/bash/?C=M&O=D"
+    url "https://ftpmirror.gnu.org/gnu/bash/?C=M&O=D"
     regex(/href=.*?bash[._-]v?(\d+(?:\.\d+)+)\.t/i)
     strategy :gnu do |page, regex|
       # Match versions from files
@@ -68,23 +73,27 @@ class Bash < Formula
     end
   end
 
-  no_autobump! because: :requires_manual_review
+  no_autobump! because: :incompatible_version_format
 
   bottle do
     rebuild 1
-    sha256 arm64_sequoia: "0cb8fa2fef54f0215e01137dae12119af693da6f9d468c8eb882c979dcee91a0"
-    sha256 arm64_sonoma:  "fe8e711dbad1902aea7b1237a93addb1cbd4fd643144ee2fa860800972e15b8d"
-    sha256 arm64_ventura: "d97833da4ac2bce736f63168162707cdaa3c57547e63b2ef39c2500be4e2a4b9"
-    sha256 sonoma:        "03e937973106a6bce6cf3830e6cc21b48250bfd79c0b93899404328008296d68"
-    sha256 ventura:       "0afa527fcb68b0182c63f395ac25474e42d90c7dae8e009c4c8a4c8a1baa20ee"
-    sha256 arm64_linux:   "3bc02cf84788f354c443bd15218b2bdacbce4fcd4364852afed1caf2a25ef30c"
-    sha256 x86_64_linux:  "505c5c1260fe9a3a7251baa06dc0acecd0274bdda4686edb04202385523279e6"
+    sha256 arm64_sequoia: "9b4b897e4fe4df3ffdfcd47265ca1c5c563265d9de490b6ef8deb75580ad4ee2"
+    sha256 arm64_sonoma:  "82f6c2822bd49dae8d15be45fc347ebc91100de1fdad421b1360d4caf5526df3"
+    sha256 arm64_ventura: "721bdf14667a59cb7a24d4d476e0228649483513a2d3c9e93908564380915032"
+    sha256 sonoma:        "94ef4a156e8cf4be1ae0a056aa988324d89cea55c2ec8f29ec9646a9df258441"
+    sha256 ventura:       "7d259d44cfcbc36bb9c7c21fa8a08138868b39ce36dd963f853f9d50d9202145"
+    sha256 arm64_linux:   "08e2e633ceb91d97c90205197d521607a3bcc3a491a18ae16d0fd3f1acf80d31"
+    sha256 x86_64_linux:  "5d178cd059067f0e76c91ad7515304576052dd8727d5a7c50fc7b9caa0b5bc32"
   end
 
-  depends_on "gettext"
   # System ncurses lacks functionality
   # https://github.com/Homebrew/homebrew-core/issues/158667
   depends_on "ncurses"
+  depends_on "readline"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   def bash_loadables_path
     [
@@ -110,7 +119,10 @@ class Bash < Formula
 
     ENV.append_to_cflags "-DDEFAULT_LOADABLE_BUILTINS_PATH='\"#{bash_loadables_path}\"'"
 
-    system "./configure", "--prefix=#{prefix}", "--with-curses", "--without-included-gettext"
+    # Avoid crashes on macOS 15.0-15.4.
+    ENV["bash_cv_func_strchrnul_works"] = "no" if OS.mac? && MacOS.version <= :sequoia
+
+    system "./configure", "--prefix=#{prefix}", "--with-curses", "--with-installed-readline"
     system "make", "install"
 
     (include/"bash/builtins").install lib/"bash/loadables.h"
@@ -126,5 +138,9 @@ class Bash < Formula
     # If the following assertion breaks, then it's likely the configuration of `DEFAULT_LOADABLE_BUILTINS_PATH`
     # is broken. Changing the test below will probably hide that breakage.
     assert_equal "csv is a shell builtin\n", shell_output("#{bin}/bash -c 'enable csv; type csv'")
+
+    return if OS.linux? || MacOS.version > :sequoia
+
+    refute_match "U _strchrnul", shell_output("nm #{bin}/bash")
   end
 end

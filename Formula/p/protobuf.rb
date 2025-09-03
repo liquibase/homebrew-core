@@ -1,9 +1,10 @@
 class Protobuf < Formula
   desc "Protocol buffers (Google's data interchange format)"
   homepage "https://protobuf.dev/"
-  url "https://github.com/protocolbuffers/protobuf/releases/download/v29.3/protobuf-29.3.tar.gz"
-  sha256 "008a11cc56f9b96679b4c285fd05f46d317d685be3ab524b2a310be0fbad987e"
+  url "https://github.com/protocolbuffers/protobuf/releases/download/v32.0/protobuf-32.0.tar.gz"
+  sha256 "9dfdf08129f025a6c5802613b8ee1395044fecb71d38210ca59ecad283ef68bb"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,30 +12,35 @@ class Protobuf < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256                               arm64_sequoia: "8ac9ede06ec4f11b5b2c47b3f15a35cfb74043b716e4a91b4287b7345cdd80fb"
-    sha256                               arm64_sonoma:  "2150b2720b5ae9bae3d1a7389b5ffb7085847eea5d0acf2757ebccb68289ca29"
-    sha256                               arm64_ventura: "1db7cb15f9a82062cec8fb21d911eade129bb44067ea936db52ae42411a3e864"
-    sha256 cellar: :any,                 sonoma:        "c02c1b1d259c09adfb869080dbbda7737d50fa6a3f0da77e431900f903cbea7a"
-    sha256 cellar: :any,                 ventura:       "1d5a65d7d6155938c6de69878710c8058da2e57c61fcc4d45af0e189cebb7154"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "03fc2bf06769c453368a8018168655efce163d57cda11671a5bd92306f864bdd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d26e7e4f01c1f4259ddaacdaab92bb709623e2e4b0ba963400d26c367c24d4b3"
+    sha256 cellar: :any, arm64_sequoia: "90b483aad7b81336695a9510b73c5cd9aec7673a011c8371038ec0e7a459691a"
+    sha256 cellar: :any, arm64_sonoma:  "618cd213cdccfad8dadc713182b137e8cb06f409623cc92051745039981c1334"
+    sha256 cellar: :any, arm64_ventura: "94157e620da6d0d0fbaffe3a6be2569059fc729254389a6fba90a2c0b28deefa"
+    sha256 cellar: :any, sonoma:        "a7e4b68587ed5617a7da88966105f07a27ff03ba0ca65c1f805838cde4dc9980"
+    sha256 cellar: :any, ventura:       "8d99bf09b9ce970813085f530bb3933c2a503833a5ef17b34e8b7ebd4f657acb"
+    sha256               arm64_linux:   "79cc5788c6a3ee0b2ab55b1e716d8bf97bfac691cdfda1fb19f514448a890282"
+    sha256               x86_64_linux:  "c1614bf4cc935166cb462c39c03cd493e1131533197f7480327780e82db1a9ed"
   end
 
   depends_on "cmake" => :build
+  depends_on "googletest" => :build
   depends_on "abseil"
   uses_from_macos "zlib"
 
-  on_macos do
-    # We currently only run tests on macOS.
-    # Running them on Linux requires rebuilding googletest with `-fPIC`.
-    depends_on "googletest" => :build
+  on_linux do
+    # Avoid newer GCC which creates binary with higher GLIBCXX requiring runtime dependency
+    depends_on "gcc@12" => :build if DevelopmentTools.gcc_version("/usr/bin/gcc") < 12
   end
 
-  # Backport to expose java-related symbols
+  fails_with :gcc do
+    version "11"
+    cause "absl/log/internal/check_op.h error: ambiguous overload for 'operator<<'"
+  end
+
+  # Apply open PR to fix CRC32 usage on arm64 linux
+  # https://github.com/protocolbuffers/protobuf/pull/23164
   patch do
-    url "https://github.com/protocolbuffers/protobuf/commit/9dc5aaa1e99f16065e25be4b9aab0a19bfb65ea2.patch?full_index=1"
-    sha256 "edc1befbc3d7f7eded6b7516b3b21e1aa339aee70e17c96ab337f22e60e154d7"
+    url "https://github.com/protocolbuffers/protobuf/commit/1cd12a573b8d629ae69f6123e24db5c71e92e18c.patch?full_index=1"
+    sha256 "b1676b4c8a4a20dec9a7c0fe2c6e10ccf35673d6f3f6dce1ef303f37d0a0aa5b"
   end
 
   def install
@@ -46,15 +52,15 @@ class Protobuf < Formula
       -Dprotobuf_BUILD_LIBPROTOC=ON
       -Dprotobuf_BUILD_SHARED_LIBS=ON
       -Dprotobuf_INSTALL_EXAMPLES=ON
-      -Dprotobuf_BUILD_TESTS=#{OS.mac? ? "ON" : "OFF"}
+      -Dprotobuf_BUILD_TESTS=ON
       -Dprotobuf_USE_EXTERNAL_GTEST=ON
-      -Dprotobuf_ABSL_PROVIDER=package
-      -Dprotobuf_JSONCPP_PROVIDER=package
+      -Dprotobuf_FORCE_FETCH_DEPENDENCIES=OFF
+      -Dprotobuf_LOCAL_DEPENDENCIES_ONLY=ON
     ]
 
     system "cmake", "-S", ".", "-B", "build", *cmake_args, *std_cmake_args
     system "cmake", "--build", "build"
-    system "ctest", "--test-dir", "build", "--verbose" if OS.mac?
+    system "ctest", "--test-dir", "build", "--verbose"
     system "cmake", "--install", "build"
 
     (share/"vim/vimfiles/syntax").install "editors/proto.vim"

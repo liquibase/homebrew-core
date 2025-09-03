@@ -2,8 +2,8 @@ class Apt < Formula
   desc "Advanced Package Tool"
   homepage "https://wiki.debian.org/Apt"
   # Using git tarball as Debian does not retain old versions at deb.debian.org
-  url "https://salsa.debian.org/apt-team/apt/-/archive/3.1.3/apt-3.1.3.tar.bz2"
-  sha256 "309410ede37684bdd3807314bd98062e67e278faa6051743c73af08a3939b248"
+  url "https://salsa.debian.org/apt-team/apt/-/archive/3.1.5/apt-3.1.5.tar.bz2"
+  sha256 "fde3de2503b3a4cea43a37ed105f1fbe37189820a93dad00d50a78feb7159daf"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -12,11 +12,11 @@ class Apt < Formula
   end
 
   bottle do
-    sha256 arm64_linux:  "7e43fbe75cdba01f011d38a4f075f91cce96a92283274e4a634808760f7ec33a"
-    sha256 x86_64_linux: "42ed719a372e9df515606ff70a5a5b2039c31f716a9b30be91fb321c65b4e038"
+    sha256 arm64_linux:  "0407b085f73c1c3de98529dce90ce54923ea04d898eba88c0c25ffe52926d6da"
+    sha256 x86_64_linux: "def540cd29d93087f6feb7186cfb11630b5c3d208cd086cb9c388eb212a7ee74"
   end
 
-  keg_only "not linked to prevent conflicts with system apt"
+  keg_only "it conflicts with system apt"
 
   depends_on "cmake" => :build
   depends_on "docbook" => :build
@@ -24,7 +24,6 @@ class Apt < Formula
   depends_on "doxygen" => :build
   depends_on "gettext" => :build
   depends_on "libxslt" => :build
-  depends_on "llvm" => :build if DevelopmentTools.gcc_version("/usr/bin/gcc") < 13
   depends_on "po4a" => :build
   depends_on "w3m" => :build
 
@@ -42,11 +41,6 @@ class Apt < Formula
   depends_on "zlib"
   depends_on "zstd"
 
-  fails_with :gcc do
-    version "12"
-    cause "error: static assertion failed: Cannot construct map for key type"
-  end
-
   resource "triehash" do
     url "https://github.com/julian-klode/triehash/archive/refs/tags/v0.3.tar.gz"
     sha256 "289a0966c02c2008cd263d3913a8e3c84c97b8ded3e08373d63a382c71d2199c"
@@ -56,7 +50,6 @@ class Apt < Formula
     # Find our docbook catalog
     ENV["XML_CATALOG_FILES"] = "#{etc}/xml/catalog"
 
-    ENV.llvm_clang if DevelopmentTools.gcc_version("/usr/bin/gcc") < 13
     ENV.prepend_path "PATH", buildpath/"bin"
 
     resource("triehash").stage do

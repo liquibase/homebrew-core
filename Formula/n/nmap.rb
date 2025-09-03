@@ -1,8 +1,8 @@
 class Nmap < Formula
   desc "Port scanning utility for large networks"
   homepage "https://nmap.org/"
-  url "https://nmap.org/dist/nmap-7.97.tar.bz2"
-  sha256 "af98f27925c670c257dd96a9ddf2724e06cb79b2fd1e0d08c9206316be1645c0"
+  url "https://nmap.org/dist/nmap-7.98.tar.bz2"
+  sha256 "ce847313eaae9e5c9f21708e42d2ab7b56c7e0eb8803729a3092f58886d897e6"
   license :cannot_represent
   head "https://svn.nmap.org/nmap/"
 
@@ -12,21 +12,24 @@ class Nmap < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "3248afca88a66d1c05d45184e3ad392d621d0840f7e8cd4414fd9f3dbbc1269b"
-    sha256 arm64_sonoma:  "7016aa0e4002533b53fba111768bc68213f3ea657addb03322a84b0dab9c7808"
-    sha256 arm64_ventura: "a65b39e2ab437dce905172ef2d4a76d163d642b480b64517294ee870cea89e9a"
-    sha256 sonoma:        "5bb32d46f1eb4d1e6dbe2660e5f0638effa1b71c88afb94bf245cda37cd12008"
-    sha256 ventura:       "2a903ba2f7c273438c76f983d0ef047b9777372e29f4323f8fc1891e8873b3bc"
-    sha256 arm64_linux:   "679376aa9188cb49e1b789871c84341ed312c66ab3491be3a1aad245a7357070"
-    sha256 x86_64_linux:  "55ff270118c5f7228041f2b8adc141ed004e860400e1f6980e9ed5b08814bca1"
+    rebuild 1
+    sha256 arm64_sequoia: "a03b34a68f4a64e05ea7d13bedfcaf95df08024f8535d0ee421adbb4d5c4779f"
+    sha256 arm64_sonoma:  "95c388f63d4e8c2c5684420bab57f68a856e04815ec524336377cd4abd50808f"
+    sha256 arm64_ventura: "e58642363109486b81fcd6d9ad43bc55e89f6f278484ea3c7b7394839cb0677f"
+    sha256 sonoma:        "34b141f30a9dadc00a0290a043fea4ea7096a5a055a455d2fc49388e49d87c52"
+    sha256 ventura:       "9c7c34cbd9b4053df2709c903c9488e0e8c7c64bf1be3e7fa1b4206c8a1ea0f0"
+    sha256 arm64_linux:   "efc2e738c069175b74452d9ad521e2b3c5e0da2e0b64c0f5a661dbb699e51c50"
+    sha256 x86_64_linux:  "c9532f3302a83a7c74ecc12308b980cf162e002187dad961bdf9eb10bca0126b"
   end
 
+  depends_on "python-setuptools" => :build
   depends_on "liblinear"
   depends_on "libssh2"
   # Check supported Lua version at https://github.com/nmap/nmap/tree/master/liblua.
   depends_on "lua"
   depends_on "openssl@3"
   depends_on "pcre2"
+  depends_on "python@3.13" # for ndiff
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
@@ -65,19 +68,14 @@ class Nmap < Formula
     system "make" # separate steps required otherwise the build fails
     system "make", "install"
 
+    # Install `ndiff` separately so that we can use `pip` and `setuptools`.
+    system "python3", "-m", "pip", "install", *std_pip_args, "./ndiff"
     bin.glob("uninstall_*").map(&:unlink) # Users should use brew uninstall.
   end
 
-  def caveats
-    on_macos do
-      <<~EOS
-        If using `ndiff` returns an error about not being able to import the ndiff module, try:
-          chmod go-w #{HOMEBREW_CELLAR}
-      EOS
-    end
-  end
-
   test do
-    system bin/"nmap", "-p80,443", "google.com"
+    system bin/"nmap", "-p80,443", "-oX", "scan1.xml", "google.com"
+    cp "scan1.xml", "scan2.xml"
+    system bin/"ndiff", "scan1.xml", "scan2.xml"
   end
 end

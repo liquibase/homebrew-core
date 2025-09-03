@@ -1,24 +1,27 @@
 class Roxctl < Formula
   desc "CLI for Stackrox"
   homepage "https://www.stackrox.io/"
-  url "https://github.com/stackrox/stackrox/archive/refs/tags/4.8.0.tar.gz"
-  sha256 "902d994495305ec02c025c06d23cadbb358dec87ec507eddbb0700faafcf44dc"
+  url "https://github.com/stackrox/stackrox/archive/refs/tags/4.8.2.tar.gz"
+  sha256 "5f92b652deefc9ba7269de1021df8919340a7ac02350d4bdea6b32ef056bc28c"
   license "Apache-2.0"
   head "https://github.com/stackrox/stackrox.git", branch: "master"
 
+  # Upstream maintains multiple major/minor versions and the "latest" release
+  # may be for a lower version, so we have to check multiple releases to
+  # identify the highest version.
   livecheck do
     url :stable
-    strategy :github_latest
+    strategy :github_releases
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "84a29e4fe4a437e855f9e1ab5a1e0227c3e958531853091ef4f6d6eb4a7138e6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4331b278f551dc8ed096e01c6ffa02a0234a83e503c7c90afd2192fbd15dfe78"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "b65edc71ef90afee27adacf83ab485c1354748c5284213fa5cd6efd71fe86432"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7ed89dbeffe1e3aae044895a7e148edcc92bf057dc096a8b5128f0518a8ab607"
-    sha256 cellar: :any_skip_relocation, ventura:       "d1bc028be3ff4a5104e400d88b658885e0873d6656c569c65d80c56674ee565c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "dcc8bdd54b74d0bbbbe73e781322c44aa26d2a5a827b806287025c0394a609d6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3d710aa66c00b3cb5d2533a1796ed4b7dba3efc52716746ad4648b2fc1ca7662"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "29bee9d07dd851f675d2b9fd335c3b43a975fb9ad54d7beaab07c6278efbb1d0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e758a5be78cbd5dbd5c45620ddcf300188dae9c94ea3b1218b0411c7502c5c55"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c9b0c229439a67696db98e18c972a0b4aa4860c942dba1a9fb9c6f7a2adca497"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f9cb1acadbbeb11796a7d41eec9fa6885a4b69481b3756965befaa3de9c3c401"
+    sha256 cellar: :any_skip_relocation, ventura:       "48a6270c4957be156e85db9a0a57e9305ae9e940526bfa064a895c03bff8e318"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "66d24c3eb299ba8aa5fec21973b1822b7df98640f938bd54955255dcc4eb23d2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b6e995d80203a77bf16ec52c1b15afae060bedde836304ed4c328830b1e39ecf"
   end
 
   depends_on "go" => :build

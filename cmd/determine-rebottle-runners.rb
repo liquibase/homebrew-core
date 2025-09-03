@@ -47,14 +47,14 @@ module Homebrew
         timeout = args.named.second.to_i
 
         tags = formula.bottle_specification.collector.tags
-        runners = if tags.count == 1 && tags.first.system == :all
+        runners = if tags.one? && tags.first.system == :all
           # Build on all supported macOS versions and Linux.
           [linux_runner_spec(:x86_64, timeout)] + MacOSVersion::SYMBOLS.keys.flat_map do |symbol|
             macos_version = MacOSVersion.from_symbol(symbol)
             if macos_version.outdated_release? || macos_version.prerelease?
               nil
             else
-              ephemeral_suffix = "-#{ENV.fetch("GITHUB_RUN_ID")}"
+              ephemeral_suffix = "-#{ENV.fetch("GITHUB_RUN_ID")}-dispatch"
               macos_runners = [{ runner: "#{macos_version}-x86_64#{ephemeral_suffix}" }]
               macos_runners << { runner: "#{macos_version}-arm64#{ephemeral_suffix}" }
               macos_runners
@@ -70,6 +70,7 @@ module Homebrew
               runner = macos_version.to_s
               runner += "-#{tag.arch}"
               runner += "-#{ENV.fetch("GITHUB_RUN_ID")}"
+              runner += "-dispatch"
 
               { runner: }
             end

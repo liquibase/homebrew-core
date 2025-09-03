@@ -1,8 +1,8 @@
 class Unciv < Formula
   desc "Open-source Android/Desktop remake of Civ V"
   homepage "https://github.com/yairm210/Unciv"
-  url "https://github.com/yairm210/Unciv/releases/download/4.17.3/Unciv.jar"
-  sha256 "3120b51cf079f58e6191b7cd4ecf6ddd25d5ee38c212d53eced53697035bd23c"
+  url "https://github.com/yairm210/Unciv/releases/download/4.17.18/Unciv.jar"
+  sha256 "6d485a7feee70f06a19743152eca3bdd3b90259063f6dbe3fe3bce2373ad3c13"
   license "MPL-2.0"
 
   livecheck do
@@ -10,10 +10,8 @@ class Unciv < Formula
     regex(/^v?(\d+(?:\.\d+)+(?:[._-]?patch\d*)?)$/i)
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "03f5234d294b0281999c322df741fc2be50e93ce720b2e81fa45b0de70f98c64"
+    sha256 cellar: :any_skip_relocation, all: "168639039f6e7cfb5e9fdb4845bf2b9bfdc8a90649ea21406fbdae80fcddc794"
   end
 
   depends_on "openjdk"

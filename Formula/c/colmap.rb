@@ -1,17 +1,17 @@
 class Colmap < Formula
   desc "Structure-from-Motion and Multi-View Stereo"
   homepage "https://colmap.github.io/"
-  url "https://github.com/colmap/colmap/archive/refs/tags/3.12.1.tar.gz"
-  sha256 "366496caca43e73a1e61c7ebd9dee51d5b2afe15c0e75e16ebad6cfae6f2860b"
+  url "https://github.com/colmap/colmap/archive/refs/tags/3.12.5.tar.gz"
+  sha256 "93dfb220cce24d988506bbb1d27d4278eacfd4e372df61d380559d414c1bd9e4"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "98d3b4c9c372d4c4acd452dfe97a18ac4fb6ae57f39d15af553ebb59285557dd"
-    sha256 cellar: :any, arm64_sonoma:  "975fc5da61062d709057c2943881f3a6ce33b899ad83793107cae17c6bbbb2a5"
-    sha256 cellar: :any, arm64_ventura: "028608ebd110e37eb68ee0095d0b02a2af4f205d7057293fcf83e5d1f8e14653"
-    sha256 cellar: :any, sonoma:        "a3790cb22b18d756f6c8daa73bc88e54a061e725ad6cef7c64426a103807c42c"
-    sha256 cellar: :any, ventura:       "db54e91f7ea1bfeeaeda7ebd9e43dd60d6c4e008eacc290e85a3f7ce49e6ea1a"
-    sha256               x86_64_linux:  "3f6f9ec7976a499585b3436db564980efec741466658c4111efeb3d91754f5a2"
+    rebuild 1
+    sha256 cellar: :any, arm64_sonoma:  "f30b343b6a57e5455a19b70b1d50d493a1466b48f1b64acbf24602e07059e335"
+    sha256 cellar: :any, arm64_ventura: "32e1527cf7ec53e989b9d1fca76bdbf57544679044971b0e56a1a9ddd523822b"
+    sha256 cellar: :any, sonoma:        "9c6e639171b656295978741177bd1f09c792c27721b631b72833bf6c4912ca30"
+    sha256 cellar: :any, ventura:       "009de8b69f339954254259379a70e0da28f96802b40cece12f5d9c5f5d90ab4c"
+    sha256               x86_64_linux:  "8fa780ef4d4efc4abdf829d0afe66a03e1fca6c553a4af158ad05fbc1886d465"
   end
 
   depends_on "cmake" => :build
@@ -29,7 +29,7 @@ class Colmap < Formula
   depends_on "lz4"
   depends_on "metis"
   depends_on "poselib"
-  depends_on "qt@5"
+  depends_on "qt"
   depends_on "suite-sparse"
 
   uses_from_macos "sqlite"
@@ -44,9 +44,13 @@ class Colmap < Formula
     depends_on "mesa"
   end
 
-  def install
-    ENV.append_path "CMAKE_PREFIX_PATH", Formula["qt@5"].prefix
+  # Backport support for Qt6
+  patch do
+    url "https://github.com/colmap/colmap/commit/1625d9e8c97aa8beef0df0c00430c1c3d79190ab.patch?full_index=1"
+    sha256 "146e444bfe7209b046a8a5a9f14acb84bd381295ba7f2cc70a38f768e9137136"
+  end
 
+  def install
     args = %w[
       -DCUDA_ENABLED=OFF
       -DFETCH_POSELIB=OFF

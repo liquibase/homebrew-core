@@ -1,18 +1,18 @@
 class Dockerize < Formula
   desc "Utility to simplify running applications in docker containers"
   homepage "https://github.com/jwilder/dockerize"
-  url "https://github.com/jwilder/dockerize/archive/refs/tags/v0.9.3.tar.gz"
-  sha256 "73e1d74e4548affc8491c678b35560468998462c677c8be555c2a24657b4222a"
+  url "https://github.com/jwilder/dockerize/archive/refs/tags/v0.9.5.tar.gz"
+  sha256 "29b1d98e96638d62d71aa990d8fbcd8bb3e03e5017d4015b8da11af194158179"
   license "MIT"
   head "https://github.com/jwilder/dockerize.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2d9678f32f8aa1cbb9ab471d09d55191d4c0d2a04af7888fed7512d37ae042e6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2d9678f32f8aa1cbb9ab471d09d55191d4c0d2a04af7888fed7512d37ae042e6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "2d9678f32f8aa1cbb9ab471d09d55191d4c0d2a04af7888fed7512d37ae042e6"
-    sha256 cellar: :any_skip_relocation, sonoma:        "9d911cdb52483e88d898e261ef49ed47cb3922edaef5b7c85c58c233244ab392"
-    sha256 cellar: :any_skip_relocation, ventura:       "9d911cdb52483e88d898e261ef49ed47cb3922edaef5b7c85c58c233244ab392"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5564e1ba66e1b6b143c2187d573f8accf0fc33f55bc69b22264ca9c8e423b2ac"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "30778e05effc52be9314a34841858b4e459997591221e80e58c0e3d8a16d70fd"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "30778e05effc52be9314a34841858b4e459997591221e80e58c0e3d8a16d70fd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "30778e05effc52be9314a34841858b4e459997591221e80e58c0e3d8a16d70fd"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1efea3fac8b4298273b0b56a1c8c37421ce584375c4667caafe4abef0bdd3992"
+    sha256 cellar: :any_skip_relocation, ventura:       "1efea3fac8b4298273b0b56a1c8c37421ce584375c4667caafe4abef0bdd3992"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "eb178e1109065afed2d01014e8de942057445f90a34e2b1a370acb885e23800d"
   end
 
   depends_on "go" => :build

@@ -1,19 +1,19 @@
 class Oj < Formula
   desc "JSON parser and visualization tool"
   homepage "https://github.com/ohler55/ojg"
-  url "https://github.com/ohler55/ojg/archive/refs/tags/v1.26.8.tar.gz"
-  sha256 "94fbca185bb38989b7b3345da76a29bfd7fa5c984226aded967856ed34e25640"
+  url "https://github.com/ohler55/ojg/archive/refs/tags/v1.26.10.tar.gz"
+  sha256 "5f70b0baba7ca153ef123a8d392452038b69c0e155bcc15bf35bbc46d90ab0d1"
   license "MIT"
   head "https://github.com/ohler55/ojg.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "67d9d9f39a512e095001cb01951ac953b7ac0063cf12a5ca68e6829dc2b2ddfb"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "67d9d9f39a512e095001cb01951ac953b7ac0063cf12a5ca68e6829dc2b2ddfb"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "67d9d9f39a512e095001cb01951ac953b7ac0063cf12a5ca68e6829dc2b2ddfb"
-    sha256 cellar: :any_skip_relocation, sonoma:        "454dba89d070f377c33d4696092d5f66a2dde91b73c43ec989cab46aa0257229"
-    sha256 cellar: :any_skip_relocation, ventura:       "454dba89d070f377c33d4696092d5f66a2dde91b73c43ec989cab46aa0257229"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "7059d120ce3a79a4bf7e44ae00f069b1f2e2a2a7065232db101adb8459acead8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2d813df6941d8de2d93a206e8382155282de1d5e6751e4efe5f2a1a7fa9d597a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "37de874893ae11677ca75532557bebd3dde8f1b9e9547dceae4a48e4858c113b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "37de874893ae11677ca75532557bebd3dde8f1b9e9547dceae4a48e4858c113b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "37de874893ae11677ca75532557bebd3dde8f1b9e9547dceae4a48e4858c113b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f6a69759d965e5c8d079c7a4aab3b39e542be9551a021127a48b76a570e6267e"
+    sha256 cellar: :any_skip_relocation, ventura:       "f6a69759d965e5c8d079c7a4aab3b39e542be9551a021127a48b76a570e6267e"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "61a38ba19e35e089be3f54a71e6f7678281a77d5f73f0ff3d5d45b422f86c7b7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "433147b7f0b703a7fd269a2ba39b8b5656fa0fb7eacc6d8cf1cc4d82b2119f6d"
   end
 
   depends_on "go" => :build

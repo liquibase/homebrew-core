@@ -47,7 +47,7 @@ jobs:
           workflow-name: Triage tasks
 
       - name: Download `event_payload` artifact
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
           name: event_payload
           github-token: ${{ github.token }}
@@ -194,7 +194,7 @@ jobs:
           cask: false
           test-bot: false
 
-      - run: brew pr-publish "$PR"
+      - run: brew pr-publish --branch=main "$PR"
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ needs.status-check.outputs.pull-number }}

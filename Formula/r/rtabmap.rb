@@ -1,10 +1,10 @@
 class Rtabmap < Formula
   desc "Visual and LiDAR SLAM library and standalone application"
   homepage "https://introlab.github.io/rtabmap"
-  url "https://github.com/introlab/rtabmap/archive/refs/tags/0.21.4.tar.gz"
-  sha256 "242f8da7c5d20f86a0399d6cfdd1a755e64e9117a9fa250ed591c12f38209157"
+  url "https://github.com/introlab/rtabmap/archive/refs/tags/0.22.1.tar.gz"
+  sha256 "3988ad84c409e39048a6b23317076d4ee1a0123e94a5ad6574db93647d7a80c0"
   license "BSD-3-Clause"
-  revision 11
+  revision 4
   head "https://github.com/introlab/rtabmap.git", branch: "master"
 
   # Upstream doesn't create releases for all tagged versions, so we use the
@@ -17,11 +17,11 @@ class Rtabmap < Formula
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256                               arm64_sonoma:  "fbf0965fd170b388c8fdd66a91b179cb9c7c3f3b3f7d2b68146766cb9c7e4710"
-    sha256                               arm64_ventura: "e03225f05160f3d002063c02fdf651a2eb9ee7ee35c6d375b69a43f428c42a9f"
-    sha256                               sonoma:        "8354568d383a42537112a71c0ec7d8f9404138643a645c07c1209a79dbd63756"
-    sha256                               ventura:       "1f1090acdf8d7aa10ae0e7c951b7d9f93c8c5d60973da1f85cc7ec1725f36e4b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d346715818367390b00615de1cb0b98a9f886ac9f4f61d2c42f07e5e129d2c3"
+    sha256                               arm64_sonoma:  "5e5a0bbb1d6b8bbbf43786c1609f141c72da4bb1b696d3f096b9959d2728303f"
+    sha256                               arm64_ventura: "673bff5fa8a7f08217e2f3bdd09ece21cf8b65ad2dce5918fb679fc19171f4d9"
+    sha256                               sonoma:        "d49aefaffaef001c1e2507376cbd1bd4e24694e2c631b08377ca2512bbda63eb"
+    sha256                               ventura:       "2a2c4823e31f76de01e5ebdc4f496114d67c4422d079b2b4bdd0ab3ea3cb2d16"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b982d916d9d60cef10136b03fbc37a397ac0f2d80b506eb1e86ec669987f7fdb"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -50,10 +50,6 @@ class Rtabmap < Formula
   end
 
   def install
-    # Backport support for newer PCL
-    # Ref: https://github.com/introlab/rtabmap/commit/cbd3995b600fc2acc4cb57b81f132288a6c91188
-    inreplace "corelib/src/CameraThread.cpp", "pcl/io/io.h", "pcl/common/io.h" if build.stable?
-
     system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_RPATH=#{rpath}", *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"

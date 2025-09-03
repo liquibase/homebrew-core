@@ -1,20 +1,28 @@
 class SpirvHeaders < Formula
   desc "Headers for SPIR-V"
   homepage "https://github.com/KhronosGroup/SPIRV-Headers"
-  url "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.313.0.tar.gz"
-  sha256 "f68be549d74afb61600a1e3a7d1da1e6b7437758c8e77d664909f88f302c5ac1"
   license "MIT"
+  revision 1
   head "https://github.com/KhronosGroup/SPIRV-Headers.git", branch: "main"
+
+  stable do
+    url "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.321.0.tar.gz"
+    sha256 "5bbea925663d4cd2bab23efad53874f2718248a73dcaf9dd21dff8cb48e602fc"
+
+    # Backport SPV_INTEL_function_variants for SPIRV LLVM Translator >= 21
+    patch do
+      url "https://github.com/KhronosGroup/SPIRV-Headers/commit/9e3836d7d6023843a72ecd3fbf3f09b1b6747a9e.patch?full_index=1"
+      sha256 "44eff041125f59dce93272be22226ab5e48fe4cf2397e422692d0c8679f40d51"
+    end
+  end
 
   livecheck do
     url :stable
     regex(/^(?:vulkan[._-])?sdk[._-]v?(\d+(?:\.\d+)+)$/i)
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "2d07850b674da53b8fc098287bea1455cb9c2ec4adab305dea040980d8072676"
+    sha256 cellar: :any_skip_relocation, all: "5fdb11bf7ec105db57352bd5bd8f2865ca8a45d0ca08ad336e82033c5258d52d"
   end
 
   depends_on "cmake" => [:build, :test]

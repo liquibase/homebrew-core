@@ -1,8 +1,8 @@
 class Emscripten < Formula
   desc "LLVM bytecode to JavaScript compiler"
   homepage "https://emscripten.org/"
-  url "https://github.com/emscripten-core/emscripten/archive/refs/tags/4.0.10.tar.gz"
-  sha256 "dc1493ccc207bf6743f9cc97163c4b7671fbd9e22bec9f79fdc000a0edc774fe"
+  url "https://github.com/emscripten-core/emscripten/archive/refs/tags/4.0.14.tar.gz"
+  sha256 "8ed77d6d3949ea9aaa50352dec8267915dd918cf61dc50f418b7aa41de32f92c"
   license all_of: [
     "Apache-2.0", # binaryen
     "Apache-2.0" => { with: "LLVM-exception" }, # llvm
@@ -16,14 +16,13 @@ class Emscripten < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia: "1f56da0bad00cb262d6fcc86ab6c8a1ed1cb3b6ffb09d9f713d6b9ed03f3aabf"
-    sha256 cellar: :any,                 arm64_sonoma:  "c3309002ed362f7b02546dc505e1ffb2c0f51ef3b30fb812e3719dcca43500b9"
-    sha256 cellar: :any,                 arm64_ventura: "f00fe21f8cea58e28d55af0239c7b6953192e04f72f94e60664c701717da8122"
-    sha256 cellar: :any,                 sonoma:        "8f20761e28026782b229dc7f627c4ad693992132c638b20788fcbbea94ccab5b"
-    sha256 cellar: :any,                 ventura:       "476e8635e2577cf0b2da6e29d1ec52b23a46288a8633fa87e16fa3ec3b6d08d2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "05a323d8bc54ae9da27d55b1828f98adc73248fbedffafe2f7a626ba003eed62"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "39cbd699d816cdafd43134337f4fd7f4a9c0500ea440bd7fb2574e4ae287303b"
+    sha256 cellar: :any,                 arm64_sequoia: "0471ad57ba87d5855215f264b2faff5e97e2d8f146ed08e82177bd97cd22af59"
+    sha256 cellar: :any,                 arm64_sonoma:  "e27642d9806327a0c1f4d2bb35906c1616ef81360005c9adf0b5d80575071cd5"
+    sha256 cellar: :any,                 arm64_ventura: "1d3cb4f43de2d9d4238159562f5a4c8220f963eb247c17b0ed47c89334397d40"
+    sha256 cellar: :any,                 sonoma:        "4a9571a2a0da8d078d88380ea664c77fd8cf745ddee9422664048b6b1217aa97"
+    sha256 cellar: :any,                 ventura:       "49476530346682fa6be80d97a31545b467d663ea91410630a13d8925a71e875d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "ec0c8218dbfdb9137a9ee3bdd7185ae79a229e082615887c9df3995d5c72d32d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0f0d0f0c536c01d8d801faf019b4fd2a48a46780d10df36baa5d4e9ed855be15"
   end
 
   depends_on "cmake" => :build
@@ -63,9 +62,9 @@ class Emscripten < Formula
   # https://chromium.googlesource.com/emscripten-releases/+/<commit>/DEPS
   # Then use the listed binaryen_revision for the revision below.
   resource "binaryen" do
-    url "https://github.com/WebAssembly/binaryen/archive/8c82b6884483315011541e4519afdcb7fd46df68.tar.gz"
-    version "8c82b6884483315011541e4519afdcb7fd46df68"
-    sha256 "7ab7ffe0dabbefe121ab4234a11d2ab04ff45827df050a0ab8b1cdc66465cbaf"
+    url "https://github.com/WebAssembly/binaryen/archive/fc1a391b9320602b624cefe5e760eda40cbb05a3.tar.gz"
+    version "fc1a391b9320602b624cefe5e760eda40cbb05a3"
+    sha256 "48e4d73d7a7f3f78c1cb7e25ecaaa892e3b9abbb03a5920198a88c74ecc93c19"
 
     livecheck do
       url "https://raw.githubusercontent.com/emscripten-core/emsdk/refs/tags/#{LATEST_VERSION}/emscripten-releases-tags.json"
@@ -89,9 +88,9 @@ class Emscripten < Formula
   # See binaryen resource above for instructions on how to update this.
   # Then use the listed llvm_project_revision for the tarball below.
   resource "llvm" do
-    url "https://github.com/llvm/llvm-project/archive/8f7e57485ee73205e108d74abb5565d5c63beaca.tar.gz"
-    version "8f7e57485ee73205e108d74abb5565d5c63beaca"
-    sha256 "ea3bdec770d19962bc678ec290d47feab1c88943acd26837a60caf5285768482"
+    url "https://github.com/llvm/llvm-project/archive/1cc84bcc08f723a6ba9d845c3fed1777547f45f9.tar.gz"
+    version "1cc84bcc08f723a6ba9d845c3fed1777547f45f9"
+    sha256 "ef47b1de67e897fc838d9610dc803da5d123edb14ffe5dbb691154f2ba9ac40a"
 
     livecheck do
       url "https://raw.githubusercontent.com/emscripten-core/emsdk/refs/tags/#{LATEST_VERSION}/emscripten-releases-tags.json"
@@ -111,6 +110,8 @@ class Emscripten < Formula
   end
 
   def install
+    system "tools/maint/create_entry_points.py"
+
     # Avoid hardcoding the executables we pass to `write_env_script` below.
     # Prefer executables without `.py` extensions, but include those with `.py`
     # extensions if there isn't a matching executable without the `.py` extension.

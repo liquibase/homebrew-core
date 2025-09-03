@@ -1,10 +1,16 @@
 class Root < Formula
   desc "Analyzing petabytes of data, scientifically"
   homepage "https://root.cern"
-  url "https://root.cern/download/root_v6.36.00.source.tar.gz"
-  sha256 "94afc8def92842679a130a27521be66e2abdaa37620888e61d828a43fc4b01a2"
   license "LGPL-2.1-or-later"
   head "https://github.com/root-project/root.git", branch: "master"
+
+  stable do
+    url "https://root.cern/download/root_v6.36.04.source.tar.gz"
+    sha256 "cc6367d8f563c6d49ca34c09d0b53cb0f41a528db6f86af111fd76744cda4596"
+
+    # Backport part of https://github.com/root-project/root/commit/b2acf687d6b5f887b8f97f35d9b3b011adad5be4
+    patch :DATA
+  end
 
   livecheck do
     url "https://root.cern/install/all_releases/"
@@ -15,13 +21,13 @@ class Root < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "6acf19d37623fdaf605ac510467c5e6154c48497511f8868a638ef468d30d425"
-    sha256 arm64_sonoma:  "fe907ced2705016bc6e7184d14e2ae14a86ced6cd968fd64451d9eb92bc81563"
-    sha256 arm64_ventura: "2f0d6136bca3a216dad49bce925896518629a92acc001bb76d9f7a98ccb4ee91"
-    sha256 sonoma:        "bd6de4cdd4e0e191d92707faad723dd9a29dea7ad831c13f185f5d8ae1af9c15"
-    sha256 ventura:       "f4f89934bbd31c04ed0c7b6c7db37f66b60d93b9452cd1383d77fcff331d11f6"
-    sha256 arm64_linux:   "c8fcb64265097c17ca1fec59366c1bb05742f7348683d516d021fe2f5ce365fc"
-    sha256 x86_64_linux:  "77d0bd95feebf10783b6f1b356c001539f4bd95c01a79911c558ad02ea08e52d"
+    sha256 arm64_sequoia: "a0cdac95303bf5df2354e549ea219cae20542ab8bc4c36fb6f56d28f28a7f9a2"
+    sha256 arm64_sonoma:  "3ef3cd3c3b41a64f5eaf2976ed22c7a9cefb6800c2595c3b8cf444561117a711"
+    sha256 arm64_ventura: "7f989daa006a38c3a0dbb25b2260c7828e46403cc3977b13fc1d63ffa35f982f"
+    sha256 sonoma:        "86037a2ab2461a69cbe700a194a05e1fcdf7d118989f116c9ad27560dcd19a37"
+    sha256 ventura:       "7481ec8804fd905df59d6ec49b8877ca3c92d173fb7de113ecd132c3bcb9294d"
+    sha256 arm64_linux:   "b8f1f4c03d7befca00e19e73cb6c2bcf549034a8cd81e902ff32a85579589dbb"
+    sha256 x86_64_linux:  "2a3ecda1d6774591c09037137859dbc7b01b29d53058e617b24589ee0799156c"
   end
 
   depends_on "cmake" => :build
@@ -47,7 +53,6 @@ class Root < Formula
   depends_on "numpy" # for tmva
   depends_on "openblas"
   depends_on "openssl@3"
-  depends_on "pcre"
   depends_on "pcre2"
   depends_on "python@3.13"
   depends_on "sqlite"
@@ -231,3 +236,53 @@ class Root < Formula
     system python3, "-c", "import ROOT; ROOT.gSystem.LoadAllLibraries()"
   end
 end
+
+__END__
+diff --git a/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt b/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt
+index 911517294b..03406a9663 100644
+--- a/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt
++++ b/bindings/pyroot/cppyy/CPyCppyy/CMakeLists.txt
+@@ -104,6 +104,11 @@ target_include_directories(${libname}
+ 
+ set_property(GLOBAL APPEND PROPERTY ROOT_EXPORTED_TARGETS ${libname})
+ 
++if(NOT MSVC)
++  # Make sure that relative RUNPATH to main ROOT libraries is always correct.
++  ROOT_APPEND_LIBDIR_TO_INSTALL_RPATH(${libname} ${CMAKE_INSTALL_PYTHONDIR})
++endif()
++
+ # Install library
+ install(TARGETS ${libname} EXPORT ${CMAKE_PROJECT_NAME}Exports
+                             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT libraries
+diff --git a/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt b/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt
+index f296f3886d..25862bfa44 100644
+--- a/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt
++++ b/bindings/pyroot/cppyy/cppyy-backend/CMakeLists.txt
+@@ -38,6 +38,11 @@ add_dependencies(${libname} move_headers)
+ 
+ set_property(GLOBAL APPEND PROPERTY ROOT_EXPORTED_TARGETS ${libname})
+ 
++if(NOT MSVC)
++  # Make sure that relative RUNPATH to main ROOT libraries is always correct.
++  ROOT_APPEND_LIBDIR_TO_INSTALL_RPATH(${libname} ${CMAKE_INSTALL_PYTHONDIR})
++endif()
++
+ # Install library
+ install(TARGETS ${libname} EXPORT ${CMAKE_PROJECT_NAME}Exports
+                             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT libraries
+diff --git a/bindings/pyroot/pythonizations/CMakeLists.txt b/bindings/pyroot/pythonizations/CMakeLists.txt
+index e222e04c0e..30ef38edd9 100644
+--- a/bindings/pyroot/pythonizations/CMakeLists.txt
++++ b/bindings/pyroot/pythonizations/CMakeLists.txt
+@@ -210,6 +210,11 @@ endforeach()
+ add_library(PyROOT INTERFACE)
+ target_link_libraries(PyROOT INTERFACE cppyy_backend cppyy ROOTPythonizations)
+ 
++if(NOT MSVC)
++  # Make sure that relative RUNPATH to main ROOT libraries is always correct.
++  ROOT_APPEND_LIBDIR_TO_INSTALL_RPATH(${libname} ${CMAKE_INSTALL_PYTHONDIR})
++endif()
++
+ # Install library
+ install(TARGETS ${libname} EXPORT ${CMAKE_PROJECT_NAME}Exports
+                             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT libraries

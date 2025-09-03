@@ -1,22 +1,19 @@
 class ProtocGenJs < Formula
   desc "Protocol buffers JavaScript generator plugin"
   homepage "https://github.com/protocolbuffers/protobuf-javascript"
-  url "https://github.com/protocolbuffers/protobuf-javascript/archive/refs/tags/v3.21.4.tar.gz"
-  sha256 "8cef92b4c803429af0c11c4090a76b6a931f82d21e0830760a17f9c6cb358150"
+  url "https://github.com/protocolbuffers/protobuf-javascript/archive/refs/tags/v4.0.0.tar.gz"
+  sha256 "7d3cd714bf99660ecc96882468a5a23465efca07064ff8105da634372649ee6e"
   license "BSD-3-Clause"
-  revision 9
   head "https://github.com/protocolbuffers/protobuf-javascript.git", branch: "main"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "e1d3eb4bac2263ba923f679559e88d7b4c12f678e17399438356941b18604643"
-    sha256 cellar: :any,                 arm64_sonoma:  "61cd3b85437197c9c3032340d1eb85ba1f94843487e60ce1b6338f61204c7f30"
-    sha256 cellar: :any,                 arm64_ventura: "04cd632b292fabc0152c3943e52cd82ed5e8e069d5ad4098177f9498d7e34988"
-    sha256 cellar: :any,                 sonoma:        "4e1ad32e594ae4a51b04667c0a136ef07a9db1e568fe9d6a303ae8308efcee55"
-    sha256 cellar: :any,                 ventura:       "101b027ec794658d1a0684c7da07966c1a62463216e02c6a13b959009da82e92"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b33b76262e0a6ea80580c7b069b844f3e6de051d1dd0ca0abea845dd95d859c1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c81f134c3f3caa2d1e6a79ff11568332a896a1d102b5ff686b8f9f90601eb657"
+    sha256 cellar: :any,                 arm64_sequoia: "4f1706dd3fa26e2abdc29d72a7327f730aee6324eb12f69d787aac10988ab954"
+    sha256 cellar: :any,                 arm64_sonoma:  "3893f5fe97808fe1b89035f50230a0d157a8d3ceeb7a5ab57029f4949315d791"
+    sha256 cellar: :any,                 arm64_ventura: "22f7d5fcbfc9fd011ca0059016497a6f86af6de205162e5e880a3f91751e05f7"
+    sha256 cellar: :any,                 sonoma:        "bfb23af337fe2d1caa4a89fecab7b1b1475c4117721add0e7fb3975896ad7e13"
+    sha256 cellar: :any,                 ventura:       "8bd3ad1569477f9cc0f998add4035bbd81215bacf46f7e579b41355abbd820c5"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "cb1a45f894813e6d02dce4bc3ca6d8b1da12ab8c25604812924c92122db2162c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc107e124e47d727df28d35d2b5899dacf383e2985024aef639a156cd11a939a"
   end
 
   depends_on "pkgconf" => :build

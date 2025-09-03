@@ -2,7 +2,7 @@ class Ledger < Formula
   desc "Command-line, double-entry accounting tool"
   homepage "https://ledger-cli.org/"
   license "BSD-3-Clause"
-  revision 8
+  revision 10
   head "https://github.com/ledger/ledger.git", branch: "master"
 
   stable do
@@ -40,6 +40,17 @@ class Ledger < Formula
       url "https://github.com/ledger/ledger/commit/5320c9f719a309ddacdbe77181cabeb351949013.patch?full_index=1"
       sha256 "9794113b28eabdcfc8b900eafc8dc2c0698409c0b3d856083ed5e38818289ba1"
     end
+
+    # CMakeLists.txt update for use of `CMAKE_CXX_STANDARD`
+    # It is set to 17 but we have to use 14 for compatibility issue with other sources
+    patch do
+      url "https://github.com/ledger/ledger/commit/8e64a1cf7009bbe7b89dc8bcb7abd00e39815b0b.patch?full_index=1"
+      sha256 "116cc2c4d716df516c2ad89241bc9fed6943013aacdfcd03757745202416bc72"
+    end
+    patch do
+      url "https://github.com/ledger/ledger/commit/19b0553dfbcd65c3c601b89e7020bff8013cb461.patch?full_index=1"
+      sha256 "9f70e40ca3eec216959a02e7f4ea626d265957443c2ec5d5219977ed2e525332"
+    end
   end
 
   livecheck do
@@ -50,13 +61,13 @@ class Ledger < Formula
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "6fe371a5bcfa9830acbaaebc0ef8610f397f56025b3eec0b4cfac1d05d66f3d0"
-    sha256 cellar: :any,                 arm64_sonoma:  "a13069588287ee7022d4ecbd79b3a3f62454b7bdcb4f8521d81dd5db0745b056"
-    sha256 cellar: :any,                 arm64_ventura: "95ad23162c58e1de9ba100d26d7547a209f8ac0b9ad7f5e56a456aa7b68e46fe"
-    sha256 cellar: :any,                 sonoma:        "75d9f373ddf42a8af5b71354e863caa4a40229cf0bf8e1f9eb189c6554c794e4"
-    sha256 cellar: :any,                 ventura:       "0873ee5b14e44585ca2f8ddb6e4ad6cb3d42a303f3d10890867ce39421c2dd62"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b64fcec6b6d14d1c34bac6d8b4173bc03069a4a2c0ffbb498723aa6a411ece38"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c9502395a997808405f2d380c04d2c73fc57d15323179944092491c5c4ccfd7c"
+    sha256 cellar: :any,                 arm64_sequoia: "24bc2c89d89b0f0b355c037a5d6315f1d653accfba24c1dc76e51bcf3bbdbd16"
+    sha256 cellar: :any,                 arm64_sonoma:  "3af2f35e72e3d5e50be515148bb1987c23cee6ee621fa17358b1fa50765cf227"
+    sha256 cellar: :any,                 arm64_ventura: "a9a4cca0fc9dc851603ca76d6d7f51638d7d8053529dc17636c694e7a18afe97"
+    sha256 cellar: :any,                 sonoma:        "4f1b9ad9ea6267c32ee381bd64f526529cf96d717f4609cfed985979a82497c7"
+    sha256 cellar: :any,                 ventura:       "36e9ef1b92e34221caa9d3d7e21fd0145f389842a37a3f499d2adb49b07ac5eb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "464af7ae2d92d869baf3a3a45e60552b0e053b005b8f142e77bd6a8e07f04777"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fdd22eb4b12f6e18fc396541142c0f8e9f952d3cfa27c319895e9617440e0cdd"
   end
 
   depends_on "cmake" => :build
@@ -64,6 +75,7 @@ class Ledger < Formula
   depends_on "boost"
   depends_on "gmp"
   depends_on "gpgme"
+  depends_on "gpgmepp"
   depends_on "mpfr"
   depends_on "python@3.13"
 
@@ -75,14 +87,18 @@ class Ledger < Formula
   end
 
   def install
-    # Workaround until next release as commit doesn't apply
-    # https://github.com/ledger/ledger/commit/956d8ea37247b34a5300c9d55abc7c75324fff33
     if build.stable?
-      inreplace "CMakeLists.txt", "cmake_minimum_required(VERSION 3.0)",
-                                  "cmake_minimum_required(VERSION 3.5)"
+      inreplace "CMakeLists.txt" do |s|
+        # Workaround until next release as commit doesn't apply
+        # https://github.com/ledger/ledger/commit/956d8ea37247b34a5300c9d55abc7c75324fff33
+        s.gsub! "cmake_minimum_required(VERSION 3.0)", "cmake_minimum_required(VERSION 3.5)"
+
+        # Workaround to build with Boost 1.89.0 until release with fix
+        # PR for HEAD: https://github.com/ledger/ledger/pull/2430
+        s.gsub! "REQUIRED date_time filesystem system ", "REQUIRED date_time filesystem "
+      end
     end
 
-    ENV.cxx11
     ENV.prepend_path "PATH", Formula["python@3.13"].opt_libexec/"bin"
 
     args = %W[
@@ -96,6 +112,7 @@ class Ledger < Formula
       -DBoost_NO_BOOST_CMAKE=ON
       -DPython_FIND_VERSION_MAJOR=3
       -DUSE_GPGME=1
+      -DCMAKE_CXX_STANDARD=14
     ] + std_cmake_args
 
     system "./acprep", "opt", "make", *args

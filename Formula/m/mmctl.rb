@@ -1,8 +1,8 @@
 class Mmctl < Formula
   desc "Remote CLI tool for Mattermost server"
   homepage "https://github.com/mattermost/mattermost"
-  url "https://github.com/mattermost/mattermost/archive/refs/tags/v10.9.1.tar.gz"
-  sha256 "b660efa723992ebf3edf24fc2d7024b5deae57a165f0c02ae27b4a4c41413408"
+  url "https://github.com/mattermost/mattermost/archive/refs/tags/v10.11.2.tar.gz"
+  sha256 "17aa396db23d949ee74703be8056c3c1c645e7f4ecd1e3433190e4be0c18750c"
   license all_of: ["AGPL-3.0-only", "Apache-2.0"]
   head "https://github.com/mattermost/mattermost.git", branch: "master"
 
@@ -12,12 +12,12 @@ class Mmctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9128a26ccb75b4599050f20c559f722a8d62511d5bc323570cb1c1185ed5c042"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9128a26ccb75b4599050f20c559f722a8d62511d5bc323570cb1c1185ed5c042"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "9128a26ccb75b4599050f20c559f722a8d62511d5bc323570cb1c1185ed5c042"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a6a96cb17df53da75d535b9c0feedae4b517533b79dbce6c8f22b1867ab86d37"
-    sha256 cellar: :any_skip_relocation, ventura:       "a6a96cb17df53da75d535b9c0feedae4b517533b79dbce6c8f22b1867ab86d37"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "43a2d93789c37a09522ef9b061ca2596e899ebed35294d807d06f8809306836d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "493e9bfac40e27a224c3e528c0e55f1e59b3824525a04bd8835cd29197cebce9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "493e9bfac40e27a224c3e528c0e55f1e59b3824525a04bd8835cd29197cebce9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "493e9bfac40e27a224c3e528c0e55f1e59b3824525a04bd8835cd29197cebce9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ba59f9354ccdae527746eecfc0bec085e310a0cb73fbf010ddc714a0c3163381"
+    sha256 cellar: :any_skip_relocation, ventura:       "ba59f9354ccdae527746eecfc0bec085e310a0cb73fbf010ddc714a0c3163381"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cfb587afdc075de7747a7597649ec5dcf207ce5fb0476e745591bd63d53bf919"
   end
 
   depends_on "go" => :build
@@ -25,6 +25,7 @@ class Mmctl < Formula
   def install
     # remove non open source files
     rm_r("server/enterprise")
+    rm Dir["server/cmd/mmctl/commands/compliance_export*"]
 
     ldflags = "-s -w -X github.com/mattermost/mattermost/server/v8/cmd/mmctl/commands.buildDate=#{time.iso8601}"
     system "make", "-C", "server", "setup-go-work"

@@ -1,18 +1,17 @@
 class Vtk < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  url "https://www.vtk.org/files/release/9.4/VTK-9.4.2.tar.gz"
-  sha256 "36c98e0da96bb12a30fe53708097aa9492e7b66d5c3b366e1c8dc251e2856a02"
+  url "https://www.vtk.org/files/release/9.5/VTK-9.5.1.tar.gz"
+  sha256 "14443661c7b095d05b4e376fb3f40613f173e34fc9d4658234e9ec1d624a618f"
   license "BSD-3-Clause"
-  revision 1
   head "https://gitlab.kitware.com/vtk/vtk.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:  "f547aa7af3480adfce7f08562b689caf68869a462f6530b5af85221e0e8de0f2"
-    sha256 cellar: :any, arm64_ventura: "0543c0a79e791feef7599eba5fd0a727082bcaa0db9977ca3723e24235b4600c"
-    sha256 cellar: :any, sonoma:        "675bfddf1e3315cad272bf3030d93401515b98912b36f392a08f6e162a6f93ed"
-    sha256 cellar: :any, ventura:       "6e3117b893ef5db5c496d9596f286213639be45922f66eea779f8e236a457467"
-    sha256               x86_64_linux:  "2f03d9da47d8aec34b5588e29fb5ed3805f965eeaf534256d06c7f737d5eac29"
+    sha256 cellar: :any, arm64_sonoma:  "8d3596b8ea74de16022a54be04882555152b21e00a0908baa05d1872e16ab8dc"
+    sha256 cellar: :any, arm64_ventura: "b3517208ac0bf15079af958c16ef4c5ee7ee0d84de5ef3a70a5d3b9836b4ee15"
+    sha256 cellar: :any, sonoma:        "5415df6574689139093bfb8798a19b3246724dac97459f87f0fb9edbeceefd55"
+    sha256 cellar: :any, ventura:       "2610902d0b5a9b0efa10dc060a400f56a21f49203d67e40c3780a5ce3b51637c"
+    sha256               x86_64_linux:  "bfc0ed1800afbc60683525b67b4732426230f2a97bd0dbc91ad51bbb75735741"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -52,13 +51,6 @@ class Vtk < Formula
     depends_on "libx11"
     depends_on "libxcursor"
     depends_on "mesa"
-  end
-
-  # Apply Arch Linux patch to fix build with netcdf 4.9.3+
-  # Issue ref: https://gitlab.kitware.com/vtk/vtk/-/issues/19616
-  patch do
-    url "https://gitlab.archlinux.org/archlinux/packaging/packages/vtk/-/raw/b4d07bd7ee5917e2c32f7f056cf78472bcf1cec2/netcdf-4.9.3.patch"
-    sha256 "87535578bbb0023ede506fd64afae95cdf4fb698c543f9735e6267730634afbc"
   end
 
   def install
@@ -126,7 +118,8 @@ class Vtk < Formula
   test do
     vtk_dir = lib/"cmake/vtk-#{version.major_minor}"
     vtk_cmake_module = vtk_dir/"VTK-vtk-module-find-packages.cmake"
-    assert_match Formula["boost"].version.to_s, vtk_cmake_module.read, "VTK needs to be rebuilt against Boost!"
+    assert_match Formula["boost"].version.major_minor_patch.to_s, vtk_cmake_module.read,
+                 "VTK needs to be rebuilt against Boost!"
 
     (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 4.0 FATAL_ERROR)

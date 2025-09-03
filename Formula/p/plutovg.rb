@@ -1,18 +1,18 @@
 class Plutovg < Formula
   desc "Tiny 2D vector graphics library in C"
   homepage "https://github.com/sammycage/plutovg"
-  url "https://github.com/sammycage/plutovg/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "8aa9860519c407890668c29998e8bb88896ef6a2e6d7ce5ac1e57f18d79e1525"
+  url "https://github.com/sammycage/plutovg/archive/refs/tags/v1.3.0.tar.gz"
+  sha256 "4b08587d782f6858e6cb815b455fd7238f45190a57094857a3123883ecb595eb"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "ac156e2c915c6512ff71be37db603ed4fe32329ee5074ed867fee3fd59fd7069"
-    sha256 cellar: :any,                 arm64_sonoma:  "c7296dca832620899ced5f5752f32405b9db14bcb972c9cea0abae21dfd13952"
-    sha256 cellar: :any,                 arm64_ventura: "987a6642fd71f6594e1af68980b4f3ecca034cc7a0fbb02824b666e4cfd2c0e1"
-    sha256 cellar: :any,                 sonoma:        "adae6b93c4dc216886d41269c758800efcf3da303c88dca1cf2438b0750924e6"
-    sha256 cellar: :any,                 ventura:       "53072481855f74f313530d64e6ab0f21af5bc188b48becb60de1627782b1dfb8"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "e9b79f59f1df5754b7c031892e998e02aac551653ef94fdf9518cd072b0ce0e8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bdde75991f4603eddaf7249b9b7387c7f605451ede7622ce3b67518b8d202350"
+    sha256 cellar: :any,                 arm64_sequoia: "f327be8d935b5c4faad877a200ff94a386e5feacd8c13791d3e9fd6b73583c19"
+    sha256 cellar: :any,                 arm64_sonoma:  "100256be4d7e09e6b551123a5588870dfd5ddcde762f38a2e97926cd100b41cf"
+    sha256 cellar: :any,                 arm64_ventura: "49330df2058d1b41e8b9bdca2d2462ef8464d6c4e5e67ffb8926bcdb9592423f"
+    sha256 cellar: :any,                 sonoma:        "7726c77de46ab5b02b36b08fd1678dd8fbba9ba5005062f7c008b684dfd44241"
+    sha256 cellar: :any,                 ventura:       "32d1880e94e203077c43aa9e6533ec9fee7e1874627e943b55660c148ba5197d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e85aed0cca9388200d31f76fb16612241d95f117c4144241712d0cead336a6fe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "980d47b6462ea6c98a045d6dfbab73a52f902cfbd8f3a1e89a1f7f7d44deb266"
   end
 
   depends_on "cmake" => :build

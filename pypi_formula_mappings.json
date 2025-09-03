@@ -1,4 +1,7 @@
 {
+  "abi3audit": {
+    "exclude_packages": ["certifi"]
+  },
   "acronym": {
     "exclude_packages": ["numpy"]
   },
@@ -86,7 +89,6 @@
     "exclude_packages": ["certifi"]
   },
   "awscli": {
-    "exclude_packages": ["cryptography"],
     "extra_packages": ["flit-core"]
   },
   "awscurl": {
@@ -94,6 +96,9 @@
   },
   "b2-tools": {
     "exclude_packages": ["certifi"]
+  },
+  "b4" :{
+    "exclude_packages": ["certifi", "cffi"]
   },
   "badkeys": {
     "exclude_packages": ["cryptography"]
@@ -227,11 +232,15 @@
     "extra_packages": ["distro"]
   },
   "conda-lock": {
-    "exclude_packages": ["certifi", "cryptography"],
-    "extra_packages": ["jeepney", "secretstorage"]
+    "exclude_packages": ["certifi", "cffi", "cryptography"],
+    "extra_packages": ["jeepney", "secretstorage", "xattr"]
   },
   "cookiecutter": {
     "exclude_packages": ["certifi"]
+  },
+  "copyparty": {
+    "package_name": "copyparty[thumbnails2,audiotags,ftpd,ftps,tftpd,pwhash,zeromq]",
+    "exclude_packages": ["cffi", "cryptography", "pycparser"]
   },
   "core-lightning": {
     "package_name": "",
@@ -248,6 +257,9 @@
   },
   "cycode": {
     "exclude_packages": ["certifi"]
+  },
+  "darker": {
+    "package_name": "darker[black]"
   },
   "datalad": {
     "package_name": "datalad[misc]",
@@ -296,7 +308,8 @@
     "exclude_packages": ["certifi", "cryptography", "numpy", "pygit2"]
   },
   "dvr-scan": {
-    "exclude_packages": ["numpy"]
+    "exclude_packages": ["numpy"],
+    "extra_packages": ["pyobjc-framework-cocoa"]
   },
   "dxpy": {
     "exclude_packages": ["cryptography", "certifi"]
@@ -342,6 +355,9 @@
   "fiona": {
     "exclude_packages": ["certifi"]
   },
+  "flexget": {
+    "exclude_packages": ["certifi"]
+  },
   "flintrock": {
     "exclude_packages": ["cryptography"]
   },
@@ -351,6 +367,9 @@
   "fonttools": "fonttools[lxml,woff]",
   "forbidden": {
     "exclude_packages": ["certifi", "cffi", "cryptography", "pycparser"]
+  },
+  "fred": {
+    "exclude_packages": ["certifi"]
   },
   "fwupd": {
     "package_name": "",
@@ -382,8 +401,8 @@
     "exclude_packages": ["certifi"]
   },
   "glances": {
-    "package_name": "glances[all]",
-    "exclude_packages": ["certifi", "cryptography", "psycopg-binary"]
+    "package_name": "glances[containers,web]",
+    "exclude_packages": ["certifi"]
   },
   "gnuradio": {
     "package_name": "",
@@ -501,7 +520,7 @@
     "exclude_packages": ["certifi", "cryptography"]
   },
   "keeper-commander": {
-    "exclude_packages": ["certifi", "cryptography"]
+    "exclude_packages": ["certifi", "cryptography", "pillow"]
   },
   "keepkey-agent": {
     "exclude_packages": ["cryptography"],
@@ -522,6 +541,10 @@
   "linode-cli": {
     "exclude_packages": ["certifi"]
   },
+  "litani": {
+    "package_name": "",
+    "extra_packages": ["jinja2", "markupsafe", "pyyaml"]
+  },
   "litecli": {
     "exclude_packages": ["setuptools"]
   },
@@ -540,6 +563,9 @@
   "locust": {
     "exclude_packages": ["certifi"]
   },
+  "mac-cleanup-py": {
+    "exclude_packages": ["cffi", "pycparser"]
+  },
   "magic-wormhole": {
     "exclude_packages": ["cryptography"]
   },
@@ -556,6 +582,9 @@
   "mathlibtools": {
     "exclude_packages": ["certifi", "cryptography"]
   },
+  "mcp-proxy": {
+    "exclude_packages": ["certifi"]
+  },
   "mcpm": {
     "exclude_packages": ["certifi", "cryptography"]
   },
@@ -570,8 +599,11 @@
   "meta-package-manager": {
     "exclude_packages": ["certifi"]
   },
+  "mk": {
+    "exclude_packages": ["certifi"]
+  },
   "molecule": {
-    "extra_packages": ["docker-py", "molecule-vagrant", "python-vagrant"],
+    "extra_packages": ["molecule-plugins[azure,docker,ec2,gce,podman,vagrant,openstack]"],
     "exclude_packages": ["certifi", "cryptography"]
   },
   "mongo-orchestration": {
@@ -588,7 +620,7 @@
     "exclude_packages": ["certifi", "cryptography"]
   },
   "mycli": {
-    "exclude_packages": ["cryptography"]
+    "exclude_packages": ["certifi", "cryptography"]
   },
   "nanopb": {
     "package_name": "nanopb",
@@ -616,6 +648,9 @@
   "okta-awscli": {
     "exclude_packages": ["certifi"]
   },
+  "omnara": {
+    "exclude_packages": ["certifi", "cryptography"]
+  },
   "onionprobe": {
     "exclude_packages": ["certifi", "cryptography"]
   },
@@ -636,7 +671,8 @@
     "exclude_packages": ["certifi", "cryptography"]
   },
   "organize-tool": {
-    "exclude_packages": ["cryptography"]
+    "exclude_packages": ["cryptography"],
+    "extra_packages": ["pyobjc-framework-cocoa"]
   },
   "osc": {
     "package_name": "",
@@ -647,7 +683,7 @@
     "exclude_packages": ["certifi"]
   },
   "oterm": {
-    "exclude_packages": ["certifi", "cffi", "cryptography", "pycparser"]
+    "exclude_packages": ["certifi", "cffi", "cryptography", "pillow", "pycparser"]
   },
   "otterdog": {
     "exclude_packages": ["certifi", "cryptography"]
@@ -699,6 +735,9 @@
   },
   "prowler": {
     "exclude_packages": ["certifi", "cryptography", "numpy"]
+  },
+  "pulp-cli": {
+    "exclude_packages": ["certifi"]
   },
   "pwntools": {
     "exclude_packages": ["capstone", "certifi", "cryptography"]
@@ -825,6 +864,9 @@
   "sail": {
     "exclude_packages": ["certifi", "cryptography"]
   },
+  "scdl": {
+    "exclude_packages": ["certifi"]
+  },
   "sceptre": {
     "exclude_packages": ["certifi"]
   },
@@ -896,6 +938,9 @@
   },
   "ssh-mitm": {
     "exclude_packages": ["cryptography"]
+  },
+  "standardebooks": {
+    "exclude_packages": ["certifi", "cffi", "pillow", "pycairo"]
   },
   "streamlink": {
     "exclude_packages": ["certifi"]

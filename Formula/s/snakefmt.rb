@@ -3,19 +3,13 @@ class Snakefmt < Formula
 
   desc "Snakemake code formatter"
   homepage "https://github.com/snakemake/snakefmt/"
-  url "https://files.pythonhosted.org/packages/66/da/0411e11ff46a9706539b1215ecf4afa3e5bc2da60e4caa8cc23177044e6a/snakefmt-0.11.0.tar.gz"
-  sha256 "afc3b92e103cfda80fff7e77f357f6cc1dab742272ee76342ba342f30e721f30"
+  url "https://files.pythonhosted.org/packages/26/08/34fb07cadad1e9598031522e641ba0da3145cc8f70891b77790d08554ded/snakefmt-0.11.1.tar.gz"
+  sha256 "2c20d40b4368bef20ad704bdf2914eae1605176248fa4252c8f8c1118c60941b"
   license "MIT"
   head "https://github.com/snakemake/snakefmt.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c6f3b238883159ea5e23d01cb0892963b4bd953d24c1698012b53bc5f26a9c4c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c6f3b238883159ea5e23d01cb0892963b4bd953d24c1698012b53bc5f26a9c4c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "c6f3b238883159ea5e23d01cb0892963b4bd953d24c1698012b53bc5f26a9c4c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7b5c55a0907942d9ce338e1a2edab23febf8e9fd3d6411c6310ace4c1e2784bb"
-    sha256 cellar: :any_skip_relocation, ventura:       "7b5c55a0907942d9ce338e1a2edab23febf8e9fd3d6411c6310ace4c1e2784bb"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f1630f33ef1dea71add311265206881e08a08e00ce2f9fb866a5c97d1eb1fd09"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f1630f33ef1dea71add311265206881e08a08e00ce2f9fb866a5c97d1eb1fd09"
+    sha256 cellar: :any_skip_relocation, all: "96c0f5cd21c49768cfedc3e5bcfea7bc792cdcafc8fea6a38a58e231b1978426"
   end
 
   depends_on "python@3.13"
@@ -26,18 +20,18 @@ class Snakefmt < Formula
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz"
-    sha256 "ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"
+    url "https://files.pythonhosted.org/packages/60/6c/8ca2efa64cf75a977a0d7fac081354553ebe483345c734fb6b6515d96bbc/click-8.2.1.tar.gz"
+    sha256 "27c491cc05d968d271d5a1db13e3b5a184636d9d930f148c50b038f0d0646202"
   end
 
   resource "mypy-extensions" do
-    url "https://files.pythonhosted.org/packages/98/a4/1ab47638b92648243faf97a5aeb6ea83059cc3624972ab6b8d2316078d3f/mypy_extensions-1.0.0.tar.gz"
-    sha256 "75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782"
+    url "https://files.pythonhosted.org/packages/a2/6e/371856a3fb9d31ca8dac321cda606860fa4548858c0cc45d9d1d4ca2628b/mypy_extensions-1.1.0.tar.gz"
+    sha256 "52e68efc3284861e772bbcd66823fde5ae21fd2fdb51c62a211403730b916558"
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
-    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
+    url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
+    sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
   end
 
   resource "pathspec" do
@@ -46,13 +40,8 @@ class Snakefmt < Formula
   end
 
   resource "platformdirs" do
-    url "https://files.pythonhosted.org/packages/b6/2d/7d512a3913d60623e7eb945c6d1b4f0bddf1d0b7ada5225274c87e5b53d1/platformdirs-4.3.7.tar.gz"
-    sha256 "eb437d586b6a0986388f0d6f74aa0cde27b48d0e3d66843640bfb6bdcdb6e351"
-  end
-
-  resource "toml" do
-    url "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz"
-    sha256 "b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"
+    url "https://files.pythonhosted.org/packages/23/e8/21db9c9987b0e728855bd57bff6984f67952bea55d6f75e055c46b5383e8/platformdirs-4.4.0.tar.gz"
+    sha256 "ca753cf4d81dc309bc67b0ea38fd15dc97bc30ce419a7f58d13eb3bf14c4febf"
   end
 
   def install
@@ -61,7 +50,7 @@ class Snakefmt < Formula
 
     virtualenv_install_with_resources
 
-    generate_completions_from_executable(bin/"snakefmt", shells: [:fish, :zsh], shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"snakefmt", shell_parameter_format: :click)
   end
 
   test do

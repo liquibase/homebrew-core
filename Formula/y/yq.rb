@@ -1,8 +1,8 @@
 class Yq < Formula
   desc "Process YAML, JSON, XML, CSV and properties documents from the CLI"
   homepage "https://github.com/mikefarah/yq"
-  url "https://github.com/mikefarah/yq/archive/refs/tags/v4.45.4.tar.gz"
-  sha256 "e06b9b219ad885b08cf983a7ce5ff6d946587ab4ffc62de4538655bb50e39111"
+  url "https://github.com/mikefarah/yq/archive/refs/tags/v4.47.1.tar.gz"
+  sha256 "48ef09b9ffdb80f26ee516fa2fc83f713c1b49f503cedef79a96435509d456af"
   license "MIT"
   head "https://github.com/mikefarah/yq.git", branch: "master"
 
@@ -12,12 +12,12 @@ class Yq < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2e67a801ebd410bb0183ae6bd5ce47963b910da7cb3fc77b0b6b1ff59c67a2d7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2e67a801ebd410bb0183ae6bd5ce47963b910da7cb3fc77b0b6b1ff59c67a2d7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "2e67a801ebd410bb0183ae6bd5ce47963b910da7cb3fc77b0b6b1ff59c67a2d7"
-    sha256 cellar: :any_skip_relocation, sonoma:        "1338d9a2ce0b7c03895ff8df6c96e52d150e609c57e0cbc874f4aadfe118f8f1"
-    sha256 cellar: :any_skip_relocation, ventura:       "1338d9a2ce0b7c03895ff8df6c96e52d150e609c57e0cbc874f4aadfe118f8f1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5c64691dcf2f41bb3f474190c4b360918c90d0d652e2d6721f41b95df4779388"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "75ca7f0398442a8c47b86296323e2c43dc0bf2caa88f899ba73f95ca2ba08fcf"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "75ca7f0398442a8c47b86296323e2c43dc0bf2caa88f899ba73f95ca2ba08fcf"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "75ca7f0398442a8c47b86296323e2c43dc0bf2caa88f899ba73f95ca2ba08fcf"
+    sha256 cellar: :any_skip_relocation, sonoma:        "cb37dad2aa76e132551dec38bd1b06402fcc4e8841e59fab4dcaf0081f6eae81"
+    sha256 cellar: :any_skip_relocation, ventura:       "cb37dad2aa76e132551dec38bd1b06402fcc4e8841e59fab4dcaf0081f6eae81"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "571ef29381da2f33fab56810a67a61d9ba68b22c6910c124afdb5d4a5b04884a"
   end
 
   depends_on "go" => :build

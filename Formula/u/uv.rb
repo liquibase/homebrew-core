@@ -1,19 +1,19 @@
 class Uv < Formula
   desc "Extremely fast Python package installer and resolver, written in Rust"
   homepage "https://docs.astral.sh/uv/"
-  url "https://github.com/astral-sh/uv/archive/refs/tags/0.7.19.tar.gz"
-  sha256 "51a069ebb3236f39dfa9c3e3e56cf3db2b267cca3153fc32eeab05e1b2ffa1b9"
+  url "https://github.com/astral-sh/uv/archive/refs/tags/0.8.14.tar.gz"
+  sha256 "210f3a3e1f6ee31dafd5a70355d257bb2cbd996975d8ff0e08461aa76f7b15e6"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/astral-sh/uv.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a7eda1fb5c3ea0787151b4949ced1a701a7895f0f39c801e3235ee34171b8b39"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "93dae9d469dda5e3837c54cfe616ea2fbb6c7c13a045e52fce4132045450901f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "54cc291063e09e98edcadbccff05e86f0f6807df9409c160adf2d1a9ce9be637"
-    sha256 cellar: :any_skip_relocation, sonoma:        "788a4c2d9f8cb0d8b2cc3a335182cbd820b17f723dbfe5a8db58b0483adef182"
-    sha256 cellar: :any_skip_relocation, ventura:       "bc0dd603d528cb442c627f2aa248bc2eb5d7c092cc41902dbb4e79b31902362c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c4e516665565de115ed9306d71e0e011fd671815f4732118a19a0fd4b5c9c160"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "67460539f41eba35cf97bb865b4728039a6d115934e841aaa77f1fc76f3ae339"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2e4f4f13cb69866fd54fd804d081165a5bbb9bb3fa8ee89c9fbaa36c462bb3a4"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "be124dda7243d70df4092d4c76737d3ace3e7bdc44589e7bf77ac62b19899878"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d7f6e5fa1a99cb55f94dd1888f336d867981f4250aa0f93971dc61afd9bc2104"
+    sha256 cellar: :any_skip_relocation, sonoma:        "95476b80c3bd65a3dd81ae2c1b30a59d6fbf2e7eed11c2bc2789e1e935f6d1e4"
+    sha256 cellar: :any_skip_relocation, ventura:       "11654deef622f1f7dfa08ff9558fbefa307561c3fcb81e4e70d6f789bfae5f4d"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e6c83fad973193b603b5ec8e65cfa0f63d0b0459a05a4740cd5b72c10445e9b3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "318494568dfe7758e64937dcedc3ff4bbee0640e8a6d3f60565419a588f3bd04"
   end
 
   depends_on "pkgconf" => :build
@@ -26,6 +26,8 @@ class Uv < Formula
   def install
     ENV["UV_COMMIT_HASH"] = ENV["UV_COMMIT_SHORT_HASH"] = tap.user
     ENV["UV_COMMIT_DATE"] = time.strftime("%F")
+    # See: https://github.com/astral-sh/uv/issues/15401
+    ENV["JEMALLOC_SYS_WITH_LG_PAGE"] = "16" if Hardware::CPU.arm? && OS.linux?
     system "cargo", "install", *std_cargo_args(path: "crates/uv")
     generate_completions_from_executable(bin/"uv", "generate-shell-completion")
     generate_completions_from_executable(bin/"uvx", "--generate-shell-completion")

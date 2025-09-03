@@ -2,8 +2,8 @@ class Koka < Formula
   desc "Compiler for the Koka language"
   homepage "http://koka-lang.org"
   url "https://github.com/koka-lang/koka.git",
-    tag:      "v3.1.3",
-    revision: "acce6267bf0c35da37610a70b7ecf9d3c7fc4b94"
+    tag:      "v3.2.2",
+    revision: "39b4bec7327dbbcb2f83ce7aca5fe061931a4dc3"
   license "Apache-2.0"
   head "https://github.com/koka-lang/koka.git", branch: "dev"
 
@@ -14,12 +14,13 @@ class Koka < Formula
   end
 
   bottle do
-    sha256               arm64_sequoia: "40be28f80d005df22bc03410fdb5be5d16d54d80e4ce3cb28411ff165a4e6161"
-    sha256               arm64_sonoma:  "727c9ff5fcac5429d5916a5637eb4b2d5966824ebfa35a9d35ab043fc160841e"
-    sha256               arm64_ventura: "f6ac8e720d0589989cd2235543977dd7c159b8cf0a9770378703ec659afd3fbe"
-    sha256 cellar: :any, sonoma:        "652825acfb5b84436a91d87874680f45c3395771c913a650120efa84d323dcee"
-    sha256 cellar: :any, ventura:       "9299ff495073b003e0687cde8415281f0df9bae3bd3ce0f1a6163274b586a559"
-    sha256               x86_64_linux:  "0a929e297f31139aa87d737d63ca7e439a4962915b885b31b57703265733c041"
+    sha256               arm64_sequoia: "b232e8756d3e827d6ff5d20df38ead3c116ccd6114b994323696c168604776f5"
+    sha256               arm64_sonoma:  "59e8dc38bbf66bc259afa45b837aa70fde60f9a106c2b3895ef14b0c876b0b6d"
+    sha256               arm64_ventura: "aed65125db396062d0e25a4f612d89bc02b46d9d61950d458282900384f5ef1e"
+    sha256 cellar: :any, sonoma:        "75f8a3a7d09b70e31aaa7b299f6c9709f2130d72d80ef217e933ee9e628b460c"
+    sha256 cellar: :any, ventura:       "de168feec52ce04ecd56049b4ef10f9911aa46c64f8d533d9e74c564c76a8c3d"
+    sha256               arm64_linux:   "2e53a1cfb65f0d5cc89c8000195e769daf8ce935839caffc9cb9f4e923a6ab45"
+    sha256               x86_64_linux:  "ed3665df8c182f4b9268319879a21d49cbf4853bc2cb8d3171397a5f3ddba412"
   end
 
   depends_on "cabal-install" => :build

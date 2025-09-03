@@ -1,8 +1,8 @@
 class Sdl3 < Formula
   desc "Low-level access to audio, keyboard, mouse, joystick, and graphics"
   homepage "https://libsdl.org/"
-  url "https://github.com/libsdl-org/SDL/releases/download/release-3.2.16/SDL3-3.2.16.tar.gz"
-  sha256 "6340e58879b2d15830c8460d2f589a385c444d1faa2a4828a9626c7322562be8"
+  url "https://github.com/libsdl-org/SDL/releases/download/release-3.2.22/SDL3-3.2.22.tar.gz"
+  sha256 "f29d00cbcee273c0a54f3f32f86bf5c595e8823a96b1d92a145aac40571ebfcc"
   license "Zlib"
   head "https://github.com/libsdl-org/SDL.git", branch: "main"
 
@@ -13,13 +13,13 @@ class Sdl3 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "1c67df52a37bbd4f13f61eca7c19bea36a53ff3dc0d310c9a878cd0f924edb21"
-    sha256 cellar: :any,                 arm64_sonoma:  "85d25691ab5555af9cdc272551be6564bc0b460f57b2eae7effb6f6f044c2061"
-    sha256 cellar: :any,                 arm64_ventura: "abf021c48b6276686d35220f7288635fca53b0bec6f433c6810df091350e3bca"
-    sha256 cellar: :any,                 sonoma:        "d7f87a73bb06d65c1c3e5cb5d67fccccfe40ba4abf665909e4693ca41f442527"
-    sha256 cellar: :any,                 ventura:       "4275579a0a85d883b83906aa14a4bca6f1759af443bd70a8f8032d10cba925d9"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "237d70db22ec812af6eb7568604c20868d1766e2e161350892402498c4ff8102"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "601e5d04d6e7d2f1ed8a2c50850952a49fa149f8e6458f841fc2f35725bf8521"
+    sha256 cellar: :any,                 arm64_sequoia: "e8f94c94ee5a7ac70b84488f274bfad726da22f9a87b95e11e502129c6b0cafc"
+    sha256 cellar: :any,                 arm64_sonoma:  "ae9c02119ef1559ead149460e0479fc3edfc0a86fb5c64dcf39721435ef5d204"
+    sha256 cellar: :any,                 arm64_ventura: "7fc2aac80a434868e9736165ba7cba3a94c74b9bbcc90b0e9d4c78c1926d7edc"
+    sha256 cellar: :any,                 sonoma:        "596d0680c040b9f0042da4c9df7ae4a67956b8c8ab6c880fa4eae3d1f138ed54"
+    sha256 cellar: :any,                 ventura:       "761a2b603e8eb92a8f558b1f61545d7e5565bfcd86d53b9b91a5698ab7d433bc"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "5f6bae46a1bc5622502a59f15c6ab01d74d879cb302a4abe7c41dca2d2549988"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0168e51694161204dd09eabd545557334a4f7248d7023ec0633054eaf0bb3124"
   end
 
   depends_on "cmake" => :build

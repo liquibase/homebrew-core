@@ -26,10 +26,8 @@ class Erigon < Formula
   depends_on "gcc" => :build
   depends_on "go" => :build
 
-  conflicts_with "ethereum", because: "both install `evm` binaries"
-
   def install
-    unless build.head?
+    if build.stable?
       ENV["GIT_COMMIT"] = "unknown"
       ENV["GIT_BRANCH"] = "release"
       ENV["GIT_TAG"] = "v#{version}"

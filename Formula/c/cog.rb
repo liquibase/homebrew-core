@@ -1,18 +1,23 @@
 class Cog < Formula
   desc "Containers for machine learning"
   homepage "https://cog.run/"
-  url "https://github.com/replicate/cog/archive/refs/tags/v0.15.10.tar.gz"
-  sha256 "5876d0d5011131c396bc557d04b7e531b57be99350fb530c88bf7161c430e773"
+  url "https://github.com/replicate/cog/archive/refs/tags/v0.16.6.tar.gz"
+  sha256 "d8fa48f9221eef25964b9d2db6f07c4327e61d61a555192344d52f290d421df7"
   license "Apache-2.0"
   head "https://github.com/replicate/cog.git", branch: "main"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "97c4feb669e561a292accc31914301ad817a43feef63f724cf9a6f7ed5b8ecf6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "97c4feb669e561a292accc31914301ad817a43feef63f724cf9a6f7ed5b8ecf6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "97c4feb669e561a292accc31914301ad817a43feef63f724cf9a6f7ed5b8ecf6"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b9c28e3bddb3ce66c3a7e604b13ae183f4529f2f2f0a18e981a0fecf47e02784"
-    sha256 cellar: :any_skip_relocation, ventura:       "b9c28e3bddb3ce66c3a7e604b13ae183f4529f2f2f0a18e981a0fecf47e02784"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dff4e1621c2546e890b24a52d7575020968e057c0b1fa2f41aa0f012542ace81"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "062873e5a65312a667ce8a610813974941587000b005052de0fa61f9d69df6a6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "062873e5a65312a667ce8a610813974941587000b005052de0fa61f9d69df6a6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "062873e5a65312a667ce8a610813974941587000b005052de0fa61f9d69df6a6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "10a582a64c3f360d6d7e9d46448a633872cb1425e29c31d8abfdde509d76e9bc"
+    sha256 cellar: :any_skip_relocation, ventura:       "10a582a64c3f360d6d7e9d46448a633872cb1425e29c31d8abfdde509d76e9bc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "61cbd9f95ab345ca086553d357aa33e5e2d3a72018aae92d434d008a2d81f2fc"
   end
 
   depends_on "go" => :build

@@ -1,19 +1,20 @@
 class Brpc < Formula
   desc "Better RPC framework"
   homepage "https://brpc.apache.org/"
-  url "https://dlcdn.apache.org/brpc/1.13.0/apache-brpc-1.13.0-src.tar.gz"
-  sha256 "106f6be8bbc6038b975f611c0e7a862a1c3ea3f8c82ec83d3915790a1ca7f5d8"
+  url "https://dlcdn.apache.org/brpc/1.14.1/apache-brpc-1.14.1-src.tar.gz"
+  sha256 "ed6e6703122cf294462ffae921c713910594b3b0a26dcfef5357a3dcefcc43d3"
   license "Apache-2.0"
+  revision 3
   head "https://github.com/apache/brpc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "5ee83db56a2bd4aa55b27f88d8df6754acad87376e96b599c8c12fb1fd346acc"
-    sha256 cellar: :any,                 arm64_sonoma:  "29041545a671e04b0db044b0b4fcae6a6bf719e3a615540d144fa5f9c9d14f1b"
-    sha256 cellar: :any,                 arm64_ventura: "a1b1d7416a05808f0c24a06b60e5791783dcc753d1dad49b0c4ddf7791785239"
-    sha256 cellar: :any,                 sonoma:        "1efc4ee86e1660947dec16f84120d0e52c19dd67aa9418e8c138de3aabe40c0f"
-    sha256 cellar: :any,                 ventura:       "8fbe818bba4ec1b11a8fd76116ee17e64851c0047bcb7ff615d58e8fa144b10d"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "417ff56ecc578f7d6ed318d503344f3ae16a83df6aebf489542353fa6f7e0b66"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3d9334730f6fa20443c358d4c4c4657b38a44e2c54d59a63c0f233eaf880a4b8"
+    sha256 cellar: :any, arm64_sequoia: "2d752fc3015abe6e14abbeb42a9db6959cee0f48850a4ab81de558d1e4afad20"
+    sha256 cellar: :any, arm64_sonoma:  "cdfcd2a797d6554261b51a9164a36a78cf9ca0e406bd45ec4efd76fe5ea42e3c"
+    sha256 cellar: :any, arm64_ventura: "6675b0ed4264875aa4807bf41616386df11e1ffa1463b68727d7e08b91c9a132"
+    sha256 cellar: :any, sonoma:        "635af40c416cc03798d9e4fb77546effba3fc71a058f3b541c0d2744d9a08683"
+    sha256 cellar: :any, ventura:       "70ab50d6769ce3de29660052b036a326663e430e5361639917d3440d62bf1202"
+    sha256               arm64_linux:   "e2aa5466064a7271efd07c2868759cfcf80379ae88d275d2a3225b69bc986246"
+    sha256               x86_64_linux:  "afa7639ad8ab6184f0d816a09e35fc5180af2dac41ba9868e773d278b311e4c4"
   end
 
   depends_on "cmake" => :build

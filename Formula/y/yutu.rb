@@ -1,38 +1,41 @@
 class Yutu < Formula
-  desc "Fully functional CLI for YouTube"
+  desc "MCP server and CLI for YouTube"
   homepage "https://github.com/eat-pray-ai/yutu"
   url "https://github.com/eat-pray-ai/yutu.git",
-      tag:      "v0.9.10",
-      revision: "a074d5564d4c7eb562dc11108b5ca06f842029bf"
-  license "MIT"
+      tag:      "v0.10.1",
+      revision: "16f8f0e9b996a2804263f9e4a709101a76517bc1"
+  license "Apache-2.0"
   head "https://github.com/eat-pray-ai/yutu.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "06738845be37b5af38326ce2d5d589ca73f1a71dd0eb315ead52967b54094651"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "06738845be37b5af38326ce2d5d589ca73f1a71dd0eb315ead52967b54094651"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "06738845be37b5af38326ce2d5d589ca73f1a71dd0eb315ead52967b54094651"
-    sha256 cellar: :any_skip_relocation, sonoma:        "450807c5b5a1e0fa39df551a1677f23f4189b2fe13f425840f5b09d728378a5d"
-    sha256 cellar: :any_skip_relocation, ventura:       "450807c5b5a1e0fa39df551a1677f23f4189b2fe13f425840f5b09d728378a5d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf4c6e6cde1cfa1e3e11da5e683d8e5b80c840baba1b5e223ea70b72448e3093"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "93d96c6394fd2ad85aad33967c7796d1169dee67ec65c5466959fde92730f86e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "93d96c6394fd2ad85aad33967c7796d1169dee67ec65c5466959fde92730f86e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "93d96c6394fd2ad85aad33967c7796d1169dee67ec65c5466959fde92730f86e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "19a4030ce0b519762770d82d1a85fef64af659e90f2b04bc0cf050983c0d56a6"
+    sha256 cellar: :any_skip_relocation, ventura:       "19a4030ce0b519762770d82d1a85fef64af659e90f2b04bc0cf050983c0d56a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3aee8a95b68bd3802e0ee086cf388792cf09bea9b957fbf38a1d515c984ca729"
   end
 
   depends_on "go" => :build
 
   def install
     mod = "github.com/eat-pray-ai/yutu/cmd"
-    ldflags = %W[-w -s
-                 -X #{mod}.Os=#{OS.mac? ? "darwin" : "linux"}
-                 -X #{mod}.Arch=#{Hardware::CPU.arch}
-                 -X #{mod}.Version=v#{version}
-                 -X #{mod}.Commit=#{Utils.git_short_head(length: 7)}
-                 -X #{mod}.CommitDate=#{time.iso8601}]
-    system "go", "build", *std_go_args(ldflags:), "."
+    ldflags = %W[
+      -s -w
+      -X #{mod}.Os=#{OS.mac? ? "darwin" : "linux"}
+      -X #{mod}.Arch=#{Hardware::CPU.arch}
+      -X #{mod}.Version=v#{version}
+      -X #{mod}.Commit=#{Utils.git_short_head(length: 7)}
+      -X #{mod}.CommitDate=#{time.iso8601}
+    ]
+    system "go", "build", *std_go_args(ldflags:)
+
+    generate_completions_from_executable(bin/"yutu", "completion")
   end
 
   test do
-    version_output = shell_output("#{bin}/yutu version 2>&1")
-    assert_match "yutu🐰 version v#{version}", version_output
-    auth_output = shell_output("#{bin}/yutu auth 2>&1", 1)
-    assert_match "Please configure OAuth 2.0", auth_output
+    assert_match "yutu🐰 version v#{version}", shell_output("#{bin}/yutu version 2>&1")
+
+    assert_match "Please configure OAuth 2.0", shell_output("#{bin}/yutu auth 2>&1", 1)
   end
 end

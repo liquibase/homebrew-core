@@ -1,18 +1,18 @@
 class Perbase < Formula
   desc "Fast and correct perbase BAM/CRAM analysis"
   homepage "https://github.com/sstadick/perbase"
-  url "https://github.com/sstadick/perbase/archive/refs/tags/v0.10.3.tar.gz"
-  sha256 "15fb5ac4ef4c7eae39292d0eb5fbfb5e5f8cd8fb0e88dab8983f856720a7e72d"
+  url "https://github.com/sstadick/perbase/archive/refs/tags/v1.1.0.tar.gz"
+  sha256 "6b9e030ce0692631482ef074a7d6c37519d6400be21d2f7533ba44a0ec5dc237"
   license "MIT"
   head "https://github.com/sstadick/perbase.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "231fdd1559c4c3f10b8870998a9c4b65c368fdfecae4eb3ba3d6ffe57a266205"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e5604b687b1aa7cd0cd5c84f68a05e24d7942febb49208d65d759be4665bb241"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "ed8bfd3835387b2fa6819b7695d669ddfa47c06d8dd041e6843d8c9200d6a78a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "f979210823cab603d0d1f567d42c3cfcb99e50d278033f4766e4071b3ad9ca8f"
-    sha256 cellar: :any_skip_relocation, ventura:       "e24267375ab83ec58bd51ecd55115de408c73ecfbb8eeaa19be98d5c1abaa5ae"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3c002f3710e5ed513ed29f10ef31427f89ac4d790c4fd57e97135d70cf31a1d3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b5b4e4b6a8bde8efb516cc81688eafefd9ace4cc2759f315713f32af2221e7bd"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6d585cde8edf189742687519dfd326902b16de1e16f1eac67620dd68cb96d50b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8c332dbefe601d6b26675c09d6150b7dfedc50a13f106cf68507acc6d1e4f211"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1dfe32666a0e0233d79152879bddb5bbd400efcd646514519ff387ca7c78f1c6"
+    sha256 cellar: :any_skip_relocation, ventura:       "aeb69abd269e393ed75a2dcabf50ec2063da579c4c5b0d4d04a084e3833a4d9f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a3e9dc64b2d55b9cd7c77c5aecad6cd213c79b70e8824002c04384124f28f54a"
   end
 
   depends_on "cmake" => :build

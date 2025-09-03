@@ -1,8 +1,8 @@
 class Dwarfs < Formula
   desc "Fast high compression read-only file system for Linux, Windows, and macOS"
   homepage "https://github.com/mhx/dwarfs"
-  url "https://github.com/mhx/dwarfs/releases/download/v0.12.4/dwarfs-0.12.4.tar.xz"
-  sha256 "352d13a3c7d9416e0a7d0d959306a25908b58d1ff47fb97e30a7c8490fcff259"
+  url "https://github.com/mhx/dwarfs/releases/download/v0.13.0/dwarfs-0.13.0.tar.xz"
+  sha256 "d0654fcc1219bfd11c96f737011d141c3ae5929620cd22928e49f25c37a15dc9"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -12,13 +12,13 @@ class Dwarfs < Formula
   end
 
   bottle do
-    sha256                               arm64_sequoia: "3ff65a78a4f52826d19180d5d197218cb7e3fbe8d4b9ad6c16d85c8fb734e6a0"
-    sha256                               arm64_sonoma:  "0da0d156eaa75c1655cc3ea0a912028f92cf1b4b90a2c0b88b0966e4fa1319f7"
-    sha256                               arm64_ventura: "5099e0966d6a3b0a764bbb820d3e40172cfce51adb8b8e4c5314c8b5988da1e0"
-    sha256 cellar: :any,                 sonoma:        "a1e74d5a71e125918909c2f220b48df2e430de3ceb9fb5057e8f51c619b02677"
-    sha256 cellar: :any,                 ventura:       "a811e4738557e2962e0f8182a54228ab7a4b4209c5595cf4955dbc0486d5d9c5"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "de340355a70a1bd71d61ece366abad774b8bc4fbf9a0d1654115b1ff7852f22a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "97a7815ccb7ee637d0a712b3cee46753b82e8c4f66864a860b8900052c535d72"
+    sha256                               arm64_sequoia: "e042bc7ba514d04af91dcab3af3edf91c4d6865fb9aa0b50c5587d1234eb54f5"
+    sha256                               arm64_sonoma:  "708b6313f17ef0813e2ba3fe07923f675893953a780e5b3f2b92a348b4b9b283"
+    sha256                               arm64_ventura: "0ae44a58627292f7e4ff95b2b74d8420182b3e68d7e7fe3dd595dce6448e3171"
+    sha256 cellar: :any,                 sonoma:        "b7ab7c653028882f0688fb1168dc00236117daa712680d1def4366e69ed2f552"
+    sha256 cellar: :any,                 ventura:       "9b69ab73a08b78a3d022b46e6f7dade5cf36ed8c4cf5013ff998d95897a0092e"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "10ccb1ddec2601891528592b6d954f6d54436c487f380b21f7b85e52050cbfbe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e3dfa59eb0ed9299160b51b7e169d23f86fa3df76558cdc1ebadd1eed13e6bf"
   end
 
   depends_on "cmake" => :build
@@ -58,12 +58,9 @@ class Dwarfs < Formula
     cause "Not all required C++20 features are supported"
   end
 
-  # Apply folly fix for LLVM 20 from https://github.com/facebook/folly/pull/2404
-  patch do
-    url "https://github.com/facebook/folly/commit/1215a574e29ea94653dd8c48f72e25b5503ced18.patch?full_index=1"
-    sha256 "14a584c4f0a166d065d45eb691c23306289a5287960806261b605946166de590"
-    directory "folly"
-  end
+  # Workaround for Boost 1.89.0 until upstream Folly fix.
+  # Issue ref: https://github.com/facebook/folly/issues/2489
+  patch :DATA
 
   def install
     args = %W[
@@ -84,6 +81,9 @@ class Dwarfs < Formula
     ]
 
     if OS.mac? && DevelopmentTools.clang_build_version <= 1500
+      # No ASAN for folly
+      ENV.append "CXXFLAGS", "-D_LIBCPP_HAS_NO_ASAN"
+
       ENV.llvm_clang
 
       # Needed in order to find the C++ standard library
@@ -137,3 +137,25 @@ class Dwarfs < Formula
     assert_equal version.to_s, shell_output("./test").chomp
   end
 end
+
+__END__
+--- a/folly/CMake/folly-config.cmake.in
++++ b/folly/CMake/folly-config.cmake.in
+@@ -38,7 +38,6 @@ find_dependency(Boost 1.51.0 MODULE
+     filesystem
+     program_options
+     regex
+-    system
+     thread
+   REQUIRED
+ )
+--- a/folly/CMake/folly-deps.cmake
++++ b/folly/CMake/folly-deps.cmake
+@@ -41,7 +41,6 @@ find_package(Boost 1.51.0 MODULE
+     filesystem
+     program_options
+     regex
+-    system
+     thread
+   REQUIRED
+ )

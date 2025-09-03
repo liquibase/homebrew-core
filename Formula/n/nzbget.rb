@@ -1,19 +1,19 @@
 class Nzbget < Formula
   desc "Binary newsgrabber for nzb files"
   homepage "https://nzbget.com"
-  url "https://github.com/nzbgetcom/nzbget/archive/refs/tags/v25.2.tar.gz"
-  sha256 "a557d6067e551ee77fd86a9f395a8407438edc3ee16ab6797830db25ba8e1662"
+  url "https://github.com/nzbgetcom/nzbget/archive/refs/tags/v25.3.tar.gz"
+  sha256 "dc875b96606d0bc1dc6514fd51950f8bd6075698d6e29742ce145d2ae2553501"
   license "GPL-2.0-or-later"
   head "https://github.com/nzbgetcom/nzbget.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "0a550c2ba03578872a7f2983317ccebb4737ca158b12dd940e0a61e3c5832af1"
-    sha256 cellar: :any,                 arm64_sonoma:  "420a3e2d979132839a9d2a4e8dd99f14e6a861951255b3e404d78eb2386cde63"
-    sha256 cellar: :any,                 arm64_ventura: "ae7d6fcc21e52ce4fea1b3e1d0f61e90035f63fe4eb855053c1825807b3b484f"
-    sha256                               sonoma:        "fe1c738c108bd62d7c48ec188b5c1e34c2eecf4c6973373d38b3fe12da211e71"
-    sha256                               ventura:       "18c1d802062396691eb27f27a6ee560bcfa65d146c1126a78a2f6d4a116c3f53"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "3d813e615f58fa4efaa208c7ed9818584f4149b88faaf71395c8b022045f8ebd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "78173ec478edec907afa5eae70cfc9419a32c15a564881210dfb7756bbe457c1"
+    sha256 cellar: :any,                 arm64_sequoia: "8d387a7d880402135a9b13bebf091594bbb56a25856a420d729fb9aeae826d28"
+    sha256 cellar: :any,                 arm64_sonoma:  "5de1bac6efe1d3fa1b22a35890b67dbded144acbb30629baba72f5e430de61a4"
+    sha256 cellar: :any,                 arm64_ventura: "ae1cc06180e289a4aa35165d251526dc43cab504e7e4bafc9822dcc2e7d3edc6"
+    sha256                               sonoma:        "bacc7a61b3f25871aab0e79db70976eef853d0e9210fd4b3744fe85ff2366d00"
+    sha256                               ventura:       "edfe1b149687758951bd4b55d6873ec2b5cb69c973169f23efbe0b1f0617fd79"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "31ad4766584fe5cf5742575af01fb556507146da17aad1983725026e4a5c71d2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b42ada4a987b60271c4fc5888a205d7ace0d78df7bcd8b4298ce300ebfbaf205"
   end
 
   depends_on "cmake" => :build
@@ -30,13 +30,16 @@ class Nzbget < Formula
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
-    if OS.mac?
-      # Set upstream's recommended values for file systems without
-      # sparse-file support (e.g., HFS+); see Homebrew/homebrew-core#972
-      inreplace "nzbget.conf", "DirectWrite=yes", "DirectWrite=no"
-      inreplace "nzbget.conf", "ArticleCache=0", "ArticleCache=700"
+    inreplace "nzbget.conf" do |s|
+      if OS.mac?
+        # Set upstream's recommended values for file systems without
+        # sparse-file support (e.g., HFS+); see Homebrew/homebrew-core#972
+        s.gsub! "DirectWrite=yes", "DirectWrite=no"
+        s.gsub! "ArticleCache=0", "ArticleCache=700"
+      end
+
       # Update 7z cmd to match homebrew binary
-      inreplace "nzbget.conf", "SevenZipCmd=7z", "SevenZipCmd=7zz"
+      s.gsub! "SevenZipCmd=7z", "SevenZipCmd=7zz"
     end
 
     etc.install "nzbget.conf"

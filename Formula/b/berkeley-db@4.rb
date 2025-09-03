@@ -27,6 +27,7 @@ class BerkeleyDbAT4 < Formula
   # This formula is less likely to get security patches than `berkeley-db@5`,
   # which is the version shipped & patched by major Linux distros.
   deprecate! date: "2024-08-17", because: :unmaintained
+  disable! date: "2025-08-24", because: :unmaintained
 
   # Fix build with recent clang
   patch do
@@ -64,7 +65,7 @@ class BerkeleyDbAT4 < Formula
 
       # use the standard docs location
       doc.parent.mkpath
-      mv prefix+"docs", doc
+      mv prefix/"docs", doc
     end
   end
 

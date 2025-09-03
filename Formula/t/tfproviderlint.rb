@@ -23,7 +23,7 @@ class Tfproviderlint < Formula
     ldflags = %W[
       -s -w
       -X github.com/bflad/tfproviderlint/version.Version=#{version}
-      -X github.com/bflad/tfproviderlint/version.VersionPrerelease=#{build.head? ? "dev" : ""}
+      -X github.com/bflad/tfproviderlint/version.VersionPrerelease=#{"dev" if build.head?}
     ]
 
     system "go", "build", *std_go_args(ldflags:), "./cmd/tfproviderlint"
@@ -37,8 +37,8 @@ class Tfproviderlint < Formula
 
     testpath.install resource("homebrew-test_resource")
     assert_match "S006: schema of TypeMap should include Elem",
-      shell_output(bin/"tfproviderlint -fix #{testpath}/... 2>&1", 3)
+      shell_output("#{bin}/tfproviderlint -fix #{testpath}/... 2>&1", 3)
 
-    assert_match version.to_s, shell_output(bin/"tfproviderlint --version")
+    assert_match version.to_s, shell_output("#{bin}/tfproviderlint --version")
   end
 end

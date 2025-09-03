@@ -3,20 +3,18 @@ class FlowControl < Formula
   homepage "https://flow-control.dev/"
   # version is used to build by `git describe --always --tags`
   url "https://github.com/neurocyte/flow.git",
-      tag:      "v0.3.3",
-      revision: "fb5cd46d0b1fd277d6de3ded0a9d1d99bd73d643"
+      tag:      "v0.5.0",
+      revision: "28da270834b233e3692153cb0575c051361557ff"
   license "MIT"
   head "https://github.com/neurocyte/flow.git", branch: "master"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 arm64_sequoia: "6ed1b2aaf297e50e5782d85c71a6fd23bd8705043e79281e194d68520661e11f"
-    sha256 arm64_sonoma:  "2ddcea938d0eb9f7aa4560991d7a4d2f3fe89e322d4cac67ed5b70f7e04e73f8"
-    sha256 arm64_ventura: "8920bb92cd7af18d0083540e6f82fe331e66ca3fa22f1c7da0bddd7dfe1333dd"
-    sha256 sonoma:        "3dbbd4c191c10a804a204e128c8a2d5b68a929eada6350ca925cf4ded0fc8e1e"
-    sha256 ventura:       "8d451e9e64769726bf5a84998c97d9af902b0f01db2f41223ef22a36f8cfcf0b"
-    sha256 x86_64_linux:  "020d09612e1d13fe77f68f55bf14f6b47e3a26cbbdbe7af42228f3e4e602af78"
+    sha256 arm64_sequoia: "d0f70361e668717714a34817483d77b464fd659b68b1adf24eeb0c4d789dffec"
+    sha256 arm64_sonoma:  "ecb2d1c4671784f471ba994ee3dcae9f3ef3729f35284f749912de2e84e19c74"
+    sha256 arm64_ventura: "43b0d3d1c6e4fa07bea855432a12d5928b7c78f83a4b1d573fa3504abfd758b0"
+    sha256 sonoma:        "82d5fded191d4b2debc77a45cf34b14f7bf61b742bae3819e29d680f57466449"
+    sha256 ventura:       "49ee95c05c45244f487ff45db7b123bf649036896fd75b933a776c01915c88b6"
+    sha256 x86_64_linux:  "47791b0fb0591a8eeb5c87c6fdf37061ed0457c7a6ae61b289e551f3daece8bb"
   end
 
   depends_on "zig"
@@ -29,13 +27,10 @@ class FlowControl < Formula
     else Hardware.oldest_cpu
     end
 
-    args = %W[
-      --prefix #{prefix}
-      -Doptimize=ReleaseFast
-    ]
+    args = []
     args << "-Dcpu=#{cpu}" if build.bottle?
 
-    system "zig", "build", *args
+    system "zig", "build", *args, *std_zig_args
   end
 
   test do

@@ -1,24 +1,22 @@
 class Swiftdraw < Formula
   desc "Convert SVG into PDF, PNG, JPEG or SF Symbol"
   homepage "https://github.com/swhitty/SwiftDraw"
-  url "https://github.com/swhitty/SwiftDraw/archive/refs/tags/0.22.0.tar.gz"
-  sha256 "072f68d7dc5481fb4139b5f437db6a388014deb34ae11eefd8729de565f431f7"
+  url "https://github.com/swhitty/SwiftDraw/archive/refs/tags/0.24.0.tar.gz"
+  sha256 "89522e2699de7bcccc32bff0bc448b1aa2c8d095f24790243d6317a5b061b78d"
   license "Zlib"
   head "https://github.com/swhitty/SwiftDraw.git", branch: "main"
 
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "61ff66d69af1b5609c53920d90af27958a03e67f16f3e4b92a93a59102c9da3d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c2275cd577cce39b7994b86ebabc7c44a08be2ab9b8318f3b49fff6abaf06b99"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6487967882b8a29a17eddedb99f49c6e57faaee1893caf65c3141b9005e961f7"
-    sha256 cellar: :any_skip_relocation, sonoma:        "d58f4d73ff88f049f4eca9ac1125bcafe83d8f22a1e66eeb3caa0f0e6074cc51"
-    sha256 cellar: :any_skip_relocation, ventura:       "937236fcaf02b73ce585afcdd7b4cbb8ef61f941a09788f15c74c38d29457878"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "fea9f4155e962b4ac717e93ae699f1c040930f68f20381179f774b99c45538cf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e1621b92bbfeeb8f795667b0c406ea2647e12b0af0dfbc3ec656a314710fc6a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "310fc09194f68bbdeb74d1fd50f424b70a1e14bc532ac216140ce610b885b00c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "95fed74462bb075e0e30bf29fc06bb3f6364981d281fd17f6299913d4479b98b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "c9636b7a0ce4d0497de2c9ae6cc43b9b6362a26ef97a1c3fcc55fe6b995027b0"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "773e7ce797377b42991b29d3a8e6f62fb0893d5ce6b0729b177f16ff776855d9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "460447f88c076f723fbf8f486dfa230b00e79fcb5e551c7c885225d6fea71b82"
   end
 
-  depends_on xcode: ["14.0", :build]
+  depends_on xcode: ["16.0", :build]
 
   uses_from_macos "swift" => :build
   uses_from_macos "libxml2"

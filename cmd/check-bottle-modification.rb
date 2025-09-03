@@ -24,7 +24,8 @@ module Homebrew
         response = GitHub::API.open_rest(GitHub.url_to("repos", owner, repo, "pulls", pull_request, "commits"))
 
         response.reject! do |item|
-          UNCHECKED_COMMIT_AUTHORS.include?(item.dig("commit", "author", "name")) ||
+          item.fetch("parents").count > 1 ||
+            UNCHECKED_COMMIT_AUTHORS.include?(item.dig("commit", "author", "name")) ||
             UNCHECKED_COMMIT_AUTHORS.include?(item.dig("commit", "committer", "name"))
         end
 
@@ -37,9 +38,10 @@ module Homebrew
 
         files = response.fetch("files")
         files.reject! do |file|
-          filename = file.fetch("filename")
+          next true if %w[renamed removed].include?(file.fetch("status"))
 
-          !filename.start_with?("Formula") || !filename.end_with?(".rb")
+          filename = file.fetch("filename")
+          !filename.start_with?("Formula/") || !filename.end_with?(".rb")
         end
 
         files.any? { |file| patch_modifies_bottle_block?(file.fetch("patch")) }

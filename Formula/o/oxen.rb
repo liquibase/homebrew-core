@@ -1,8 +1,8 @@
 class Oxen < Formula
   desc "Data VCS for structured and unstructured machine learning datasets"
   homepage "https://www.oxen.ai/"
-  url "https://github.com/Oxen-AI/Oxen/archive/refs/tags/v0.35.0.tar.gz"
-  sha256 "f8301be0615b5e489ea7ec6811a04e6730424c05710b22453b3b1c66e946dcf9"
+  url "https://github.com/Oxen-AI/Oxen/archive/refs/tags/v0.36.5.tar.gz"
+  sha256 "12327d45327215064d845c6ea57d7b438e81119c2cd7fafbd22c690ab1bad6a6"
   license "Apache-2.0"
   head "https://github.com/Oxen-AI/Oxen.git", branch: "main"
 
@@ -13,13 +13,15 @@ class Oxen < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
+  no_autobump! because: :bumped_by_upstream
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c8793e7c834bac7cf51526e4bc397f60959aad9ba2582547deb3648d997ef7f7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c5028a4c4023327ee842b9e609b3ea7c1c0a00e4d335ff853bb79d93bd4b948c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "854c2db0bbc9098ac8a2bd518d0a4e0aa0743680f8a098a0ccd00b5e75e7533e"
-    sha256 cellar: :any_skip_relocation, sonoma:        "2d156ebc9ad223b4c2740de009fb2c7ed5cb8398bbb3afb8a8b443675c88649c"
-    sha256 cellar: :any_skip_relocation, ventura:       "9003f44c38e1210ff649904a81a267b238e411b92d8c7a9b6ffc4c09b0c3ed19"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c0ad60cfb5dad9e31709a8b65301315a9afdfe2ad8aa2698085c8d3065888c4d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d459e4b90d2937cd6cd2042eb0a80d1ffc6020488bd0b4e5f31c138bc096c1b7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "41c76a5a8d2da738c23fedd839808c341f5eb59abd08b8c3eb4394d6cc841b20"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c70971b26eb94b21e71ad6a1f7a696500c236b47b6315cb5c542f24bce0ceb68"
+    sha256 cellar: :any_skip_relocation, sonoma:        "79fb5793baca1c018dcb449a714ce9c403e92c7b89c17e581ae43941b1f6540e"
+    sha256 cellar: :any_skip_relocation, ventura:       "9f6d30356b63854047399e24d3d2880408f2c75c488080f38a014f02adb224f3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "09b58c632052f96adf88a95a1ccfe7b5d5e018148fd4f641dbe9d3085f3d7109"
   end
 
   depends_on "cmake" => :build # for libz-ng-sys
@@ -35,7 +37,9 @@ class Oxen < Formula
   end
 
   def install
-    system "cargo", "install", *std_cargo_args
+    cd "oxen-rust" do
+      system "cargo", "install", *std_cargo_args(path: "src/cli")
+    end
   end
 
   test do

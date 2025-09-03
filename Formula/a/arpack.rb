@@ -46,11 +46,9 @@ class Arpack < Formula
   end
 
   test do
-    ENV.fortran
-    args = (OS.mac? && MacOS.version >= :sequoia) ? ["-O2"] : []
-    system ENV.fc, *args, "-o", "test", pkgshare/"dnsimp.f", pkgshare/"mmio.f",
-                   "-L#{lib}", "-larpack",
-                   "-L#{Formula["openblas"].opt_lib}", "-lopenblas"
+    system "gfortran", "-o", "test", pkgshare/"dnsimp.f", pkgshare/"mmio.f",
+                       "-L#{lib}", "-larpack",
+                       "-L#{Formula["openblas"].opt_lib}", "-lopenblas"
     cp_r pkgshare/"testA.mtx", testpath
     assert_match "reached", shell_output("./test")
   end

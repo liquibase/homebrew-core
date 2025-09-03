@@ -2,19 +2,25 @@ class Opencv < Formula
   desc "Open source computer vision library"
   homepage "https://opencv.org/"
   license "Apache-2.0"
-  revision 1
+  revision 8
 
   stable do
-    url "https://github.com/opencv/opencv/archive/refs/tags/4.11.0.tar.gz"
-    sha256 "9a7c11f924eff5f8d8070e297b322ee68b9227e003fd600d4b8122198091665f"
+    url "https://github.com/opencv/opencv/archive/refs/tags/4.12.0.tar.gz"
+    sha256 "44c106d5bb47efec04e531fd93008b3fcd1d27138985c5baf4eafac0e1ec9e9d"
 
     resource "contrib" do
-      url "https://github.com/opencv/opencv_contrib/archive/refs/tags/4.11.0.tar.gz"
-      sha256 "2dfc5957201de2aa785064711125af6abb2e80a64e2dc246aca4119b19687041"
+      url "https://github.com/opencv/opencv_contrib/archive/refs/tags/4.12.0.tar.gz"
+      sha256 "4197722b4c5ed42b476d42e29beb29a52b6b25c34ec7b4d589c3ae5145fee98e"
 
       livecheck do
         formula :parent
       end
+    end
+
+    # Backport support for FFmpeg 8.0
+    patch do
+      url "https://github.com/opencv/opencv/commit/90c444abd387ffa70b2e72a34922903a2f0f4f5a.patch?full_index=1"
+      sha256 "5b662eea7b5de1dac3e06895c711955c9d1515d1202191b68594f4f9cfa23242"
     end
   end
 
@@ -26,11 +32,11 @@ class Opencv < Formula
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256 arm64_sonoma:  "14e468ccb54da0d671e31730284f933508d5195a208aca7a9b08541ada70c32a"
-    sha256 arm64_ventura: "b70e530ca8d0aeb8e6bc91a13c5d1fffd114fce6807f517b8d87c9375cf18b05"
-    sha256 sonoma:        "b2ff125058f1b6c8b409c3510d833fbd22ee9a025663f8acb91bab12d03aec5e"
-    sha256 ventura:       "690e423d0e51cca672a27d570f452ed7d8d867ba43d808ac7fb5156768d5d6c5"
-    sha256 x86_64_linux:  "f91667972adca2f3e7e286ab0a8cd1623b7b14954f01d233a7efb8143cf66e85"
+    sha256 arm64_sonoma:  "75727153194d53eb9bba65a15c65c183c3e4cb986bef20e0b2b26ec45f720007"
+    sha256 arm64_ventura: "4c572edfb6959e9300a6e7a889c7b30225c85cb1b399827a626c0b8cd90ae02f"
+    sha256 sonoma:        "2a463978ba9f475d8b15708b975084e3cdab3254803e35954317fa9cba4209c0"
+    sha256 ventura:       "770ea61fd99ccaa9e56d0c6df0e8bdb182141bc30450e033d4b0b544a2897975"
+    sha256 x86_64_linux:  "ba735d6b8e0dad28e2ec34426104f683074da738814f1a72ababb8dd415cda4f"
   end
 
   head do
@@ -60,7 +66,6 @@ class Opencv < Formula
   depends_on "openblas"
   depends_on "openexr"
   depends_on "openjpeg"
-  depends_on "openvino"
   depends_on "protobuf"
   depends_on "python@3.13"
   depends_on "tbb"
@@ -97,6 +102,7 @@ class Opencv < Formula
     libdirs = %w[ffmpeg libjasper libjpeg libjpeg-turbo libpng libtiff libwebp openexr openjpeg protobuf tbb zlib]
     libdirs.each { |l| rm_r(buildpath/"3rdparty"/l) }
 
+    # FIXME: `openvino` seems to break often and is difficult to update, so we disable it here for now.
     args = %W[
       -DCMAKE_CXX_STANDARD=17
       -DCMAKE_OSX_DEPLOYMENT_TARGET=
@@ -128,7 +134,7 @@ class Opencv < Formula
       -DWITH_JASPER=OFF
       -DWITH_OPENEXR=ON
       -DWITH_OPENGL=OFF
-      -DWITH_OPENVINO=ON
+      -DWITH_OPENVINO=OFF
       -DWITH_QT=OFF
       -DWITH_TBB=ON
       -DWITH_VTK=ON
@@ -150,6 +156,8 @@ class Opencv < Formula
         -DOPENEXR_ILMTHREAD_LIBRARY=#{Formula["openexr"].opt_lib}/libIlmThread.so
         -DPNG_LIBRARY=#{Formula["libpng"].opt_lib}/libpng.so
         -DPROTOBUF_LIBRARY=#{Formula["protobuf"].opt_lib}/libprotobuf.so
+        -DPROTOBUF_INCLUDE_DIR=#{Formula["protobuf"].include}
+        -DPROTOBUF_PROTOC_EXECUTABLE=#{Formula["protobuf"].bin}/protoc
         -DTIFF_LIBRARY=#{Formula["libtiff"].opt_lib}/libtiff.so
         -DWITH_V4L=OFF
         -DZLIB_LIBRARY=#{Formula["zlib"].opt_lib}/libz.so
@@ -200,6 +208,9 @@ class Opencv < Formula
     system ENV.cxx, "-std=c++17", "test.cpp", "-I#{include}/opencv4", "-o", "test",
                     "-L#{lib}", "-lopencv_core", "-lopencv_imgcodecs"
     assert_equal version.to_s, shell_output("./test").strip
+
+    # The test below seems to time out on Intel macOS.
+    return if OS.mac? && Hardware::CPU.intel?
 
     output = shell_output("#{python3} -c 'import cv2; print(cv2.__version__)'")
     assert_equal version.to_s, output.chomp

@@ -1,18 +1,18 @@
 class FabricAi < Formula
   desc "Open-source framework for augmenting humans using AI"
-  homepage "https://danielmiessler.com/p/fabric-origin-story"
-  url "https://github.com/danielmiessler/fabric/archive/refs/tags/v1.4.242.tar.gz"
-  sha256 "df0b941705121e7cae386debf83045e16de32f94feb1abb7d5b46c334a3f12e2"
+  homepage "https://github.com/danielmiessler/fabric"
+  url "https://github.com/danielmiessler/fabric/archive/refs/tags/v1.4.307.tar.gz"
+  sha256 "f90fb73025941d31a3b742c1600c5d9fae870dde46fd41a1def49dfc28d000e2"
   license "MIT"
   head "https://github.com/danielmiessler/fabric.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ffa0f1829b404db239557e076851c6bfa28bb23a62e525564a5f77f3ff56f900"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ffa0f1829b404db239557e076851c6bfa28bb23a62e525564a5f77f3ff56f900"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "ffa0f1829b404db239557e076851c6bfa28bb23a62e525564a5f77f3ff56f900"
-    sha256 cellar: :any_skip_relocation, sonoma:        "866d72dd8ffd1bdf2e919ddb066457a7cc47e6ef2ed3c311bb5ad369a9f6e4c1"
-    sha256 cellar: :any_skip_relocation, ventura:       "866d72dd8ffd1bdf2e919ddb066457a7cc47e6ef2ed3c311bb5ad369a9f6e4c1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "19425ecd9f13aa114d5325bbd0b83a71009d3cbc6a36761ae0eb308f237455e3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "bdf2b7f29ed4ded1190a910e3a1e374d3797e19a163894406a214e9d830d3d64"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "bdf2b7f29ed4ded1190a910e3a1e374d3797e19a163894406a214e9d830d3d64"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "bdf2b7f29ed4ded1190a910e3a1e374d3797e19a163894406a214e9d830d3d64"
+    sha256 cellar: :any_skip_relocation, sonoma:        "31f77c979a259801bea6585013fecb64b41c0ea432657a9cd2828f4c9a9a7dab"
+    sha256 cellar: :any_skip_relocation, ventura:       "31f77c979a259801bea6585013fecb64b41c0ea432657a9cd2828f4c9a9a7dab"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "341fe7e57772313f52f3f9ec4adaf1987e086bb13dbba67759425853b1d5cb51"
   end
 
   depends_on "go" => :build
@@ -25,7 +25,7 @@ class FabricAi < Formula
     assert_match version.to_s, shell_output("#{bin}/fabric-ai --version")
 
     (testpath/".config/fabric/.env").write("t\n")
-    output = shell_output("#{bin}/fabric-ai --dry-run < /dev/null 2>&1")
+    output = pipe_output("#{bin}/fabric-ai --dry-run 2>&1", "", 1)
     assert_match "error loading .env file: unexpected character", output
   end
 end

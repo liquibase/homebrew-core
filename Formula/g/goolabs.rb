@@ -8,10 +8,9 @@ class Goolabs < Formula
   license "MIT"
   revision 13
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b92fcd048d0f353a8ece560fad57fe26567ced4eced08fa560d36c18cc8be3bf"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "491259e4dd6b58ca77057c50f06bc133c6455da70a6851e1e32bb688dd1ed0e8"
   end
 
   depends_on "certifi"
@@ -50,7 +49,7 @@ class Goolabs < Formula
   def install
     virtualenv_install_with_resources
 
-    generate_completions_from_executable(bin/"goolabs", shells: [:fish, :zsh], shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"goolabs", shell_parameter_format: :click)
   end
 
   test do

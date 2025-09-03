@@ -1,18 +1,19 @@
 class Carapace < Formula
   desc "Multi-shell multi-command argument completer"
   homepage "https://carapace.sh"
-  url "https://github.com/carapace-sh/carapace-bin/archive/refs/tags/v1.3.3.tar.gz"
-  sha256 "0de73fc9338eb034a0c2bdbda72880f1de12ac0bc686d814beb1975a310264fc"
+  url "https://github.com/carapace-sh/carapace-bin/archive/refs/tags/v1.4.1.tar.gz"
+  sha256 "7460eef0ea7d19e5d0082e425fbef08f506d926d995701c7a8c3c6e90c9e61c5"
   license "MIT"
   head "https://github.com/carapace-sh/carapace-bin.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8f762830305f84a52eaf6920d414f2f81ddfea074f2702e774640069682dddce"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "939602d44b2a985c4bb4b8114e9f31538738842fbc4d7b9855d4fd58c2952298"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "b7b8b4a59d26dd8b62caa25432dc203e5c1b394d3fb81b61bf3c3b1d7218ad9a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "068bcc3fc81f2608dfd837e3eb4561213953fd1a6c96c1886f5d23871a1d400a"
-    sha256 cellar: :any_skip_relocation, ventura:       "67db36aab975ff46dd5d491ae099b6ded6ff60978e926218e4ddbef1b5695a83"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fe5c05921af0465071703f6d305f291b3baff7feb2855924a84ff0ebe01ee265"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7a67e00e824df654068fbb83d8700bd1dca16fd646bd7542a4852e46938d74e4"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "7a67e00e824df654068fbb83d8700bd1dca16fd646bd7542a4852e46938d74e4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "7a67e00e824df654068fbb83d8700bd1dca16fd646bd7542a4852e46938d74e4"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d92b9cb0bf6efa6c3ef5cdb3c67caa2be9295eb369b0e65262f282799cb48a47"
+    sha256 cellar: :any_skip_relocation, ventura:       "d92b9cb0bf6efa6c3ef5cdb3c67caa2be9295eb369b0e65262f282799cb48a47"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6f6b67ee070ce4f1331fe98f01842667a8ef75930389c6a59b03fac45583adc0"
   end
 
   depends_on "go" => :build
@@ -25,7 +26,7 @@ class Carapace < Formula
     ]
     system "go", "build", *std_go_args(ldflags:, tags: "release"), "./cmd/carapace"
 
-    generate_completions_from_executable(bin/"carapace", "_carapace")
+    generate_completions_from_executable(bin/"carapace", "carapace")
   end
 
   test do

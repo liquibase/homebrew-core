@@ -4,16 +4,16 @@ class Staticcheck < Formula
   url "https://github.com/dominikh/go-tools/archive/refs/tags/2025.1.1.tar.gz"
   sha256 "259aaf528e4d98e7d3652e283e8551cfdb98cd033a7c01003cd377c2444dd6de"
   license "MIT"
-  revision 4
+  revision 6
   head "https://github.com/dominikh/go-tools.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "97d24c73aa0598dafc875025951862bfcd04bbef62059129d1588f601d04fc58"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "97d24c73aa0598dafc875025951862bfcd04bbef62059129d1588f601d04fc58"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "97d24c73aa0598dafc875025951862bfcd04bbef62059129d1588f601d04fc58"
-    sha256 cellar: :any_skip_relocation, sonoma:        "83239474b6f3f53be115968cfcbcd3e133968577a7d7d4cd05e24ad5109935cc"
-    sha256 cellar: :any_skip_relocation, ventura:       "83239474b6f3f53be115968cfcbcd3e133968577a7d7d4cd05e24ad5109935cc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "41393ab1609059ba804f3fc4f77bc631e3e843fc37c4e0bf791e45162d9515c1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1d49bf15d445037e7338411d4834b502f31b2d48d61b2307d68bc6ab0cf06e9c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1d49bf15d445037e7338411d4834b502f31b2d48d61b2307d68bc6ab0cf06e9c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1d49bf15d445037e7338411d4834b502f31b2d48d61b2307d68bc6ab0cf06e9c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "4c0672275fc93e3a7f80af0f80ff1619c03102f4a0fcf2a82d2d65ae2b9b3d0d"
+    sha256 cellar: :any_skip_relocation, ventura:       "4c0672275fc93e3a7f80af0f80ff1619c03102f4a0fcf2a82d2d65ae2b9b3d0d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a3e00e861c054c592f87ecd10ef2f26f59cd611ca71f26fe7d7ba6ceab3b4d13"
   end
 
   depends_on "go"

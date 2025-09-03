@@ -1,8 +1,8 @@
 class ArgyllCms < Formula
   desc "ICC compatible color management system"
   homepage "https://www.argyllcms.com/"
-  url "https://www.argyllcms.com/Argyll_V3.3.0_src.zip"
-  sha256 "69db1c9ef66f8cacbbbab4ed9910147de6100c3afd17a0a8c12e6525b778e8ce"
+  url "https://www.argyllcms.com/Argyll_V3.4.1_src.zip"
+  sha256 "41ad51e02a3ec6981611be473221a3877fd359d3c1fa2172b4265dbe55f8b746"
   license "AGPL-3.0-only"
 
   livecheck do
@@ -11,14 +11,13 @@ class ArgyllCms < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia: "c6eaa8f9f20129203c4ad4f8e536c0f8046a8c1f8376ecc2eb3e5ac4cd230b21"
-    sha256 cellar: :any,                 arm64_sonoma:  "6144869b77d490945df7d2e207baa71dbb7034a3dc914f00a71733f00956e58d"
-    sha256 cellar: :any,                 arm64_ventura: "c2a6ef0092b8b2ace04571ded3efee5e4fd39bdef7aaa2762deb1651de3389c0"
-    sha256 cellar: :any,                 sonoma:        "6836561552f12daecbe3f808ac50e58588d402036c242d0b5b21ac7620773118"
-    sha256 cellar: :any,                 ventura:       "e85f428eeb690ac25daf20b991f3b9c3fbeb3f53cc276fb2b7a031cff835c5ac"
-    sha256                               arm64_linux:   "03a6e4bd49c1a92adf66999ac471f5c014cab3cf4792c43e57832115f4a5487a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "76bf52c81646502007e8bb73fb1d247c0789d2d2aad4ffff41023f060f000fb1"
+    sha256 cellar: :any, arm64_sequoia: "f16dded9bf615eb33b11a9533524d2020498e7aab4766eb7c4de993e83cc8719"
+    sha256 cellar: :any, arm64_sonoma:  "0e15bf67bbbf98bf5cc480af3a90a0ac900616fd96dccf9cb1a53493e9ea6a0d"
+    sha256 cellar: :any, arm64_ventura: "b39ba95474701b963dadfddeca4bea00b037bb1baa766382e1108a879c50f84b"
+    sha256 cellar: :any, sonoma:        "52ec759d47c3d4925f111e492be5f52417bca86187e1aaf212b9a834729ccdb5"
+    sha256 cellar: :any, ventura:       "f8bc593f16e7c88c7c9ff5b852269223166f40d2de1dc68ea8957d0bc02c21d9"
+    sha256               arm64_linux:   "6e40aab9550ed5d4df52fb6bd054e352d0f6fdbccb5d02f412b2294c40f49332"
+    sha256               x86_64_linux:  "3d62059d60adbb6c0483ff303014de71bd9b2d4dd29b67d1b5122e8f5c817a72"
   end
 
   depends_on "jpeg-turbo"
@@ -104,6 +103,7 @@ class ArgyllCms < Formula
     system "sh", "makeall.sh"
     system "./makeinstall.sh"
     rm "bin/License.txt"
+    rm "bin/com.argyllcms.metainfo.xml"
     prefix.install "bin", "ref", "doc"
   end
 

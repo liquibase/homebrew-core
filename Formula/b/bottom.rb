@@ -1,8 +1,8 @@
 class Bottom < Formula
   desc "Yet another cross-platform graphical process/system monitor"
   homepage "https://clementtsang.github.io/bottom/"
-  url "https://github.com/ClementTsang/bottom/archive/refs/tags/0.10.2.tar.gz"
-  sha256 "1db45fe9bc1fabb62d67bf8a1ea50c96e78ff4d2a5e25bf8ae8880e3ad5af80a"
+  url "https://github.com/ClementTsang/bottom/archive/refs/tags/0.11.1.tar.gz"
+  sha256 "0095ea9edb386ad7c49d845176314097713661d22ec42314e3be46426bc769ee"
   license "MIT"
   head "https://github.com/ClementTsang/bottom.git", branch: "main"
 
@@ -15,14 +15,13 @@ class Bottom < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "293b085af54d7e69f159e9b6a1a317ea380d52cc2996bbf74203971cb2fa6347"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2c90acf12752aa008cb245f0f5e6982ba391b4129b0f1372d2f651b367768f90"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "fc76f47d4eaef7e6eac3cda67cbb06805b049ed83b0c7d7f3121a0ef3f9486dc"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a50cf59e7195ba6cc6c24778047b1681e1932625222c4a3d19f386e315366737"
-    sha256 cellar: :any_skip_relocation, ventura:       "eb73f6318589bc6be3e01d7eefd8a1cb4e19726be7f2f14cd8e574d2d86333d8"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c9dabacfbd8ccf889af78707abb7c5dd70dbfcde0a1b2501e9a67f0a9e1f14a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5f438b63dce811a4d60b306a712385942acec74e726101dc8ab78b910ced3a2e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dc63eb85ed39399defbb86c7019ba0cd02f8d6124dd616dcbe20e797249c3eab"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d593da907073b7b7d2faf03984475d1d5dd5dc8dc2eb05bc8c511e13ca474d22"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "56ba2aed8740f7a7294dbea9564ead057d4ee532a86a0c8fcaa590d02456d50e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "566e6a599d6c74f5ecd90e1b6cd33db2398794f6e372ab552af79bd03592d166"
+    sha256 cellar: :any_skip_relocation, ventura:       "1741b0c277cc36a1716b929eed10503de1b810bcc353ca78b532ef5f7ef58b79"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "a181e21051afbac3f332a127d21d656692b3818f2f2d10983239c839a06708a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a66af1991ec590bf5669acf41a040cf303c89df26ffa6cfee579846bcd0a9940"
   end
 
   depends_on "rust" => :build
@@ -43,7 +42,7 @@ class Bottom < Formula
   end
 
   test do
-    assert_equal "bottom #{version}", shell_output(bin/"btm --version").chomp
-    assert_match "error: unexpected argument '--invalid' found", shell_output(bin/"btm --invalid 2>&1", 2)
+    assert_equal "bottom #{version}", shell_output("#{bin}/btm --version").chomp
+    assert_match "error: unexpected argument '--invalid' found", shell_output("#{bin}/btm --invalid 2>&1", 2)
   end
 end

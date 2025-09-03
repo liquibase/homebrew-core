@@ -3,19 +3,19 @@ class Watchman < Formula
 
   desc "Watch files and take action when they change"
   homepage "https://github.com/facebook/watchman"
-  url "https://github.com/facebook/watchman/archive/refs/tags/v2025.06.30.00.tar.gz"
-  sha256 "0da2e2a2bacce34ee1b918a3f86f530c670fcb398a86fe5fdabe195cb1187c41"
+  url "https://github.com/facebook/watchman/archive/refs/tags/v2025.09.01.00.tar.gz"
+  sha256 "3aafc60e96e164b5a368523f0899eb8daaa79e126b30a6a67f06db1949bcbce0"
   license "MIT"
   head "https://github.com/facebook/watchman.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "634e7177c78f1afebb93f249724b3d1a129982d36377868f15ad1f4a44d4a7c6"
-    sha256 cellar: :any,                 arm64_sonoma:  "ba29775db2ea38137452752410f4fe270089c1badb8be2f00820cad4fca9e751"
-    sha256 cellar: :any,                 arm64_ventura: "fce5d6cf0b2e4bba6c0ff1217da7322832560429113bb0acc5e0b3750fcb5546"
-    sha256 cellar: :any,                 sonoma:        "429253da6e32d6a3f094ad490ec9c030edd1603adfa6463fad5c9aa3d29135d1"
-    sha256 cellar: :any,                 ventura:       "2a14021c9bcd0a665479e0c78bc52605e7dcd3711481a9558db1cbde293b23af"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "de524655fa7f454cdbd7ea8322499766b69707fbd4b58d97ea3c8443206e1510"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bba4628ba71fa7afc5a5606a0978aceeef2768643e37991ed062584129fb81ff"
+    sha256 cellar: :any,                 arm64_sequoia: "6d2676f36a8216e7b100bc6be437b840a0217370de73f17f86f136892abb5a5b"
+    sha256 cellar: :any,                 arm64_sonoma:  "c960984147e6ec95a1d84425d21250345228b9367e76766dc5a6d26a29b5109a"
+    sha256 cellar: :any,                 arm64_ventura: "acc9d4e83d1fcd14c55ddd38f4d05062235d5eb5ee17f6c92a42f500e3059ffb"
+    sha256 cellar: :any,                 sonoma:        "724e3a5ed861cd8c686ce34c335ba67cbe07c3980841b0f2e8e5ef118a34b7fe"
+    sha256 cellar: :any,                 ventura:       "83a3f8a5d7ad6fc39fb43619fa95689b77e5661a02fac69cc1b20c7aabc5b7f8"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "57904425282409cc680db450e6995004c652e72c3b5903f0c5f3f1aacafa6c0c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2a7a079348e7b8e3297bdb2ca0e84b282dd302b7d36f50c9189daaccc62b1445"
   end
 
   depends_on "cmake" => :build
@@ -56,6 +56,7 @@ class Watchman < Formula
       -DWATCHMAN_VERSION_OVERRIDE=#{version}
       -DWATCHMAN_BUILDINFO_OVERRIDE=#{tap&.user || "Homebrew"}
       -DWATCHMAN_STATE_DIR=
+      -DCMAKE_CXX_STANDARD=20
     ]
     # Avoid overlinking with libsodium and mvfst
     args << "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-dead_strip_dylibs" if OS.mac?

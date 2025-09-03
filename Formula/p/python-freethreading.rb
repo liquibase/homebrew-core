@@ -1,25 +1,23 @@
 class PythonFreethreading < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.13.5/Python-3.13.5.tgz"
-  sha256 "e6190f52699b534ee203d9f417bdbca05a92f23e35c19c691a50ed2942835385"
+  url "https://www.python.org/ftp/python/3.13.7/Python-3.13.7.tgz"
+  sha256 "6c9d80839cfa20024f34d9a6dd31ae2a9cd97ff5e980e969209746037a5153b2"
   license "Python-2.0"
 
   livecheck do
     formula "python"
   end
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 arm64_sequoia: "b9c0c3dc0a2d7c1046de2882358dbe6cfe22ca8307b3a99d90731c66bb5c4c97"
-    sha256 arm64_sonoma:  "e328895cb1bc0c8226fd1f821278bb5cd2e98472ad18baccca1cc0e39de69090"
-    sha256 arm64_ventura: "9f08e025e60eed7a068ce64fc2e7c833db1c691ec0b0a3767856378f1f1734d5"
-    sha256 sequoia:       "c5e8398d27194f97c51bb744f3bf7182ad03a7b62129b661abd34056a1712869"
-    sha256 sonoma:        "765d9d6a86a004185ea5965457d34b2f0304b523f226a7b14e358086d4dd96b8"
-    sha256 ventura:       "ebcb7c2ee423ca32a51fcff7f4c9f282c3be0dfc01a9172c6da66169807c3d48"
-    sha256 arm64_linux:   "f91e6b35fa3a699eab0340629d60064a0589277330faa623d22eeb1eb204f8df"
-    sha256 x86_64_linux:  "88d8b56d861e4e3a2fb735919d07fc2a302220c34bc18edbf32327f897f57944"
+    sha256 arm64_sequoia: "b0aa53df2384bb27e37687fffaa335f8ef9c1670d5ba2ccda3bdf9ad98b583b1"
+    sha256 arm64_sonoma:  "d17fe9d926c42bd725fc7191c03653f340143203584df0da205a27b4bdc48678"
+    sha256 arm64_ventura: "a53071eabfe1badb1472255f81c5bfef576c7fd0d5cb531d4accedb281a67a47"
+    sha256 sequoia:       "2b112bfcf41fa337b9be2a91b0b925e21e90ec5596981f0e86c6a687ac15912b"
+    sha256 sonoma:        "842f0145fa539edc289bc4c3b92300c7505457266fabafc0ecb06c749326b2d3"
+    sha256 ventura:       "4cb8071a25ad33dfc7d9242707882ac08cd42757f0c2228278244098bfd7aac4"
+    sha256 arm64_linux:   "17278f7d2f19f1a6273c0eeac10f59cc9453e4c6be78e2a462dc4846a614e6ac"
+    sha256 x86_64_linux:  "a6c4975bfebf9def53e4d23e1293e5e2d4a69ba424b2dd111b81ce51ed79a961"
   end
 
   depends_on "pkgconf" => :build

@@ -4,15 +4,16 @@ class Vineyard < Formula
   url "https://github.com/v6d-io/v6d/releases/download/v0.24.4/v6d-0.24.4.tar.gz"
   sha256 "055bab09ca67542ccb13229de8c176b7875b4ba8c8a818e942218dccc32a6bae"
   license "Apache-2.0"
+  revision 2
 
   bottle do
-    sha256                               arm64_sequoia: "cd5bf36444473363f44ea567a7e178ef3013a4c7715481acd1aa96c90ed1a23c"
-    sha256                               arm64_sonoma:  "b1b5c1ca2c31325af6cb6cd771cc45102ac71424bf74661645bd8e6f8812c4eb"
-    sha256                               arm64_ventura: "0718444b2b46755636720fb782b73a0ae08835527fd43f2591c225f069bd9bc7"
-    sha256                               sonoma:        "0d527f839364622ece01c6ef889e7bd54d313202b0719abe04a10821a07fc097"
-    sha256                               ventura:       "329d17e1521556ff3f05840f4675e08d6cca4408d5a11d128b1a8d86f45a384c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f42269ec1874a5ce259b16b63245c2556983423f10c54b281c2062b1a7a6737c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e0392d370be2d96bcd84d5bdee36c1487103841c5bdd6ff149c673df3b9bbee5"
+    sha256                               arm64_sequoia: "cf36da22f881d05d547cc46b34e2e15aeb30bdd750b2760573206eabe771614e"
+    sha256                               arm64_sonoma:  "bc54a45dfec84b89eccc430cb9debb4a45fc122e0676cdeb4b701989f0df3058"
+    sha256                               arm64_ventura: "4a0e6285f2e73be22689cbfe3a4cc88cbb6651c0906f85e5596216ed35fdb4fb"
+    sha256                               sonoma:        "9f42fc3f8a47c153c93a99329d36722c270f548ddcf65e903a7baf436aef1e31"
+    sha256                               ventura:       "a9ca3695e70a7ad9ca21c9a42253561890203d63929eca1a6705849584fe6d00"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "8eb9ea14c277b5e90afa79225c9f310a4cd01294bbcc2496f9035afe26816dd3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c329a6792f3c91241c46d33722b1550fbb4a392e2d46b72c06cf1d8239ba86c3"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -34,6 +35,13 @@ class Vineyard < Formula
     depends_on "autoconf" => :build
     depends_on "automake" => :build
     depends_on "libtool" => :build
+  end
+
+  # apache-arrow 21.0.0 support
+  # https://github.com/v6d-io/v6d/pull/2052
+  patch do
+    url "https://github.com/v6d-io/v6d/commit/cab3ed986e15464d6b544a98bac4db38d0e89e3a.patch?full_index=1"
+    sha256 "ce1325c893f210a3eae9ff29a8ab6cfa377d6672ab260db58de8522857856206"
   end
 
   def install
@@ -136,16 +144,17 @@ class Vineyard < Formula
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"
 
+    vineyard_sock = testpath/"vineyard.sock"
     # prepare vineyardd
     vineyardd_pid = spawn bin/"vineyardd", "--norpc",
                                            "--meta=local",
-                                           "--socket=#{testpath}/vineyard.sock"
+                                           "--socket=#{vineyard_sock}"
 
     # sleep to let vineyardd get its wits about it
-    sleep 10
+    sleep 10 until vineyard_sock.exist? && vineyard_sock.socket?
 
     assert_equal("vineyard instance is: 0\n",
-                 shell_output("#{testpath}/build/vineyard-test #{testpath}/vineyard.sock"))
+                 shell_output("#{testpath}/build/vineyard-test #{vineyard_sock}"))
   ensure
     # clean up the vineyardd process before we leave
     Process.kill("HUP", vineyardd_pid)

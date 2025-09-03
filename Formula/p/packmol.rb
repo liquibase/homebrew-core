@@ -1,8 +1,8 @@
 class Packmol < Formula
   desc "Packing optimization for molecular dynamics simulations"
   homepage "https://www.ime.unicamp.br/~martinez/packmol/"
-  url "https://github.com/m3g/packmol/archive/refs/tags/v21.0.2.tar.gz"
-  sha256 "4b63d73400f7702347d9ff0cc4d0009be5a752afa7af00ad612554e8918f00fd"
+  url "https://github.com/m3g/packmol/archive/refs/tags/v21.1.0.tar.gz"
+  sha256 "bcb64849bd490c329018210cf91375871108004ac8bf3e8cf9463e42e551fe46"
   license "MIT"
   head "https://github.com/m3g/packmol.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Packmol < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "ff3dc31853b5ed73c4ed37e81f0e1fe05d0a8af80096c045622a9d6dce28dbda"
-    sha256 cellar: :any,                 arm64_sonoma:  "aaa1f1d5d09a01d6ce4035e1ec5c4f3fa74f136241881464da849e28ce84f736"
-    sha256 cellar: :any,                 arm64_ventura: "18317fd790c03ec39ad0c291f1b56fc94083d6ccfdce9d4f222c977777799daf"
-    sha256 cellar: :any,                 sonoma:        "e348a69540b5961cd274a140e6c776c6b1be60284d616b4a55f1714a880b6d68"
-    sha256 cellar: :any,                 ventura:       "6694cd43a3320660608ca071a6467924095f624ef3ec30cf9f6d1d6e6b00e239"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "eece5b9234339d41d38f1468f0c00222b8e30ce29548f8860fb509f184d013bd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c4ab86f29d725aa61afcfcca95dd7a941cb606b6f36218765da30a7c7e260b65"
+    sha256 cellar: :any,                 arm64_sequoia: "49b9c7b2d7757a9646cbded50378cf20949504ae5dbbaed8792be5271b848924"
+    sha256 cellar: :any,                 arm64_sonoma:  "866657ca34b08c498c0dcf3a9de38ded338958917264edea2b8a7f8c95c394d9"
+    sha256 cellar: :any,                 arm64_ventura: "1d737174c4898e515ed2faec71c803bf50063a9d114f400c6fcb974caa04897e"
+    sha256 cellar: :any,                 sonoma:        "3323dcd875ee6979d9634eb5fd2535492fe1100795c4c2c2dc1c370e110809bc"
+    sha256 cellar: :any,                 ventura:       "1b3d07ac1dec6a79321843acd234939b313c0a2e2c31ddab818a3b8a1f0af9fa"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "31c7f6d7ab392a58035a2a30c16748726495484e90c88044e7aff02d158a7330"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6ed6ebef0ef0f738356790fd1655a919a2b180861909338649dcfece32c2742f"
   end
 
   depends_on "cmake" => :build

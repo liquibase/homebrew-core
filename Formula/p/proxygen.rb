@@ -1,23 +1,24 @@
 class Proxygen < Formula
   desc "Collection of C++ HTTP libraries"
   homepage "https://github.com/facebook/proxygen"
-  url "https://github.com/facebook/proxygen/releases/download/v2025.06.30.00/proxygen-v2025.06.30.00.tar.gz"
-  sha256 "dcd4787f4eb7393964c7445cfbf80a2b70422946d1351fbdf6d94fd6215aef9a"
+  url "https://github.com/facebook/proxygen/releases/download/v2025.09.01.00/proxygen-v2025.09.01.00.tar.gz"
+  sha256 "f8602dfd40e4d2a72726c5f63cc430a6abac7e72fa005739be695b3d5d4fc31e"
   license "BSD-3-Clause"
   head "https://github.com/facebook/proxygen.git", branch: "main"
 
   bottle do
-    sha256                               arm64_sequoia: "e1db5d585542ef8748750aab71cae59d65568543b97952de8def872f7df5a2c3"
-    sha256                               arm64_sonoma:  "8e8c53d6f6ad7a3783848243b3da37fe196c1da59aed7f35a377a2962247149f"
-    sha256                               arm64_ventura: "daf6f14fbd91fef69b5d3743d1746597cff92a0f24bc15c328a7eb789bfe07d9"
-    sha256 cellar: :any,                 sonoma:        "2a9fbe606fb7beee27aaed177f67b186a6eddc471ad44145ca6e2643ec1a194d"
-    sha256 cellar: :any,                 ventura:       "53a05da68f66fc6d1f20c2180b684fd368a3ec9937c03099e3e551ba562e8ca2"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "5e2312bfffd3657ed05a200fff7b8105af3d3be3dbe14470d25a0ff61f314ce2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "aa2be96f7f8c230e697a81d371475cea569b8a6eb7f2acb7472282a08e6a0048"
+    sha256                               arm64_sequoia: "c6f97eab85d0a8c7c98fdb955f4608a749e12aab6aac6d95d37bcb55266c869e"
+    sha256                               arm64_sonoma:  "4046d4e325229150a4b3bdc5a47f862b61e6433bd616d23fb0f56c6492d10547"
+    sha256                               arm64_ventura: "0293c5d11f02ea35cdcf5459389c306bb62c445eb2692fd7d26739f365558475"
+    sha256 cellar: :any,                 sonoma:        "eff39e7c46bd810b9978e0d43c879e20dedcc13a5560db4350f9e3cab67cbede"
+    sha256 cellar: :any,                 ventura:       "2de9be28409b21a7e33d10bf239f7e7c98d47d76fa31701efa72c4df9918603e"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "d22132e208c9f4e7c220cc590702520ad99b3309b5c4a2ea84b4296e706a0a56"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e082af77c752ddb30c67107a49641f41125c4227baa2afcd7e77e7ea9f83846b"
   end
 
   depends_on "cmake" => :build
   depends_on "boost"
+  depends_on "c-ares"
   depends_on "double-conversion"
   depends_on "fizz"
   depends_on "fmt"
@@ -29,30 +30,23 @@ class Proxygen < Formula
   depends_on "wangle"
   depends_on "zstd"
 
-  # TODO: uses_from_macos "gperf" => :build
+  uses_from_macos "gperf" => :build
   uses_from_macos "python" => :build
   uses_from_macos "zlib"
 
   conflicts_with "hq", because: "both install `hq` binaries"
 
-  # FIXME: Build script is not compatible with gperf 3.2
-  resource "gperf" do
-    on_linux do
-      url "https://ftp.gnu.org/gnu/gperf/gperf-3.1.tar.gz"
-      mirror "https://ftpmirror.gnu.org/gperf/gperf-3.1.tar.gz"
-      sha256 "588546b945bba4b70b6a3a616e80b4ab466e3f33024a352fc2198112cdbb3ae2"
-    end
+  # Fix name of `liblibhttperf2`.
+  # https://github.com/facebook/proxygen/pull/574
+  patch do
+    url "https://github.com/facebook/proxygen/commit/415ed3320f3d110f1d8c6846ca0582a4db7d225a.patch?full_index=1"
+    sha256 "4ea28c2f87732526afad0f2b2b66be330ad3d4fc18d0f20eb5e1242b557a6fcf"
   end
 
-  def install
-    if OS.linux?
-      resource("gperf").stage do
-        system "./configure", *std_configure_args(prefix: buildpath/"gperf")
-        system "make", "install"
-        ENV.prepend_path "PATH", buildpath/"gperf/bin"
-      end
-    end
+  # Fix build with Boost 1.89.0, pr ref: https://github.com/facebook/proxygen/pull/570
+  patch :DATA
 
+  def install
     args = ["-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"]
     if OS.mac?
       args += [
@@ -76,3 +70,56 @@ class Proxygen < Formula
     Process.kill "TERM", pid
   end
 end
+
+__END__
+diff --git i/CMakeLists.txt w/CMakeLists.txt
+index cc189df..9d61345 100644
+--- i/CMakeLists.txt
++++ w/CMakeLists.txt
+@@ -80,17 +80,21 @@ find_package(ZLIB REQUIRED)
+ find_package(OpenSSL REQUIRED)
+ find_package(Threads)
+ find_package(c-ares REQUIRED)
+-find_package(Boost 1.58 REQUIRED
+-  COMPONENTS
++set(PROXYGEN_BOOST_COMPONENTS
+     iostreams
+     context
+     filesystem
+     program_options
+     regex
+-    system
+     thread
+     chrono
+ )
++find_package(Boost 1.58 REQUIRED COMPONENTS ${PROXYGEN_BOOST_COMPONENTS})
++if (Boost_MAJOR_VERSION EQUAL 1 AND Boost_MINOR_VERSION LESS 69)
++    list(APPEND PROXYGEN_BOOST_COMPONENTS system)
++    find_package(Boost 1.58 REQUIRED COMPONENTS ${PROXYGEN_BOOST_COMPONENTS})
++endif()
++string(REPLACE ";" " " PROXYGEN_BOOST_COMPONENTS "${PROXYGEN_BOOST_COMPONENTS}")
+ 
+ list(APPEND
+     _PROXYGEN_COMMON_COMPILE_OPTIONS
+diff --git i/cmake/proxygen-config.cmake.in w/cmake/proxygen-config.cmake.in
+index 8899242..114aaf7 100644
+--- i/cmake/proxygen-config.cmake.in
++++ w/cmake/proxygen-config.cmake.in
+@@ -31,16 +31,7 @@ find_dependency(Fizz)
+ find_dependency(ZLIB)
+ find_dependency(OpenSSL)
+ find_dependency(Threads)
+-find_dependency(Boost 1.58 REQUIRED
+-  COMPONENTS
+-    iostreams
+-    context
+-    filesystem
+-    program_options
+-    regex
+-    system
+-    thread
+-)
++find_dependency(Boost 1.58 REQUIRED COMPONENTS @PROXYGEN_BOOST_COMPONENTS@)
+ find_dependency(c-ares REQUIRED)
+ 
+ if(NOT TARGET proxygen::proxygen)

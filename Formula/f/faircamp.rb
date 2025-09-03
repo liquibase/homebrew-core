@@ -1,38 +1,33 @@
 class Faircamp < Formula
   desc "Static site generator for audio producers"
   homepage "https://codeberg.org/simonrepp/faircamp"
-  url "https://codeberg.org/simonrepp/faircamp/archive/1.4.2.tar.gz"
-  sha256 "934afbd41118da5dd39164b647fe5c839789a9b8b43c9b7c1aa8b3a056884c35"
+  url "https://codeberg.org/simonrepp/faircamp/archive/1.6.0.tar.gz"
+  sha256 "c8d43e2618928de3935646fba4f85fa8d0dd23a5d11ea10f081fa430aa79d5b9"
   license "AGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "d4b4e1f9a8688e8d9013ad446c0d946d83afd80b0c8f3775d2d4446161c3b92c"
-    sha256 cellar: :any, arm64_sonoma:  "2a4567bbe5c0084f8b2c4ce5df0e85479a1407cd5db551a65c3feb436bc26721"
-    sha256 cellar: :any, arm64_ventura: "0a60a4ed2110e4f7b0af8d9fb8b7b145016986d378b5f6764273d1ce24458331"
-    sha256 cellar: :any, sonoma:        "62323585d09c30d0b575d461065b655ea311f526ece4da8b051a1379dbf237e0"
-    sha256 cellar: :any, ventura:       "5d78f5c8ce14bd6d78818a9eb96c73b9bdb270015eab8b20b992c9db61949e90"
+    sha256 cellar: :any,                 arm64_sequoia: "416b0bd05534a421cd9dfeed72ea03f06cbc856285dd4fd4b6429e2c995ebe42"
+    sha256 cellar: :any,                 arm64_sonoma:  "fd353d91775c5b4841203160f9e5f4032a2838dcdf2a6264d2a5ceb0840ab99d"
+    sha256 cellar: :any,                 arm64_ventura: "5b4a63af1e44bb8d3b0e0a8c8601bc6cfb91858634712320523b38443302f62c"
+    sha256 cellar: :any,                 sonoma:        "bc77d9686ef45d9b50dfe0a37678d15491e03e93336b90aeea59bd4027126951"
+    sha256 cellar: :any,                 ventura:       "8c68f0948cd28f567cc110ff58cb500b3dc222ead293cba95048a903b34f0bfc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4026686ab3c905d1afce726db05f6c80b30804417c27d6daca209402d882601f"
   end
 
-  depends_on "opus" => :build
   depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "ffmpeg"
   depends_on "gettext"
   depends_on "glib"
-  # Brew's libopus behaves differently in linux compared to macOS and
-  # results in runtime errors. Further investigation and work on this
-  # formulae is needed to support linux builds. The upstream project
-  # provides their own mechanism for linux distribution. Brew is most
-  # valuable on macOS, where there is no other suitable package manager,
-  # so for now, restrict this formulae to macOS.
-  depends_on :macos
+  depends_on "opus"
   depends_on "vips"
+  depends_on "xz"
 
   def install
     # libvips is a runtime dependency, the brew install location is
     # not discovered by default by Cargo. Upstream issue:
     #   https://codeberg.org/simonrepp/faircamp/issues/45
-    ENV["RUSTFLAGS"] = Utils.safe_popen_read("pkgconf", "--libs", "vips").chomp
+    ENV.append_to_rustflags Utils.safe_popen_read("pkgconf", "--libs", "opus", "vips").chomp
     system "cargo", "install", *std_cargo_args, "--features", "libvips"
   end
 

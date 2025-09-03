@@ -1,18 +1,17 @@
 class GeminiCli < Formula
   desc "Interact with Google Gemini AI models from the command-line"
   homepage "https://github.com/google-gemini/gemini-cli"
-  url "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.1.9.tgz"
-  sha256 "0f995b6ecacb8a1059e8f4cca7c89008c8e17563ff67acd523bfe1cfbe8dfb83"
+  url "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.2.2.tgz"
+  sha256 "5cba2f88c33f809dfcdc3e46490da05aca7c3fd121c6340b6e040398dafd1612"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "cc6ed3eeab9a60d50aa5daca2004f8f8b87f4b7d475b8ebd8a3ec02cfc969739"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "cc6ed3eeab9a60d50aa5daca2004f8f8b87f4b7d475b8ebd8a3ec02cfc969739"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "cc6ed3eeab9a60d50aa5daca2004f8f8b87f4b7d475b8ebd8a3ec02cfc969739"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e5e7934bb838b3969bbea653a9ba5fe02571ec72e1f984cb326e1126f92bb6da"
-    sha256 cellar: :any_skip_relocation, ventura:       "e5e7934bb838b3969bbea653a9ba5fe02571ec72e1f984cb326e1126f92bb6da"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cc6ed3eeab9a60d50aa5daca2004f8f8b87f4b7d475b8ebd8a3ec02cfc969739"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cc6ed3eeab9a60d50aa5daca2004f8f8b87f4b7d475b8ebd8a3ec02cfc969739"
+    sha256                               arm64_sequoia: "cab819174538f9b95ce047abf9be4136e807248ee0b4133d5686922053f38a4f"
+    sha256                               arm64_sonoma:  "1d5b547caebfd8a22d73cffa5b9e177ef992c24eddf8a7704ad5401b42b9cea3"
+    sha256                               arm64_ventura: "0da2c2248666b4719a0b8458f5d366e2f878f8d0b123b11973bc244f0bd2a5fe"
+    sha256                               sonoma:        "484f963dd7f1849b2a422e668bf55fae8ac562ff35e4f467a0b4993f4e19c81d"
+    sha256                               ventura:       "235a7c0c0fa132c1fbe1cba29d32ec98f210abfb90484c21298464a7aba5865d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9a898955a338a3d3d7a16217ab68830e3d36c808b22da773ad3087afefc5066b"
   end
 
   depends_on "node"

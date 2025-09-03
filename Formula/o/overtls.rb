@@ -1,19 +1,19 @@
 class Overtls < Formula
   desc "Simple proxy tunnel for bypassing the GFW"
   homepage "https://github.com/ShadowsocksR-Live/overtls"
-  url "https://github.com/ShadowsocksR-Live/overtls/archive/refs/tags/v0.2.44.tar.gz"
-  sha256 "9aaa7f6375600940e6073e6278bb335c9000eaeae5255e0b7692eff0f5f034b6"
+  url "https://github.com/ShadowsocksR-Live/overtls/archive/refs/tags/v0.3.6.tar.gz"
+  sha256 "28ce4a3d73e6eacef81bbfd2036eba5e66c4f18d4033af48832c5f69895a8a2d"
   license "MIT"
   head "https://github.com/ShadowsocksR-Live/overtls.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1b57eb3af3ec2d10f3bad3f09cb4f27e3fa1bb0b08f7d60782fe8a203cd17706"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "99b272b70568ee560c10c882af7fa8e4234cc2c12457ea6851c00d2a6ce12941"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "21ab64bed1310eebe0efa45a9372e35e95fd0fec078e17608860f9a94ab2b642"
-    sha256 cellar: :any_skip_relocation, sonoma:        "8bba82ea3a1b51684575883d63298b72b56868e3676c97ec62a85656dced04db"
-    sha256 cellar: :any_skip_relocation, ventura:       "68ddb87f9b04310fe9696bf499b50b9e5be8860e5b05a7c491600b2abcc96735"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "65615063044346cb76dba4a1a902d6c20be024b843590c20ab6d0da23cdac56c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ef052321d5287e387ac68afd04b64ca4efa329c4a2dc63869c51b56be4c37e28"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "391e947af99077cfc2afcf59086377eb3c190f24511a3ae9b67158d205da44ad"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "227a22265e4ab72feee92e795fd68ce519c36464007109c968c40b58925f6810"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "abddffd7451d432e5b809b35c73d8a51bd64ec648c43d6ae958d9e33fb0dbb15"
+    sha256 cellar: :any_skip_relocation, sonoma:        "864de6535e6aaf34cfdfc83f2b6fa1f70fb67f439b1945752d162db0e77483ae"
+    sha256 cellar: :any_skip_relocation, ventura:       "24526c3700a395d77546fd55d4bdc96c34258b422ea24e50243be6b387494fa5"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "bed1f8118ff4547210910c314e92dde9902cf4ecf66ab11e0ae73a2c67eec650"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "93dd257910558fd02f18a98af0adcf6246273cc34d5a03e822352f66847c87b9"
   end
 
   depends_on "rust" => :build
@@ -27,7 +27,7 @@ class Overtls < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/overtls-bin -V")
 
-    output = shell_output(bin/"overtls-bin -r client -c #{pkgshare}/config.json 2>&1", 1)
+    output = shell_output("#{bin}/overtls-bin -r client -c #{pkgshare}/config.json 2>&1", 1)
     assert_match "Error: Io(Kind(TimedOut))", output
   end
 end

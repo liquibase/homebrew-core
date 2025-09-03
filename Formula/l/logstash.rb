@@ -1,8 +1,8 @@
 class Logstash < Formula
   desc "Tool for managing events and logs"
   homepage "https://www.elastic.co/products/logstash"
-  url "https://github.com/elastic/logstash/archive/refs/tags/v9.0.3.tar.gz"
-  sha256 "41a4506b69039775c0347d0dbb1544ab380d12ccba17d5c37cb1c3cc4f6896cc"
+  url "https://github.com/elastic/logstash/archive/refs/tags/v9.1.3.tar.gz"
+  sha256 "57aa3cef37811b401b24e49799b4bf69b26574229474e148d74573574b16e89e"
   license "Apache-2.0"
   version_scheme 1
   head "https://github.com/elastic/logstash.git", branch: "main"
@@ -13,13 +13,13 @@ class Logstash < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c2843c08b2a55d0ea84a219630cf3c6abfc4c2c14e3151e9c02b1c4fafd69cf1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "21adf06dec6664ad8ad30501c2644fff50ecd832dd90888da53dc8ee63d2a29f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "c60b7efaaee40e2e3138dcc4a70947442ac2378a6a1559536ad6ebda8c7d9d14"
-    sha256 cellar: :any,                 sonoma:        "ca55d99dadcd364e8466e651a484903d3ccac7d45b0c5188d04b6cfd8bd9ad9a"
-    sha256 cellar: :any,                 ventura:       "a283fc64abd02b35dd55ab52b2a3c62d45ec5915247fd999dc67b13405753626"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "bf2485abf2733cdabac5f6a361e284b9cc36a0484d575dd44bdb6786d0bea0bb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6b4c902f65e69ce266d9deb61e13ad25ac3942bcb574d0ade3e232150a283168"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6e43cfe5b0053fbabfaa24a539058244a2db2691a1901e747d7c6a0ca809551c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f577de310337653d470f9a63adf83d4c627673010d188578233540117b8a112c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "737ed9b09b11181684a33b92dd55674685525f62467e6d35dc85009ddffc6049"
+    sha256 cellar: :any,                 sonoma:        "86c90d6c949ebf8efdf8e319d721a52e18b99f48e4a6449659addb892a725f4e"
+    sha256 cellar: :any,                 ventura:       "074a9fad04da1b4a0050d06b8c13fc665f9e8526c1d2336c3ed997d928fd82a3"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "3ddd74f0058e7c717f80820ee8f0a9eab6aa76d11d64afb8951a124af918d8af"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ddd5eb710e364050e12c34d8c9d707e1fd1517052dd22643d519bd08c17a8181"
   end
 
   depends_on "openjdk@21"

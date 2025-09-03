@@ -3,8 +3,8 @@ class LlamaCpp < Formula
   homepage "https://github.com/ggml-org/llama.cpp"
   # CMake uses Git to generate version information.
   url "https://github.com/ggml-org/llama.cpp.git",
-      tag:      "b5840",
-      revision: "75c91de6e955d5b8f3f28173f5040593e1964eb3"
+      tag:      "b6360",
+      revision: "3de008208b9b8a33f49f979097a99b4d59e6e521"
   license "MIT"
   head "https://github.com/ggml-org/llama.cpp.git", branch: "master"
 
@@ -12,20 +12,20 @@ class LlamaCpp < Formula
   # Having multiple updates in one day is not very convenient
   # Update formula only after 10 new tags (1 update per ≈2 days)
   #
-  # `trottle 10` doesn't work
+  # `throttle 10` doesn't work
   livecheck do
     url :stable
     regex(/^v?b(\d+(?:\.\d+)*0)$/i)
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "988373508531594a1082eb26b6ebbd1892b894b8036b98872c7872851c5d9657"
-    sha256 cellar: :any,                 arm64_sonoma:  "94950afd38df871334ad785988b49e04dcdcd474bf46c3aa864a99a125728b7b"
-    sha256 cellar: :any,                 arm64_ventura: "67f6574d450ea839762ecd6df35122cb25a0bccac12fccdb993d53c695272d4b"
-    sha256 cellar: :any,                 sonoma:        "e3547ed6cb5870aaf5484555ffa1e3050d179fa78c7dfd941ccd76d5c9ce9366"
-    sha256 cellar: :any,                 ventura:       "de900259bf1309e4243fb1943e9a19cf7cd6b0019280cf1890d880a25057da4e"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "127d4d5d438189e735a8b2a92f0bfd8fd866f207adc36d35432a244beea9e7b1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e56feac334de04300d805f90dba973b8af4f92c0ffab46c9c25ed654d1c226d7"
+    sha256 cellar: :any,                 arm64_sequoia: "d91aa920081757e089c18f8a5bca2d55aff87961b35081a00d42e073ccb88e1d"
+    sha256 cellar: :any,                 arm64_sonoma:  "5db080f31231432db7f111d38a7286b4d57dc13312abd04444592fb7d2e1a61f"
+    sha256 cellar: :any,                 arm64_ventura: "d86fe6362b7fd1e62341fb0f4c9396f489ebd8bd3a52424c7fde3c78589742d7"
+    sha256 cellar: :any,                 sonoma:        "dc9fa273c63341028008898be0982a93f6a64862ea2140621c2877d63856d159"
+    sha256 cellar: :any,                 ventura:       "004039296d054ae125eea76a1fa5777882a0ff49068fa805857e4c07d827c842"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e232651693b51771fd91551d4842e694c88d0ca41dd7ba6cb5bad22345bd0f2b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "13a552f4e3e0e5506b8488edb72ac90d13d3856ff55d714cb4c8e3fa526c415a"
   end
 
   depends_on "cmake" => :build
@@ -40,7 +40,7 @@ class LlamaCpp < Formula
     args = %W[
       -DBUILD_SHARED_LIBS=ON
       -DCMAKE_INSTALL_RPATH=#{rpath}
-      -DGGML_ACCELLERATE=#{OS.mac? ? "ON" : "OFF"}
+      -DGGML_ACCELERATE=#{OS.mac? ? "ON" : "OFF"}
       -DGGML_ALL_WARNINGS=OFF
       -DGGML_BLAS=ON
       -DGGML_BLAS_VENDOR=#{OS.mac? ? "Apple" : "OpenBLAS"}

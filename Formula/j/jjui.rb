@@ -1,17 +1,17 @@
 class Jjui < Formula
   desc "TUI for interacting with the Jujutsu version control system"
   homepage "https://github.com/idursun/jjui"
-  url "https://github.com/idursun/jjui/archive/refs/tags/v0.8.12.tar.gz"
-  sha256 "355f3e3c5136ced3526127c119c1402b2e31a396535ec7425a18b80566f12140"
+  url "https://github.com/idursun/jjui/archive/refs/tags/v0.9.3.tar.gz"
+  sha256 "799a66c6ec044dcfa6cfa538b6356ed4affac6cabba8dd487db77fe11d5a5421"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d8ec79321aff1316dd3cb36dba93e3bf999ad4634f9477fd76ef981d40296164"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d8ec79321aff1316dd3cb36dba93e3bf999ad4634f9477fd76ef981d40296164"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "d8ec79321aff1316dd3cb36dba93e3bf999ad4634f9477fd76ef981d40296164"
-    sha256 cellar: :any_skip_relocation, sonoma:        "21f17e7939c0c8664fef77fa1d7c3cd72192a36e870d43a19e61515723522451"
-    sha256 cellar: :any_skip_relocation, ventura:       "21f17e7939c0c8664fef77fa1d7c3cd72192a36e870d43a19e61515723522451"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cbcc9b1b2acd60a7c31595281c94b84fdcf6b213381abc190f0b93c7c6a19313"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "019d7b1c093451352bf55bb4e7d3eeb150470f4f8e6819b9d957c3a848520074"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "019d7b1c093451352bf55bb4e7d3eeb150470f4f8e6819b9d957c3a848520074"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "019d7b1c093451352bf55bb4e7d3eeb150470f4f8e6819b9d957c3a848520074"
+    sha256 cellar: :any_skip_relocation, sonoma:        "c56e3a4632d45484da4f8cd5df1e099a6c5981d05204df7c1e289c30bbbf466b"
+    sha256 cellar: :any_skip_relocation, ventura:       "c56e3a4632d45484da4f8cd5df1e099a6c5981d05204df7c1e289c30bbbf466b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6cb58f4aa28920dc98dd937ab3c0b594db509d2335a8084e91358fe297ec1852"
   end
 
   depends_on "go" => :build

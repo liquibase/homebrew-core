@@ -4,16 +4,16 @@ class Fastnetmon < Formula
   url "https://github.com/pavel-odintsov/fastnetmon/archive/refs/tags/v1.2.8.tar.gz"
   sha256 "d16901b00963f395241c818d02ad2751f14e33fd32ed3cb3011641ab680e0d01"
   license "GPL-2.0-only"
-  revision 7
+  revision 13
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "49de71494f182fa5183947fd6917b59422b714321b20bbc379ae731fd426ee5a"
-    sha256 cellar: :any,                 arm64_sonoma:  "fb7296f63926a399a1cb5d0f4f95d0dfdea15c6c129e61d2c64a50c5721a3de2"
-    sha256 cellar: :any,                 arm64_ventura: "172ad7f526a299ef747a0509a66799e6a3ddc75d7ae9612695bd55584b37d8ce"
-    sha256 cellar: :any,                 sonoma:        "f93311495ca99e24b077a0bab5ca869bf93eabd7899ce836d8a33afd98b57cfa"
-    sha256 cellar: :any,                 ventura:       "75b78647054bbb2ef61618fa9c634ba8db78327c72830731aa2e1e2590c90ff1"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "8a22a32431e7e39e9695ba026de9eb12a4462422b9f3675fd6c0012a1eea945b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fa2827b435c6c8786f183d8d3bda36653cf35c46e6b54ab2f9a5f77137e4b85c"
+    sha256 cellar: :any, arm64_sequoia: "bef9869591fb0fe8168423cb861ffbd16866938efaf856ed3c641c3edcea625a"
+    sha256 cellar: :any, arm64_sonoma:  "0868f1b676fc024340071e79288a21fc66a20f45a4d92bad15462d4f476148c4"
+    sha256 cellar: :any, arm64_ventura: "e176bea4eee108fdb1e5ebe1b3b2c111f2a1c7147a9b6fe15aa6698bb00c1547"
+    sha256 cellar: :any, sonoma:        "5854fe6202e1b43728ce496bee77b2544ab1790847031e331e31668a36900d52"
+    sha256 cellar: :any, ventura:       "576e6abb69951e06bfb36826465f4a4d8cc42fa9cdb261ceb5a99ca40083678e"
+    sha256               arm64_linux:   "978cd2869b9c371d5930e1a444cc9033dee5360cbf92f83e7e49fa38e5ccb7dc"
+    sha256               x86_64_linux:  "3b040d761affd4d0e1412c903fd47c7edd363acb3f0176dc510ee301ec641d2f"
   end
 
   depends_on "cmake" => :build
@@ -46,6 +46,12 @@ class Fastnetmon < Formula
   patch do
     url "https://github.com/pavel-odintsov/fastnetmon/commit/8a91b5a8c8be1af0fe96ffe1ee1c002c30494662.patch?full_index=1"
     sha256 "cb2dd41177c73ed3ef4ee3a372d8f99b6471f695041dc1c05299ea03a572a202"
+  end
+
+  # Fix build with Boost 1.89.0, pr ref: https://github.com/pavel-odintsov/fastnetmon/pull/1038
+  patch do
+    url "https://github.com/pavel-odintsov/fastnetmon/commit/4a526e90d5b493265ca2e7ffcbcdbb6ed10f064b.patch?full_index=1"
+    sha256 "d879800c448a08cbe312ca5c83edfaacffadb0a74f57707240a31316275abc6d"
   end
 
   def install

@@ -24,6 +24,8 @@ body:
           required: true
         - label: I searched for recent similar issues at https://github.com/Homebrew/homebrew-core/issues?q=is%3Aissue and found no duplicates.
           required: true
+        - label: My issue is not about a failure to build a formula from source.
+          required: true
   - type: textarea
     attributes:
       label: What were you trying to do (and why)?

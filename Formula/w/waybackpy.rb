@@ -8,10 +8,9 @@ class Waybackpy < Formula
   license "MIT"
   revision 8
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "0cdd02bf216c002bc9ba5e7f6f21bdfe5fec3594b6432031502eeb916e4fcdce"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "996bcc65b772b98507b7d5134217d463b69bc65948cd0276f0afefb89e0becf9"
   end
 
   depends_on "certifi"
@@ -45,7 +44,7 @@ class Waybackpy < Formula
   def install
     virtualenv_install_with_resources
 
-    generate_completions_from_executable(bin/"waybackpy", shells: [:fish, :zsh], shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"waybackpy", shell_parameter_format: :click)
   end
 
   test do

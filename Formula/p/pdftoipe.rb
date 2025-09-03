@@ -4,18 +4,18 @@ class Pdftoipe < Formula
   url "https://github.com/otfried/ipe-tools/archive/refs/tags/v7.2.29.1.tar.gz"
   sha256 "604ef6e83ad8648fa09c41a788549db28193bb3638033d69cac2b0b3f33bd69b"
   license "GPL-2.0-or-later"
-  revision 8
+  revision 10
 
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "73ef0b93cb20c5a6f607856003175f96a3185859c409181709fb3e0d34cba4f8"
-    sha256 cellar: :any,                 arm64_sonoma:  "3c5c3ae4556a3dad3b1f891b325613edaaaf193474574295cf40d6dcf37651a3"
-    sha256 cellar: :any,                 arm64_ventura: "884f0b8f60c43651be7ae0a08873855b9aecc86ac4c58a72760fd7d11914b05e"
-    sha256 cellar: :any,                 sonoma:        "53fc4df76a9e88347b9a531d4e9f6f8272a76af2b021b700dfb32a82b3d12f72"
-    sha256 cellar: :any,                 ventura:       "482f5b67b34e9f392ede0a2a7d1670fea573f0c090d64923ce498e6fa1592ec4"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "9294b423b731fb9e82da7f949dde35f864d74a4040429459546d6fbac76a0a46"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "225dd057b1255d16f2d639f8b2457a7ee3a3a059b7e791c48a457c8043120d0e"
+    sha256 cellar: :any,                 arm64_sequoia: "4cb6ee7067d29c1ec17a192f6cbd6d756ed510bd8dd932bfc8511b7a696e8fdf"
+    sha256 cellar: :any,                 arm64_sonoma:  "e761b956dcdaa5d5e5d43044662b07289c0bc8fceb78bb60dc63d05c9e6d8c32"
+    sha256 cellar: :any,                 arm64_ventura: "f94a45d24f66f8be3f5253c3e03269fc936f80fe8cbf76940eaea6473364a7ef"
+    sha256 cellar: :any,                 sonoma:        "9f49c005530ea59eea9bda4aebfc246096683253bb33673db030b14a7efcb081"
+    sha256 cellar: :any,                 ventura:       "eb3372709225584047545555b56b398589d9274a201e4574fa3804928a2ae27c"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "04b3ee07a0a7b043e6987109e113f5c4e23c0cc9f7750383ceb2e0e27614fe34"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "141da3c9bc5dcabd8a8162aefdc037978c18abf412e3ced84e1aaf9747240216"
   end
 
   depends_on "pkgconf" => :build

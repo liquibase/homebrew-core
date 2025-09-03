@@ -1,8 +1,8 @@
 class Netatalk < Formula
   desc "File server for Macs, compliant with Apple Filing Protocol (AFP)"
   homepage "https://netatalk.io"
-  url "https://github.com/Netatalk/netatalk/releases/download/netatalk-4-2-4/netatalk-4.2.4.tar.xz"
-  sha256 "4f07bbe118a951dd740d3f51a87b5cafba2496bd0b22e704438f421aa6670f99"
+  url "https://github.com/Netatalk/netatalk/releases/download/netatalk-4-3-1/netatalk-4.3.1.tar.xz"
+  sha256 "248e2eea8066c7d3e7fed62c54a3df37b4158bb45247ebdf64efe2e3797c04d5"
   license all_of: [
     "GPL-2.0-only",
     "GPL-2.0-or-later",
@@ -17,13 +17,13 @@ class Netatalk < Formula
   no_autobump! because: :incompatible_version_format
 
   bottle do
-    sha256 arm64_sequoia: "17e4d6ffd0039fbe4adfc873f576685a068a1755974d14890e5592371d9ac960"
-    sha256 arm64_sonoma:  "d74905541c89f537266a677868cb5ff6cc0230975e1e619dbeacbdc82fa1437a"
-    sha256 arm64_ventura: "1404002f05914d1cdfaa843e113499bfe67d05cfeac50ed6e91304b9b2b9f1e1"
-    sha256 sonoma:        "759e86a275a1ac958615fc9d837bea59a2d4f13ad7cf60b3e40ce34816bd34d7"
-    sha256 ventura:       "d0ce9f60f70a3896ca49ac8d13ac87c9946342f5225e467b8e50b88b3e7e7fdc"
-    sha256 arm64_linux:   "c792a362f93a358adc2a44683c83649eb54b7513254cc444ea18c7b04830a5be"
-    sha256 x86_64_linux:  "ead1152fc2b9997022839c082bc9419328858bd46426f0b0fb673944cf4b2df8"
+    sha256 arm64_sequoia: "8ad8e7b0c99059f5d32e24ffbbe09266c8c50a12d72fe1aa3fd458d38c9ccbd5"
+    sha256 arm64_sonoma:  "b35e111f992d9d8a792d5fc32518d0ddf58fe9a6b8d456cf86bcb6675d6fae4e"
+    sha256 arm64_ventura: "14c6a503e14b5a12205b69c0c0599b612910f730940a149dd75f2dab9fc53a21"
+    sha256 sonoma:        "4b937d5dad2817bfaefeff1dcd3ff2a919e0ddb671d4b17a1e88a5a0fe18343a"
+    sha256 ventura:       "08aaed1116fa5918c6cb6c513b6d021c137f25862c66d68319636bdf950f1d79"
+    sha256 arm64_linux:   "83b57631e73f4555b2ff7b115c789b651e089653e94513867ba00c580fd0b467"
+    sha256 x86_64_linux:  "5a152433e27a423b0b6cdd623065e41cc41c514648d5ae04e980f5cf4602f461"
   end
 
   depends_on "cmark-gfm" => :build
@@ -32,6 +32,7 @@ class Netatalk < Formula
   depends_on "pkgconf" => :build
 
   depends_on "berkeley-db@5" # macOS bdb library lacks DBC type etc.
+  depends_on "bstring"
   depends_on "cracklib"
   depends_on "iniparser"
   depends_on "libevent"
@@ -42,6 +43,7 @@ class Netatalk < Formula
   uses_from_macos "krb5"
   uses_from_macos "libxcrypt"
   uses_from_macos "perl"
+  uses_from_macos "sqlite"
 
   on_linux do
     depends_on "avahi" # on macOS we use native mDNS instead
@@ -53,6 +55,7 @@ class Netatalk < Formula
   conflicts_with "ad", because: "both install `ad` binaries"
 
   def install
+    inreplace "meson.build", "if init_cmd != ''", "if init_cmd != '' and get_option('with-init-hooks') == true"
     inreplace "distrib/initscripts/macos.netatalk.in", "@sbindir@", opt_sbin
     inreplace "distrib/initscripts/macos.netatalk.plist.in", "@bindir@", opt_bin
     inreplace "distrib/initscripts/macos.netatalk.plist.in", "@sbindir@", opt_sbin
@@ -72,9 +75,10 @@ class Netatalk < Formula
       "-Dwith-install-hooks=false",
       "-Dwith-lockfile-path=#{var}/run",
       "-Dwith-pam-config-path=#{etc}/pam.d",
-      "-Dwith-rpath=false",
+      "-Dwith-pkgconfdir-path=#{pkgetc}",
       "-Dwith-spotlight=false",
       "-Dwith-statedir-path=#{var}",
+      "-Dwith-testsuite=true",
     ]
 
     system "meson", "setup", "build", *args, *std_meson_args
@@ -105,8 +109,24 @@ class Netatalk < Formula
   end
 
   test do
-    system sbin/"netatalk", "-V"
+    pidfile = var/"run/netatalk#{".pid" if OS.mac?}"
+    port = free_port
+    (testpath/"afp.conf").write <<~EOS
+      [Global]
+      afp port = #{port}
+      log file = #{testpath}/afpd.log
+      log level = default:info
+      signature = 1234567890ABCDEF
+    EOS
+    fork do
+      system sbin/"netatalk", "-d", "-F", "#{testpath}/afp.conf"
+    end
     system sbin/"afpd", "-V"
-    assert_empty shell_output(sbin/"netatalk")
+    system sbin/"netatalk", "-V"
+    sleep 5
+    assert_match "AFP reply", shell_output("#{bin}/asip-status localhost #{port}")
+    pid = pidfile.read.chomp.to_i
+  ensure
+    Process.kill("TERM", pid)
   end
 end

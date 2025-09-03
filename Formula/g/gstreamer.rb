@@ -2,15 +2,16 @@ class Gstreamer < Formula
   desc "Development framework for multimedia applications"
   homepage "https://gstreamer.freedesktop.org/"
   license all_of: ["LGPL-2.0-or-later", "LGPL-2.1-or-later", "MIT"]
+  revision 4
 
   stable do
-    url "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.26.3/gstreamer-1.26.3.tar.bz2"
-    sha256 "2dafd2a99f9cc7df4bdd202927f7aa25a1879e3d574b5bc3248856d91c11734e"
+    url "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.26.5/gstreamer-1.26.5.tar.bz2"
+    sha256 "7f2c3016cec832170c1a1e6e9ede087282770955894c0cabf4637ee877a69941"
 
     # When updating this resource, use the tag that matches the GStreamer version.
     resource "rs" do
-      url "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/gstreamer-1.26.3/gst-plugins-rs-gstreamer-1.26.3.tar.bz2"
-      sha256 "43ed8a7a59162f96684665826c00a20d8f38056719b433d80aa9d7bd9b7b4bba"
+      url "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/gstreamer-1.26.5/gst-plugins-rs-gstreamer-1.26.5.tar.bz2"
+      sha256 "19182e58c29a9c777f4d8325253560c6481a0c9d75819e81870c711916740b93"
 
       livecheck do
         formula :parent
@@ -24,13 +25,13 @@ class Gstreamer < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "2c230eee1055e6e4c5bd1288f133bf5f28bc60141d8e8060dbfdd85c840bbdbd"
-    sha256 arm64_sonoma:  "7f1d678bdada7a4d19f7040e2790ca48282913db69fb2c47c6be3ef7e7cc4019"
-    sha256 arm64_ventura: "a19c5071a6fc3cc1cfa5f3f76937b8775ac98388785d2cd4e9027e79b26d6a71"
-    sha256 sonoma:        "d67adf8cf69f13981c981d95c93bc64242ce3b3861e57751479490e88129f620"
-    sha256 ventura:       "01055f690dca5b6d6eebc1dfc6af4af7bd3a2ccb7ad73c7e63122f414471c71d"
-    sha256 arm64_linux:   "0a2fd68bf3650fa4eff08a1c3be9695e1f12e02976f39df76f08e99eda6b85d7"
-    sha256 x86_64_linux:  "744980affa45d11713c415e7277b7a2951f5f32d965cb9f7302a9f6b96bf2abe"
+    sha256 arm64_sequoia: "349574a23115b7c65da50f8020eb9a3e3abb262cf1217ffc18fe9ceb3ca552f8"
+    sha256 arm64_sonoma:  "9cd5063381cb87108f9bc1c927249f708f6ecab4038656170a24a2ada0a5db18"
+    sha256 arm64_ventura: "1b34229c4892174de40dccabd8b106496821cf8cfe0f17d73e030e98fbac3866"
+    sha256 sonoma:        "058eede7f85421665058d2ea5283ecad6aabce019271c52e32eb28c951c94bf2"
+    sha256 ventura:       "0189aa0c99c39977f08031b78bce36a4d2f1da08f0ad515ad28d3fae20afee9d"
+    sha256 arm64_linux:   "d5f1ea61305396c184e3c9d719783d769ed0009c24f3c31a3e97d7466374c5f1"
+    sha256 x86_64_linux:  "a9ed62e2c2ccad0a0bd88d19184814f4f18c960fc604ee75cb6cde6f84dee108"
   end
 
   head do
@@ -123,6 +124,8 @@ class Gstreamer < Formula
 
   on_linux do
     depends_on "alsa-lib"
+    depends_on "fontconfig"
+    depends_on "freetype"
     depends_on "libdrm"
     depends_on "libva"
     depends_on "libxdamage"
@@ -214,21 +217,7 @@ class Gstreamer < Formula
     # https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/issues/279
     plugin_dir = lib/"gstreamer-1.0"
     rpath_args = [loader_path, rpath(source: plugin_dir)].map { |path| "-rpath,#{path}" }
-    ENV.append "RUSTFLAGS", "--codegen link-args=-Wl,#{rpath_args.join(",")}"
-
-    # On Linux, adjust processing of RUSTFLAGS to avoid using shlex, which may mangle our
-    # RPATH-related flags, due to the presence of `$` in $ORIGIN.
-    if OS.linux?
-      wrapper_files = %w[
-        subprojects/gst-plugins-rs/cargo_wrapper.py
-        subprojects/gst-devtools/dots-viewer/cargo_wrapper.py
-      ]
-      inreplace wrapper_files do |s|
-        s.gsub!(/shlex\.split\(env\.get\(("RUSTFLAGS"|'RUSTFLAGS'), (""|'')\)\)/,
-                "' '.split(env.get(\"RUSTFLAGS\", \"\"))")
-        s.gsub! "shlex_join(rust_flags)", "' '.join(rust_flags)"
-      end
-    end
+    ENV.append_to_rustflags "--codegen link-args=-Wl,#{rpath_args.join(",")}"
 
     # Make sure the `openssl-sys` crate uses our OpenSSL.
     ENV["OPENSSL_NO_VENDOR"] = "1"

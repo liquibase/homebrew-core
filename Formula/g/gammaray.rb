@@ -1,17 +1,17 @@
 class Gammaray < Formula
   desc "Examine and manipulate Qt application internals at runtime"
   homepage "https://www.kdab.com/software-technologies/developer-tools/gammaray/"
-  url "https://github.com/KDAB/GammaRay/releases/download/v3.2.0/gammaray-3.2.0.tar.gz"
-  sha256 "a7c00a5a33c400579002bbe535a667efdea1e726950ecddbf39cf3d8a3f50f07"
+  url "https://github.com/KDAB/GammaRay/releases/download/v3.2.2/gammaray-3.2.2.tar.gz"
+  sha256 "18830a83ca8ba8e6e07d78a88d933c2666eda4b26d3cbdc97e06914f5e92388c"
   license "GPL-2.0-or-later"
   head "https://github.com/KDAB/GammaRay.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "bc38ac14b372b5eadd5f40332cf95989a8d6f2eba6b3b83b8b8f887f16b5dfa5"
-    sha256 cellar: :any,                 arm64_ventura: "c3a6fa5468b3d3f020b0ab240fb0da8adbbb90eb9e6b0a6bf3c391bd10d34bda"
-    sha256 cellar: :any,                 sonoma:        "7e720fc4ba25f790c4bfa0cff9c2e8e7c03fcf36d6b3c7778e4e674994ceca09"
-    sha256 cellar: :any,                 ventura:       "96b2c34f2830bb9183f6851c75098eee323ed6af313e51638b6c0fb034316037"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4eb5af0d09737fa7ffec4563723a98a0911526c75613406c91a70c3f4c5e76ea"
+    sha256 cellar: :any,                 arm64_sonoma:  "188e05f535d2dcb85a2530a3c7743eab2c6b1afd3fbb2ff2f958b62ee81c3ea8"
+    sha256 cellar: :any,                 arm64_ventura: "67bef150eeaa9f64e616cdfc242958016ba65b45981a939a63721206cd56157e"
+    sha256 cellar: :any,                 sonoma:        "5d49a25721d07658ed17e45396b5edd694f4f8d9f93219938dcdc0904c1f093a"
+    sha256 cellar: :any,                 ventura:       "92727212855dd82a000851db16e91f824971aa3185ef4653475037c1462f11bb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cce7a248ef5b4009c51846317295552e6e2c105ec9d12b28f6294c9133ee9024"
   end
 
   depends_on "cmake" => :build

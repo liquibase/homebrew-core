@@ -3,8 +3,8 @@ class Mesa < Formula
 
   desc "Graphics Library"
   homepage "https://www.mesa3d.org/"
-  url "https://archive.mesa3d.org/mesa-25.1.5.tar.xz"
-  sha256 "3c4f6b10ff6ee950d0ec6ea733cc6e6d34c569454e3d39a9b276de9115a3b363"
+  url "https://archive.mesa3d.org/mesa-25.2.1.tar.xz"
+  sha256 "c124372189d35f48e049ee503029171c68962c580971cb86d968a6771c965ba4"
   license all_of: [
     "MIT",
     "Apache-2.0", # include/{EGL,GLES*,vk_video,vulkan}, src/egl/generate/egl.xml, src/mapi/glapi/registry/gl.xml
@@ -20,16 +20,17 @@ class Mesa < Formula
     { "GPL-1.0-or-later" => { with: "Linux-syscall-note" } }, # include/drm-uapi/sync_file.h
     { "GPL-2.0-only" => { with: "Linux-syscall-note" } }, # include/drm-uapi/{d3dkmthk.h,dma-buf.h,etnaviv_drm.h}
   ]
+  revision 1
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
 
   bottle do
-    sha256 arm64_sequoia: "48bacb046848b7b34b13c9fe6e03e0d05177a2fad45f04162be1d50cfec1d5ed"
-    sha256 arm64_sonoma:  "688126076931b727728c298f203cb7a76912f18b127b9d7f6e4fe6b669d93e23"
-    sha256 arm64_ventura: "c215e2db7fbdd171e656614378fbe72cc91ba8d220e61bf5690e940cbbaa12b3"
-    sha256 sonoma:        "9785fad68f0af212125bb317c1bc8c27e3385ceb168c14552919b39c8135839c"
-    sha256 ventura:       "1134657206a1c5e80a5c78250057aac9b5d03f04bce0323d20269177eff4c97b"
-    sha256 arm64_linux:   "0fd264452178d3904e1750b3ae1db23f0ae46c94ffb6b694209ee9738e9ef038"
-    sha256 x86_64_linux:  "ee1fca8d34279c70bbdb3bcf10349c000f57b55cc6d0b3582293bbe979a89fe9"
+    sha256 arm64_sequoia: "15f4b8190ca487f1abb1efda11b15fc0203ed0d179bf326103c38290b7306090"
+    sha256 arm64_sonoma:  "c667a02764129fdc163b8de2c1e98b04afd04bff2304c067a023a2e8833bda81"
+    sha256 arm64_ventura: "9acc045e2110cc22e1849752443c2f8d6076aa4c3eb09d8d87d872618d8a5160"
+    sha256 sonoma:        "6891c09508d71968ff54fb44bea368b5b8ea0cc9b3e47cb8ac2011d820bcc656"
+    sha256 ventura:       "9e2a9f3cdada57344ee5ac090636b458256538115db3a9580a4a4510ee8a63df"
+    sha256 arm64_linux:   "e711b6887fd7ff68d2109291d2fd3a571ec3eee5156cee34ef60cdd5508f9283"
+    sha256 x86_64_linux:  "07b946927b6c98ef900a1955181b35d6cb9441a7c29031e5d9a558cd50b0f1bd"
   end
 
   depends_on "bindgen" => :build
@@ -70,6 +71,7 @@ class Mesa < Formula
     depends_on "gzip" => :build
     depends_on "libva" => :build
     depends_on "libvdpau" => :build
+    depends_on "pycparser" => :build
     depends_on "valgrind" => :build
     depends_on "wayland-protocols" => :build
 
@@ -80,10 +82,6 @@ class Mesa < Formula
     depends_on "libxxf86vm"
     depends_on "lm-sensors"
     depends_on "wayland"
-
-    on_arm do
-      depends_on "pycparser" => :build
-    end
 
     on_intel do
       depends_on "cbindgen" => :build
@@ -137,44 +135,47 @@ class Mesa < Formula
 
     args = %w[
       -Db_ndebug=true
+      -Dgallium-rusticl=true
+      -Dllvm=enabled
       -Dopengl=true
       -Dstrip=true
-      -Dllvm=enabled
-
       -Dvideo-codecs=all
-      -Dgallium-rusticl=true
     ]
     args += if OS.mac?
+      # Work around .../rusticl_system_bindings.h:1:10: fatal error: 'stdio.h' file not found
+      ENV["SDKROOT"] = MacOS.sdk_for_formula(self).path
+
       %W[
         -Dgallium-drivers=llvmpipe,zink
-        -Dvulkan-drivers=swrast
-        -Dvulkan-layers=intel-nullhw,overlay,screenshot
-        -Dtools=etnaviv,glsl,nir,nouveau,imagination,dlclose-skip
         -Dmoltenvk-dir=#{Formula["molten-vk"].prefix}
+        -Dtools=etnaviv,glsl,nir,nouveau,imagination,dlclose-skip
+        -Dvulkan-drivers=swrast
+        -Dvulkan-layers=intel-nullhw,overlay,screenshot,vram-report-limit
       ]
     else
-      %w[
+      # Not all supported drivers are being auto-enabled on x86 Linux.
+      # TODO: Determine the explicit drivers list for ARM Linux.
+      drivers = Hardware::CPU.intel? ? "all" : "auto"
+
+      %W[
         -Degl=enabled
-        -Dgallium-drivers=auto
+        -Dgallium-drivers=#{drivers}
         -Dgallium-extra-hud=true
-        -Dgallium-nine=true
         -Dgallium-va=enabled
         -Dgallium-vdpau=enabled
-        -Dgallium-xa=enabled
         -Dgbm=enabled
         -Dgles1=enabled
         -Dgles2=enabled
         -Dglx=dri
-        -Dintel-clc=enabled
+        -Dintel-rt=enabled
         -Dlmsensors=enabled
         -Dmicrosoft-clc=disabled
         -Dplatforms=x11,wayland
-        -Dshared-glapi=enabled
-        -Dtools=drm-shim,dlclose-skip,etnaviv,freedreno,glsl,intel,lima,nir,nouveau,asahi,imagination
+        -Dtools=drm-shim,etnaviv,freedreno,glsl,intel,nir,nouveau,lima,panfrost,asahi,imagination,dlclose-skip
         -Dvalgrind=enabled
-        -Dvulkan-drivers=auto
-        -Dvulkan-layers=device-select,intel-nullhw,overlay,screenshot
-        --force-fallback-for=indexmap,paste,pest_generator,roxmltree,syn
+        -Dvulkan-drivers=#{drivers}
+        -Dvulkan-layers=device-select,intel-nullhw,overlay,screenshot,vram-report-limit
+        --force-fallback-for=indexmap,paste,pest_generator,roxmltree,rustc-hash,syn
       ]
     end
 
@@ -201,8 +202,8 @@ class Mesa < Formula
 
   test do
     resource "glxgears.c" do
-      url "https://gitlab.freedesktop.org/mesa/demos/-/raw/8ecad14b04ccb3d4f7084122ff278b5032afd59a/src/xdemos/glxgears.c"
-      sha256 "cbb5a797cf3d2d8b3fce01cfaf01643d6162ca2b0e97d760cc2e5aec8d707601"
+      url "https://gitlab.freedesktop.org/mesa/demos/-/raw/a533acd00ed0b6d1beda7df0c68a59a873dba2b3/src/xdemos/glxgears.c"
+      sha256 "36376674e73fb0657fd56a3738c330b828da6731c934e2b29d75253dc02ad03b"
     end
 
     resource "gl_wrap.h" do

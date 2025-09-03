@@ -1,19 +1,19 @@
 class Ubi < Formula
   desc "Universal Binary Installer"
   homepage "https://github.com/houseabsolute/ubi"
-  url "https://github.com/houseabsolute/ubi/archive/refs/tags/v0.7.2.tar.gz"
-  sha256 "e9f6a2d688476c0ebb89164c0e54fdbd97f4c31fced855ef9d3bb37bfdc4852c"
+  url "https://github.com/houseabsolute/ubi/archive/refs/tags/v0.7.4.tar.gz"
+  sha256 "5c615c73d6dcd027cf707dc7b567410ce568ca6f67f2a01aea4d51cbd0bd6356"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/houseabsolute/ubi.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "143dd359448347b21815b5d25d6cdae257a5d864787da673fe0ab41c52a1dce3"
-    sha256 cellar: :any,                 arm64_sonoma:  "3a8f1a6cc60b635fe3b90d29a416eafc9821175a7425b61b42e1d3bb6a90ebb0"
-    sha256 cellar: :any,                 arm64_ventura: "621c75822f06a98d4815fd8bf9d1f050adb2a49db8df9a30dc0edea0decb6ff0"
-    sha256 cellar: :any,                 sonoma:        "13267cc89276298338ad24b8576db841675f576ab72c2edaba189990999d8f03"
-    sha256 cellar: :any,                 ventura:       "9e6f36d86708cb9ad30305a66dbcb86bada5c63e869b5dd8aba43f5fcb3605f3"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c10ebde4475f1673b9ebd3899219cd5f00d90fb596a282f160eeb7408712b648"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "262c1dcf67a9969c5e359e705faac2bd2221eb032847b5bc78fb988d2cb0d445"
+    sha256 cellar: :any,                 arm64_sequoia: "89c713623bc07c102c7cc807ca3bd6b320318cfd466d307d990cca3a9a567a1a"
+    sha256 cellar: :any,                 arm64_sonoma:  "e440a1d9483f82e11b91dca4fd6a6f79c72940821b2d05685db9940f88293450"
+    sha256 cellar: :any,                 arm64_ventura: "8fc68bb5f66bbaccd0be5516334768875f6c83cb8cb3aeb99e9c2fca5cd918c6"
+    sha256 cellar: :any,                 sonoma:        "81df76bbca990b370465881e61c78f22bd4cc4529f3aebe0c035c05fbecca6c0"
+    sha256 cellar: :any,                 ventura:       "cab4e0f187202cee9f7c4b3d7575365fbf7c90efcc75abdd375055e6ea6a8efc"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "f048d2662f580e467955e0312da56c2fdfd76cb926707cfca1b27d4fef997e8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d3caf11a1af31cc54d684ae4e85bf2c1c3c8eabfbd5ba19af1fc97f5789550c"
   end
 
   depends_on "pkgconf" => :build

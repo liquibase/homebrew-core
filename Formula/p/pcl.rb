@@ -1,18 +1,18 @@
 class Pcl < Formula
   desc "Library for 2D/3D image and point cloud processing"
   homepage "https://pointclouds.org/"
-  url "https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.15.0.tar.gz"
-  sha256 "e90c981c21e89c45201c5083db8308e099f34c1782f92fd65a0a4eb0b72c6fbf"
+  url "https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.15.1.tar.gz"
+  sha256 "e1d862c7b6bd27a45884a825a2e509bfcbd4561307d5bfe17ce5c8a3d94a6c29"
   license "BSD-3-Clause"
   revision 1
   head "https://github.com/PointCloudLibrary/pcl.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "03fde7c94634272d2b7b00d03942edbfd0a522be1dccb79d6cc7c5bbc8a31f42"
-    sha256 cellar: :any,                 arm64_ventura: "747c17ba17c637e726e7bd4016af13867223c979a513705293ca6f912b2db62a"
-    sha256 cellar: :any,                 sonoma:        "43a7b7cb8a0712dc1db29cdb073242ef20200ae6883eca9616c9ada9f0b00367"
-    sha256 cellar: :any,                 ventura:       "174bdea4b9e66ef9e3a8f5887f65dbfa3f9edf7cb3808860b379d2df11cdc25e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a5d708d8ddda9491022bea26195a43f176f7bf4a1d89d1b09a160c5c41a154e2"
+    sha256 cellar: :any,                 arm64_sonoma:  "1e6bcc5ec5e8439f28279d96a4da0f6c4d36d7ca039e0701980da1c1463c6adb"
+    sha256 cellar: :any,                 arm64_ventura: "18e0f9c8f40bc9ad0a8fba24c271108072a8ae8a47e62e7de3e80ec1c6be2607"
+    sha256 cellar: :any,                 sonoma:        "555298752913e52820e547429dc75cacc52dfd42e5debb39d34c7822a3f1f9f2"
+    sha256 cellar: :any,                 ventura:       "97e98d574fc7a9ea3a162f4355c4cdb137db3f32f8b1c6fd17ef8c34ebfff1ac"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "73aadfcc5e0d851dd9adb6f5075cc2c588057e60399222556d1355d1b77cc712"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -40,6 +40,13 @@ class Pcl < Formula
     depends_on "libx11"
     depends_on "mesa"
     depends_on "mesa-glu"
+  end
+
+  # Apply open PR to fix build with Boost 1.89
+  # PR ref: https://github.com/PointCloudLibrary/pcl/pull/6330
+  patch do
+    url "https://github.com/PointCloudLibrary/pcl/commit/8dfb0e10ebdf4a5086328b38f854294d2d6b1627.patch?full_index=1"
+    sha256 "f31c11abb6bec8864b7a109472768ba80e87ddf90533890c303294d264f389e1"
   end
 
   def install

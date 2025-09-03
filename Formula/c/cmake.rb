@@ -1,10 +1,10 @@
 class Cmake < Formula
   desc "Cross-platform make"
   homepage "https://www.cmake.org/"
-  url "https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/cmake-4.0.3.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/legacy/cmake-4.0.3.tar.gz"
-  sha256 "8d3537b7b7732660ea247398f166be892fe6131d63cc291944b45b91279f3ffb"
+  url "https://github.com/Kitware/CMake/releases/download/v4.1.1/cmake-4.1.1.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/cmake-4.1.1.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/legacy/cmake-4.1.1.tar.gz"
+  sha256 "b29f6f19733aa224b7763507a108a427ed48c688e1faf22b29c44e1c30549282"
   license "BSD-3-Clause"
   head "https://gitlab.kitware.com/cmake/cmake.git", branch: "master"
 
@@ -17,14 +17,14 @@ class Cmake < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6124f0c7ce811d84ee72b8906d82557f33522dcac631aec7206cdfa8c90835ac"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "92655164f419333c09208118dbb2c89d61cc5488de19373302e2b8d3dfec34bc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "9db96b2241404442d0d49a8c9fd051a43f6080d26b7468e7ddccf332fe584a4d"
-    sha256 cellar: :any_skip_relocation, sequoia:       "df8668b731eb910277fa8bd6fb56b8f27b37e8ccdf77d337c7d760778a29f8b5"
-    sha256 cellar: :any_skip_relocation, sonoma:        "55a06f768313e23e0914101dd6f5f71589c5c9ae6de94a1a5d96d898570a926c"
-    sha256 cellar: :any_skip_relocation, ventura:       "dc93b4885174dc8c41727e97a3e3ef1429d74e66c8923d450f3edf04d9564055"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "adb9684730c9d663a911f58aec26cb6d5ad0f9b1e722462929d07db018a5a69f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b68d09d2c87ea29265b2353d97eb7a416e6448eb2910afe93605c096ce026e41"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "15af42c171e6914039f7188154145d20484a565bb43b308be9efbdcc893884af"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4b6b5cb55a60137a94014ff1f0e98848c2826b80bc702b32526646b23e31e26a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "afa66498af1f31e12b55a94f1b786fc605bf917dd81a31a89ad6ed912548132f"
+    sha256 cellar: :any_skip_relocation, sequoia:       "f95d6553376b9c884231ea983dbfe84b5fc52235d4bc6bcd04d7b021f350f248"
+    sha256 cellar: :any_skip_relocation, sonoma:        "71d655618f8b73b081f2d0a5ae0751217602afc46dc6f3327f7d05c0dbdb66b1"
+    sha256 cellar: :any_skip_relocation, ventura:       "f1690bc671690a62165cf3bff9ee537b538c90fb8ba61d36a62ed373ca043399"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "9c3586cd31b5945c9a56b37af0935a7cccd489ad2bc02db8b6de2aa1651588d0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1125e00f1b7e34f0e63c96360ab43a2e459c79b352ab2228ffdd0296b5cfbe4a"
   end
 
   uses_from_macos "ncurses"
@@ -33,7 +33,7 @@ class Cmake < Formula
     depends_on "openssl@3"
   end
 
-  conflicts_with cask: "cmake"
+  conflicts_with cask: "cmake-app"
 
   # The completions were removed because of problems with system bash
 

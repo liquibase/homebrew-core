@@ -1,8 +1,8 @@
 class Ncdu < Formula
   desc "NCurses Disk Usage"
   homepage "https://dev.yorhel.nl/ncdu"
-  url "https://dev.yorhel.nl/download/ncdu-2.8.2.tar.gz"
-  sha256 "022fa765d35a79797acdc80c831707df43c9a3ba60d1ae3e6ea4cc1b7a2c013d"
+  url "https://dev.yorhel.nl/download/ncdu-2.9.1.tar.gz"
+  sha256 "bfd1094e1400ee89cfd59200eab940f025ccdc0c238067105c984a3c4857bf7e"
   license "MIT"
   head "https://g.blicky.net/ncdu.git", branch: "zig"
 
@@ -12,13 +12,13 @@ class Ncdu < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "8c6101ddddef74f72707d35042f89908d7e4809245aac6922f68ca9e802867ab"
-    sha256 cellar: :any,                 arm64_sonoma:  "e2dc1b149d0902dd2a80bbe464dd76a03fc80f60eab9f9310e0ba7918e6ec945"
-    sha256 cellar: :any,                 arm64_ventura: "e38712f677f37a2c2e1f0c4b13232ddb4a9a8d9e865f18a506aece66a2f5dbbf"
-    sha256 cellar: :any,                 sonoma:        "61dcdfbcc8ec7b2363d0d3ed9243bbb6db3e0faa3c9d846ba0ee09702fd56b39"
-    sha256 cellar: :any,                 ventura:       "9e243cfcba2adc77d82a62444d13a200c71f435d203ccdd9241010e47457e58f"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "010b5d4e07e41140c166a8066a26a6246f92c9229b6e4327a1a8ca29c99aa096"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3390c8fbb71866adbb6099023254feb4cf1112cf8bb6a59418fde4b3ce2dbdce"
+    sha256 cellar: :any,                 arm64_sequoia: "e946696247e04ba05222fd3663bd1f19f4175ad5e1789be185268e44f2efcdba"
+    sha256 cellar: :any,                 arm64_sonoma:  "5a58cfe5cadc5dd0967ba98f10247c4d6e744136e1f20d017a7b8b9c841a670a"
+    sha256 cellar: :any,                 arm64_ventura: "b198a6841fd6805099414848220f120ab0aceedf605fcbcd1b7b2d5fd6cb0dc8"
+    sha256 cellar: :any,                 sonoma:        "0f0b4c07f0c7668d583ebd828b1166f5594ca2ecb7b6175d839e2e50ba7c8bde"
+    sha256 cellar: :any,                 ventura:       "d88a4512e7e1ade70fb23daff251a30402b4ede1b52fa7456fe0cf2332da3460"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "2abb6cf76c760880f9dad57f3ac7ede70ee511eaf5163f04839462080563d7cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "18844ed42709179573f5e225fb79af10f0d551da58d2fad67e30ed4c909343a5"
   end
 
   depends_on "pkgconf" => :build

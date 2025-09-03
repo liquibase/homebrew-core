@@ -2,8 +2,8 @@ class StellarCore < Formula
   desc "Backbone of the Stellar (XLM) network"
   homepage "https://www.stellar.org/"
   url "https://github.com/stellar/stellar-core.git",
-      tag:      "v22.4.1",
-      revision: "5d4528c331c553ccd8963ece9b0fbdd41efd43cb"
+      tag:      "v23.0.1",
+      revision: "050eacf11a15afb2e95560dfb5723dfdcf78070f"
   license "Apache-2.0"
   head "https://github.com/stellar/stellar-core.git", branch: "master"
 
@@ -16,13 +16,13 @@ class StellarCore < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "860254d33a2d578f583c16c50d2e49a7b0dc4adb28f509c3e9584208d79581e2"
-    sha256 cellar: :any,                 arm64_sonoma:  "5b50abf0563e5fcd1501dca761b9dab2634529ed5bf0fc3592de4157964027db"
-    sha256 cellar: :any,                 arm64_ventura: "004ec4897d6da078d4bcaffaeb6c85b078befee011a43dc972faa6ecb524f5a7"
-    sha256 cellar: :any,                 sonoma:        "2ba9ace590045400a3fbf695f2f2d1ac79cd5f980a4f19bdc8cb2aabd9c27034"
-    sha256 cellar: :any,                 ventura:       "ff13f56530c6a55b32e7150b46956b790909f7e383dcb4d5f6b943cad3d73b5b"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "f54889e142ef87bc90de29ed2f43a97ba7defb965cf26c6f5a73081e0b1eb7c7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7912218dda9cb3797c1d64432136cffbfd2809d684f52ea2371683c40ae2e2a5"
+    sha256 cellar: :any,                 arm64_sequoia: "3f81b2599339b2637e8892b207127bea909782ab692ac398ceada6d836cdb41c"
+    sha256 cellar: :any,                 arm64_sonoma:  "5f20f7aa7b39bfff588b715fd65df67afa73ec32c86d4b07356cad2dd7b24d49"
+    sha256 cellar: :any,                 arm64_ventura: "9adf336157a88caa21d506a1043110eb8966207c65ff476f4b44807d3a8f9fe7"
+    sha256 cellar: :any,                 sonoma:        "7dcaa843016563e392656bcd44d36e2ea5c1090e3f0df1cfcf5e996308b2157a"
+    sha256 cellar: :any,                 ventura:       "4ed06d390acdef994ceff2f7f562ca950bf6d67bdca0c466009836496a7b63fb"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "0d105e6d0687f9a03444ed4c2c4285038995776af432d8ef031f010fdf82cead"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e3dab52db935253b3d3ee61b2c286245fcadb1ede505dbfd5d57c70cfe8e697e"
   end
 
   depends_on "autoconf" => :build

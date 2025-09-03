@@ -1,12 +1,12 @@
 class Otf2 < Formula
   desc "Open Trace Format 2 file handling library"
-  homepage "https://www.vi-hps.org/projects/score-p/"
+  homepage "https://www.vi-hps.org/projects/score-p/overview/overview.html"
   url "https://perftools.pages.jsc.fz-juelich.de/cicd/otf2/tags/otf2-3.1.1/otf2-3.1.1.tar.gz"
   sha256 "5a4e013a51ac4ed794fe35c55b700cd720346fda7f33ec84c76b86a5fb880a6e"
   license "BSD-3-Clause"
 
   livecheck do
-    url :homepage
+    url "https://www.vi-hps.org/projects/score-p/download/download.html"
     regex(/href=.*?otf2[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
@@ -22,7 +22,6 @@ class Otf2 < Formula
 
   depends_on "python-setuptools" => :build
   depends_on "sphinx-doc" => :build
-  depends_on "gcc" # for gfortran
   depends_on "open-mpi"
   depends_on "python@3.13"
 

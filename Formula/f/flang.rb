@@ -1,8 +1,8 @@
 class Flang < Formula
   desc "LLVM Fortran Frontend"
   homepage "https://flang.llvm.org/"
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.7/llvm-project-20.1.7.src.tar.xz"
-  sha256 "cd8fd55d97ad3e360b1d5aaf98388d1f70dfffb7df36beee478be3b839ff9008"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.0/llvm-project-21.1.0.src.tar.xz"
+  sha256 "1672e3efb4c2affd62dbbe12ea898b28a451416c7d95c1bd0190c26cbe878825"
   # The LLVM Project is under the Apache License v2.0 with LLVM Exceptions
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/llvm/llvm-project.git", branch: "main"
@@ -12,97 +12,95 @@ class Flang < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "fb8bdf145609cb4985131f7e45f8d0c6735599c63400ede5723de5616a1b8b65"
-    sha256 cellar: :any,                 arm64_sonoma:  "a2cf6d74f7eadb6266f27257177bfa90322a4607a5669b8c478e5c30277bf2b6"
-    sha256 cellar: :any,                 arm64_ventura: "555605364bc7e69b8156b27aa767eeb397507a7e979a33a2c8d313840f5ad36f"
-    sha256 cellar: :any,                 sonoma:        "e7538a19ba1b7d974f4751577910bf1ba40891f29cb98d6d4b44ccc95b7c9227"
-    sha256 cellar: :any,                 ventura:       "f28215f5f8565162b5ae11bc606b2c2e708d1d160e6d4dc1092e252463ac64bd"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "ba2f7a4db843708f30fa3fd03e7517867dc4661e81d594b3467775efdd0d3a88"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "894bcc0efd88abc11cfe42cd2faac08dd6859c7df5cb499b9718454e0b02a3a5"
+    sha256 cellar: :any,                 arm64_sequoia: "6118c30d25bea2cd21a473be7d6ae0e99a78a6de09552d27de783741a0fcd54b"
+    sha256 cellar: :any,                 arm64_sonoma:  "66e34563beb6bd165d5558e247e91f1dc3eba91f9f796b685b5be63ce1d5f527"
+    sha256 cellar: :any,                 arm64_ventura: "746d426539249714213daf1689fb5de2f3a469e88af91738d1006695369f3ec3"
+    sha256 cellar: :any,                 sonoma:        "c4c02a47071419a05a98f56fc4a3c88e45d2cc0249537ef55a18f7cdce086876"
+    sha256 cellar: :any,                 ventura:       "b495907e8a584fcb9120a768c629439a321e5e8a5e5295d31519a1e2395c6949"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "03c71e3f0d0c9edda50be0ee0b76494d9f20344f565f42ffa38e23dd8c74ceba"
   end
 
   depends_on "cmake" => :build
   depends_on "llvm"
 
+  # Keep broken symlink if `llvm` has been unlinked on Linux.
+  skip_clean "lib/LLVMgold.so"
+
   # Building with GCC fails at linking with an obscure error.
   fails_with :gcc
-
-  def flang_driver
-    "flang-new"
-  end
 
   def llvm
     Formula["llvm"]
   end
 
   def install
-    # Generate omp_lib.h and omp_lib.F90 to be used by flang build
-    system "cmake", "-S", "openmp", "-B", "build/projects/openmp", *std_cmake_args
+    resource_dir = Pathname(Utils.safe_popen_read(llvm.opt_bin/"clang", "-print-resource-dir").chomp)
+    relative_resource_dir = resource_dir.relative_path_from(llvm.prefix.realpath)
 
-    args = %W[
-      -DLLVM_TOOL_OPENMP_BUILD=ON
+    common_args = %W[
+      -DBUILD_SHARED_LIBS=ON
+      -DLLVM_DIR=#{llvm.opt_lib}/cmake/llvm
+      -DLLVM_ENABLE_FATLTO=ON
+      -DLLVM_ENABLE_LTO=ON
+    ]
+
+    flang_args = %W[
       -DCLANG_DIR=#{llvm.opt_lib}/cmake/clang
       -DFLANG_INCLUDE_TESTS=OFF
       -DFLANG_REPOSITORY_STRING=#{tap&.issues_url}
-      -DFLANG_STANDALONE_BUILD=ON
       -DFLANG_VENDOR=#{tap&.user}
-      -DLLVM_DIR=#{llvm.opt_lib}/cmake/llvm
-      -DLLVM_ENABLE_EH=OFF
-      -DLLVM_ENABLE_LTO=ON
+      -DLLVM_TOOL_OPENMP_BUILD=ON
       -DLLVM_USE_SYMLINKS=ON
       -DMLIR_DIR=#{llvm.opt_lib}/cmake/mlir
       -DMLIR_LINK_MLIR_DYLIB=ON
     ]
-    args << "-DFLANG_VENDOR_UTI=sh.brew.flang" if tap&.official?
-    # FIXME: Setting `BUILD_SHARED_LIBS=ON` causes the just-built flang to throw ICE on macOS
-    args << "-DBUILD_SHARED_LIBS=ON" if OS.linux?
+    flang_args << "-DFLANG_VENDOR_UTI=sh.brew.flang" if tap&.official?
 
-    ENV.append_to_cflags "-ffat-lto-objects" if OS.linux? # Unsupported on macOS.
-    system "cmake", "-S", "flang", "-B", "build", *args, *std_cmake_args
+    flang_rt_args = %W[
+      -DCMAKE_Fortran_COMPILER_WORKS=ON
+      -DCMAKE_Fortran_COMPILER=#{bin}/flang
+      -DFLANG_RT_ENABLE_SHARED=ON
+      -DFLANG_RT_ENABLE_STATIC=OFF
+      -DFLANG_RT_INCLUDE_TESTS=OFF
+      -DLLVM_BINARY_DIR=#{llvm.opt_prefix}
+      -DLLVM_ENABLE_RUNTIMES=flang-rt
+    ]
+
+    # Generate omp_lib.h and omp_lib.F90 to be used by flang build
+    system "cmake", "-S", "openmp", "-B", "build/projects/openmp", *std_cmake_args
+
+    system "cmake", "-S", "flang", "-B", "build", *flang_args, *common_args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
-    return if OS.linux?
+
+    system "cmake", "-S", "runtimes", "-B", "build-rt", *flang_rt_args, *common_args, *std_cmake_args
+    system "cmake", "--build", "build-rt"
+    system "cmake", "--install", "build-rt"
+
+    # Add symlink for runtime library as it won't be found when resource-dir is
+    # overridden by flang.cfg. This also allows shared `flang-rt` on Linux to
+    # avoid extra RPATH. See if the upstream provides a better way of handling:
+    # https://github.com/llvm/llvm-project/blob/main/flang-rt/CMakeLists.txt#L120-L130
+    lib.install_symlink (prefix/relative_resource_dir).glob("**/#{shared_library("*")}")
+
+    if OS.linux?
+      # Allow flang -flto to work on Linux as it expects library relative to driver.
+      # The HOMEBREW_PREFIX path is used so that `brew link` skips creating a symlink.
+      lib.install_symlink HOMEBREW_PREFIX/"lib/LLVMgold.so"
+      return
+    end
 
     libexec.install bin.children
     bin.install_symlink libexec.children
 
-    # Help `flang-new` driver find `libLTO.dylib` and runtime libraries
-    resource_dir = Utils.safe_popen_read(llvm.opt_bin/"clang", "-print-resource-dir").chomp
-    resource_dir.gsub!(llvm.prefix.realpath, llvm.opt_prefix)
+    # Help `flang` driver find `libLTO.dylib` and runtime libraries
     (libexec/"flang.cfg").atomic_write <<~CONFIG
       -Wl,-lto_library,#{llvm.opt_lib}/libLTO.dylib
-      -resource-dir=#{resource_dir}
+      -resource-dir=#{llvm.opt_prefix/relative_resource_dir}
     CONFIG
-
-    # Convert LTO-generated bitcode in our static archives to MachO.
-    # Not needed on Linux because of `-ffat-lto-objects`
-    # See equivalent code in `llvm.rb`.
-    lib.glob("*.a").each do |static_archive|
-      mktemp do
-        system llvm.opt_bin/"llvm-ar", "x", static_archive
-        rebuilt_files = []
-
-        Pathname.glob("*.o").each do |bc_file|
-          file_type = Utils.safe_popen_read("file", "--brief", bc_file)
-          next unless file_type.match?(/^LLVM (IR )?bitcode/)
-
-          rebuilt_files << bc_file
-          system ENV.cc, "-fno-lto", "-Wno-unused-command-line-argument",
-                         "-x", "ir", bc_file, "-c", "-o", bc_file
-        end
-
-        system llvm.opt_bin/"llvm-ar", "r", static_archive, *rebuilt_files if rebuilt_files.present?
-      end
-    end
   end
 
   test do
-    # FIXME: We should remove the two variables below from the environment
-    #        to test that `flang` can find our config files correctly, but
-    #        this seems to break CI (but can't be reproduced locally).
-    # ENV.delete "CPATH"
-    # ENV.delete "SDKROOT"
-
     (testpath/"hello.f90").write <<~FORTRAN
       PROGRAM hello
         WRITE(*,'(A)') 'Hello World!'
@@ -121,10 +119,10 @@ class Flang < Formula
       end
     FORTRAN
 
-    system bin/flang_driver, "-v", "hello.f90", "-o", "hello"
+    system bin/"flang", "-v", "hello.f90", "-o", "hello"
     assert_equal "Hello World!", shell_output("./hello").chomp
 
-    system bin/flang_driver, "-v", "test.f90", "-o", "test"
+    system bin/"flang", "-v", "-flto", "test.f90", "-o", "test"
     assert_equal "Done", shell_output("./test").chomp
 
     (testpath/"omptest.f90").write <<~FORTRAN
@@ -143,7 +141,7 @@ class Flang < Formula
       libomp_dir = llvm.opt_lib/Utils.safe_popen_read(llvm.opt_bin/"clang", "--print-target-triple").chomp
       %W[-L#{libomp_dir} -Wl,-rpath,#{libomp_dir} -Wl,-rpath,#{lib}]
     end
-    system bin/flang_driver, "-v", *openmp_flags, "omptest.f90", "-o", "omptest"
+    system bin/"flang", "-v", *openmp_flags, "omptest.f90", "-o", "omptest"
     testresult = shell_output("./omptest")
 
     expected_result = <<~EOS
@@ -162,13 +160,12 @@ class Flang < Formula
         y = y/2
       End Program
     FORTRAN
-    system bin/flang_driver, "-v", "runtimes.f90"
+    system bin/"flang", "-v", "runtimes.f90"
 
     return if OS.linux?
+    return unless (etc/"clang").exist? # https://github.com/Homebrew/homebrew-test-bot/issues/805
 
-    system "ar", "x", lib/"libFortranCommon.a"
-    testpath.glob("*.o").each do |object_file|
-      refute_match(/^LLVM (IR )?bitcode/, shell_output("file --brief #{object_file}"))
-    end
+    assert_match %r{^Configuration file: #{Regexp.escape(etc)}/clang/.*\.cfg$}i,
+                 shell_output("#{bin}/flang --version")
   end
 end

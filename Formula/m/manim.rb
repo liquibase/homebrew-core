@@ -6,24 +6,24 @@ class Manim < Formula
   url "https://files.pythonhosted.org/packages/52/79/29f287beebcf52464c2cfd88015720992515062dd373bd37c2ed34955cdd/manim-0.19.0.tar.gz"
   sha256 "748115ffc1dea24940fd6d7a3edcae0ccedc3e1874ebc1f5d7e5c6d69a4f4505"
   license "MIT"
+  revision 1
   head "https://github.com/manimCommunity/manim.git", branch: "main"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any,                 arm64_sequoia: "052c82c53708a86c2ec03ac13d8c8504d524a34d3cdc648ef1a3a704d9b2b5ee"
-    sha256 cellar: :any,                 arm64_sonoma:  "4cb84e7b594cd5cf9a0d697167b2bd9f5c4d49b0558472fe9d2335bc6e8d9308"
-    sha256 cellar: :any,                 arm64_ventura: "fb89734574ccebed9b22a972b1c6b2289042fcfa33bf380005eadfa7058720f9"
-    sha256 cellar: :any,                 sonoma:        "8e2b70fa257adf0ecbe10c6c7024d14eb99f5a81cc0257ffddd1416069b5c64d"
-    sha256 cellar: :any,                 ventura:       "1868eb0cd025c10002c1c634185da4547a42264b07ace0e94728955efce39a74"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "4f282a4f41152c7b98c52066c949eb6e1098b21bd521b79b3d4e42ca24a84c1f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cdae0c1a543f2f4b6b60b2952f441027b36c89d11e5c66b1a187304e99d3981d"
+    sha256 cellar: :any,                 arm64_sequoia: "444b84bbef2c1f7eb7ca420eab9c7e607f534ae4af60d279387d2983931e08fb"
+    sha256 cellar: :any,                 arm64_sonoma:  "aa702435413ccd42951ff9f4555ebb4cf4d7ca0f098d761ab35108c2e1e30168"
+    sha256 cellar: :any,                 arm64_ventura: "eb566877493a0f742ecdd9f9aa05d63d9f400519db7c29133fde378aa6437290"
+    sha256 cellar: :any,                 sonoma:        "e24c88389813249996823e53c6d69eeea402d7b3e9320b45f1118b94b25c4584"
+    sha256 cellar: :any,                 ventura:       "613301101b7cffeae67d88ec3da34b0e44bd0d63bb22cad113183c95f4d19440"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "10ba13036cd5b5ef821bf23533f8024fa4b30f76d81fc8bfc46b655badba9d73"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "40cd1d0d696908d624e2a8ea5b50070117cd66d05a72af7c5f217cae71e54663"
   end
 
   depends_on "cmake" => :build # for mapbox_earcut
   depends_on "ninja" => :build
   depends_on "pkgconf" => :build
   depends_on "cairo" # for cairo.h
-  depends_on "ffmpeg"
+  depends_on "ffmpeg@7" # FFmpeg 8 needs av>=15.1.0, https://github.com/ManimCommunity/manim/pull/4385
   depends_on "fontconfig"
   depends_on "freetype"
   depends_on "glib"
@@ -220,7 +220,7 @@ class Manim < Formula
     end
     virtualenv_install_with_resources(without:)
 
-    generate_completions_from_executable(bin/"manim", shells: [:fish, :zsh], shell_parameter_format: :click)
+    generate_completions_from_executable(bin/"manim", shell_parameter_format: :click)
   end
 
   test do

@@ -1,9 +1,9 @@
 class Varnish < Formula
   desc "High-performance HTTP accelerator"
   homepage "https://www.varnish-cache.org/"
-  url "https://varnish-cache.org/_downloads/varnish-7.7.1.tgz"
-  mirror "https://fossies.org/linux/www/varnish-7.7.1.tgz"
-  sha256 "4c06c5c99680a429b72934f9fd513963f7e1ba8553b33ca7ec12c85a5c2b751a"
+  url "https://varnish-cache.org/_downloads/varnish-7.7.3.tgz"
+  mirror "https://fossies.org/linux/www/varnish-7.7.3.tgz"
+  sha256 "e96eeafc4cfe2a558ed2fb54f1e22be3a3d995f46f8c00da545d583aaef80236"
   license "BSD-2-Clause"
 
   livecheck do
@@ -12,13 +12,13 @@ class Varnish < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "fb5cbe8656ede605c0237b5547fd8597cc28f6610f7c6a0055eb4c1abce170f8"
-    sha256 arm64_sonoma:  "ffb66142d7b11573ae3678aeabb73a3562f4d88d1ed685275ec6bd2a455c1a96"
-    sha256 arm64_ventura: "83d569419f98c2f552bf12e7976933c06951923659c0c5f7e78cabd15145f802"
-    sha256 sonoma:        "be72b7f7e58cb4978f546ee7fef88b54e524217a4626712872933103a52c70f4"
-    sha256 ventura:       "d098652ecc801d17d010faf7e18ce1767773bd41c2b8fd8562657279f9ba506f"
-    sha256 arm64_linux:   "87f26a2116f5a9345eb1bdd23bf3573d27daafdfb93f5a160d1a32fc8cbed8bc"
-    sha256 x86_64_linux:  "58c14e678d32e15e03fb6f88bf4cc886244dd7e8d47521e57a97bce1c3c68d9f"
+    sha256 arm64_sequoia: "ed2e745c07dde91d8b7db4521187aafd7cf598dd9cc84d7642f7ab1bd408dec5"
+    sha256 arm64_sonoma:  "bf27e2caf53c14f1cb2bbab899b9eda77025f3246d99faa968548e91918c2e66"
+    sha256 arm64_ventura: "12082dc9354253a4e2641bc07383427d158ffc976bbbea65e1a23a53c186d4ca"
+    sha256 sonoma:        "d90ccf06cfcc1e990666cdc22a5d042d8bd3d4d4feb800b3fc707c223d3fa6fd"
+    sha256 ventura:       "976d770d0de09defe83d366aae79240f27a68c044735bdc8e89ac60aad4a6b03"
+    sha256 arm64_linux:   "5ace8a30ad386158d8c61898055ac6e75e3b438c2e16e97306d10354fdd9eab6"
+    sha256 x86_64_linux:  "6f3f69bab6e9cddeec6b69105fb6fecefc93e72f86256dcc36a6c3bb2a94408c"
   end
 
   depends_on "docutils" => :build
@@ -64,7 +64,7 @@ class Varnish < Formula
 
   service do
     run [opt_sbin/"varnishd", "-n", var/"varnish", "-f", etc/"varnish/default.vcl", "-s", "malloc,1G", "-T",
-         "127.0.0.1:2000", "-a", "0.0.0.0:8080", "-F"]
+         "127.0.0.1:2000", "-a", "127.0.0.1:8080", "-F"]
     keep_alive true
     working_dir HOMEBREW_PREFIX
     log_path var/"varnish/varnish.log"

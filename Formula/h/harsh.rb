@@ -1,18 +1,18 @@
 class Harsh < Formula
   desc "Habit tracking for geeks"
   homepage "https://github.com/wakatara/harsh"
-  url "https://github.com/wakatara/harsh/archive/refs/tags/v0.10.22.tar.gz"
-  sha256 "941198dae44835635836459e8a682a13aa4ca5aed334f5adcd8b708746f5c366"
+  url "https://github.com/wakatara/harsh/archive/refs/tags/v0.11.1.tar.gz"
+  sha256 "6b6712eea2e27bb0ed195355bc113b3820fc9bc60f55d24c415832489056abdc"
   license "MIT"
   head "https://github.com/wakatara/harsh.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e2f582ac18703ce292d79434f447cbc34a9737e9126dd75ffc309215ecee043d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e2f582ac18703ce292d79434f447cbc34a9737e9126dd75ffc309215ecee043d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e2f582ac18703ce292d79434f447cbc34a9737e9126dd75ffc309215ecee043d"
-    sha256 cellar: :any_skip_relocation, sonoma:        "2c415d3f039f7aef867af13ffe3cfe9a7e881ec567ba12329baf8a438465373b"
-    sha256 cellar: :any_skip_relocation, ventura:       "2c415d3f039f7aef867af13ffe3cfe9a7e881ec567ba12329baf8a438465373b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "768d4bad34551928261f87b117c1a5ff7e10b19647b9dad0fe0621097327f5ce"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f911075a49eefb361ea404761f7597d6a27d3c8812fdcab8e6485fc402c2751e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f911075a49eefb361ea404761f7597d6a27d3c8812fdcab8e6485fc402c2751e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f911075a49eefb361ea404761f7597d6a27d3c8812fdcab8e6485fc402c2751e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bb59cd374d9e6ad41bf837d6c29c2c365d819fbd74f003d192351f4455e5e412"
+    sha256 cellar: :any_skip_relocation, ventura:       "bb59cd374d9e6ad41bf837d6c29c2c365d819fbd74f003d192351f4455e5e412"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e02d2d447310412c6509603983626e8a3336ebaedf73b33618d0c188fa38aa76"
   end
 
   depends_on "go" => :build
@@ -22,7 +22,7 @@ class Harsh < Formula
   end
 
   test do
-    assert_match "Harsh version #{version}", shell_output("#{bin}/harsh --version")
+    assert_match version.to_s, shell_output("#{bin}/harsh --version")
     assert_match "Welcome to harsh!", shell_output("#{bin}/harsh todo")
   end
 end

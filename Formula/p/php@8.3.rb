@@ -2,24 +2,24 @@ class PhpAT83 < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.3.23.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.3.23.tar.xz"
-  sha256 "08be64700f703bca6ff1284bf1fdaffa37ae1b9734b6559f8350248e8960a6db"
+  url "https://www.php.net/distributions/php-8.3.25.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.3.25.tar.xz"
+  sha256 "187b61bb795015adacf53f8c55b44414a63777ec19a776b75fb88614506c0d37"
   license "PHP-3.01"
 
   livecheck do
-    url "https://www.php.net/downloads"
+    url "https://www.php.net/downloads?source=Y"
     regex(/href=.*?php[._-]v?(#{Regexp.escape(version.major_minor)}(?:\.\d+)*)\.t/i)
   end
 
   bottle do
-    sha256 arm64_sequoia: "e2ff41a7aaf7222090f0fe2e753f0bf065544195406bc7143e57f2c67e6c3896"
-    sha256 arm64_sonoma:  "8f3765b2bc343652fc1dc5e677983d445e807441596708e16a5f5663edbc7fa1"
-    sha256 arm64_ventura: "ba9e3166940e1a860326a4846c7e84a608e0256916aebcc3ce2f06fecef16c55"
-    sha256 sonoma:        "b04653d33c0080a359b3ccddcac2db8604b8b4347ce2626b45505ada6f1c5da7"
-    sha256 ventura:       "e4330e1f6ada3e51f75c04c103c062a83cc0521d8ad3e4d4eeb85cf570b93a14"
-    sha256 arm64_linux:   "48912af4324d93c8810cc077ba3dc54d532a0322211eaaa222bb593a5cbee988"
-    sha256 x86_64_linux:  "4a3cc966cc3f9c87516673e1f2bcea3ae600e63542b4606c9948f19c5f56faa7"
+    sha256 arm64_sequoia: "3f85f3c6f5f4670985ef97d3632fd32faaa0c5b255250bee24aa835f4d776fd0"
+    sha256 arm64_sonoma:  "26ebd58fae4d7e98e067fce77681f2922237a9bfb6f772784988ee524d111a23"
+    sha256 arm64_ventura: "496995cd5d1599002aded6ba5d1a181cdcdc7efe8bb39de269c564ccd62553bf"
+    sha256 sonoma:        "b3225e8c29481cbcfb718f851d25fb9553077d086f735a8474498267ae35ddaa"
+    sha256 ventura:       "07a3ea531e3e26d04227038497446f333e2e8055135a9d6fb3d5e97aec854670"
+    sha256 arm64_linux:   "b8888c2dfed5c157868d11d1014e06e4f2b3dd34fc56557683dae6df22ffcfc2"
+    sha256 x86_64_linux:  "b018aae937b4276a2e1ee37be6f3225cb0395570376572ab76b26131c7a34cbf"
   end
 
   keg_only :versioned_formula
@@ -81,7 +81,7 @@ class PhpAT83 < Formula
 
       # apxs will interpolate the @ in the versioned prefix: https://bz.apache.org/bugzilla/show_bug.cgi?id=61944
       s.gsub! "LIBEXECDIR='$APXS_LIBEXECDIR'",
-              "LIBEXECDIR='" + "#{lib}/httpd/modules".gsub("@", "\\@") + "'"
+              "LIBEXECDIR='" + "#{lib}/httpd/modules".gsub("\\", "\\\\").gsub("@", "\\@") + "'"
     end
 
     # Update error message in apache sapi to better explain the requirements

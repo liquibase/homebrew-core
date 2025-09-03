@@ -1,19 +1,19 @@
 class Kwctl < Formula
   desc "CLI tool for the Kubewarden policy engine for Kubernetes"
   homepage "https://www.kubewarden.io/"
-  url "https://github.com/kubewarden/kwctl/archive/refs/tags/v1.26.0.tar.gz"
-  sha256 "de4dd48a3765a7f186412d2a054c045714d663480a411402fcf4dd16543a2224"
+  url "https://github.com/kubewarden/kwctl/archive/refs/tags/v1.28.1.tar.gz"
+  sha256 "e48a34126e54f90a012334247dd2c6b5d05703a43596edc866d9e4f1c19d4046"
   license "Apache-2.0"
   head "https://github.com/kubewarden/kwctl.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8403bd9a9455cc509e8f19883d625367aa19970fccba4356f5840721ca1068f0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "055e87c984e6827749ba52ea53ad71b1709a337a3af2f2a3e9c29094de81d057"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "042de8495032a5c492e95e1c499bcf401af52dfbda407a68f03e31af8bcf132c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "6dbf407d0f210ca4a4fc68039929cf7ddd5f0d6826cf8bab90b42df52400e135"
-    sha256 cellar: :any_skip_relocation, ventura:       "308e110f7e5bedb8714700ed872f2f0586b7f0f87e70ec341ada3e120f50bc95"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cddc4db844b34e2d29b703c157bbd3dd8eed7316fe6d1afcc6176a2ae0b70c41"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dac45ac1acd07349f5494b5bd26c0953958571547301ce8f345587f7360c306f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a8b33fe5d4b78a1a74d821bdedd936ee656b0074c971abc073b6e770d3dd8579"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6a0c8c168b6d51198ee774b9cf6558172a184caf286b573ab2ad3ed3be06ed79"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8d87cd2e60bddd5bac2bc9952a0aae743c81e425bf4fb359053e7863f55d773a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "68f7c879a1cc8e4eb8dc60c8fdae1e1a76f4e6e8f1fb73dbb5491d3c1283e1e1"
+    sha256 cellar: :any_skip_relocation, ventura:       "fc85542137f0cb7ecc103759cfb8b5e83abf95a147e40b59a385b77ba2a88475"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "2d348551d9406760e8cc9ae076134d6721749d1a91ad1820fa1ead54b3968994"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9bec86eae715aa814848e406c1aa30eed9126bac9b1a57af88d74b21bab8e73e"
   end
 
   depends_on "pkgconf" => :build

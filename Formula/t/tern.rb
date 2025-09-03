@@ -8,7 +8,7 @@ class Tern < Formula
   license "BSD-2-Clause"
   head "https://github.com/tern-tools/tern.git", branch: "main"
 
-  no_autobump! because: :requires_manual_review
+  no_autobump! because: "`update-python-resources` cannot determine dependencies"
 
   bottle do
     rebuild 5
@@ -162,13 +162,13 @@ class Tern < Formula
 
   test do
     output = if OS.mac?
-      shell_output(bin/"tern report --image alpine:3.13.5 2>&1", 1)
+      shell_output("#{bin}/tern report --image alpine:3.13.5 2>&1", 1)
     else
-      shell_output(bin/"tern report --image alpine:3.13.5 2>&1")
+      shell_output("#{bin}/tern report --image alpine:3.13.5 2>&1")
     end
     assert_match "rootfs - Running command", output
     assert_path_exists testpath/"tern.log"
 
-    assert_match version.to_s, shell_output(bin/"tern --version")
+    assert_match version.to_s, shell_output("#{bin}/tern --version")
   end
 end

@@ -1,8 +1,8 @@
 class Superfile < Formula
   desc "Modern and pretty fancy file manager for the terminal"
   homepage "https://superfile.netlify.app/"
-  url "https://github.com/yorukot/superfile/archive/refs/tags/v1.3.1.tar.gz"
-  sha256 "9903ba151abee629e6da4126cb4f6c73b693112632be366b8fab5ff17d15f14d"
+  url "https://github.com/yorukot/superfile/archive/refs/tags/v1.3.3.tar.gz"
+  sha256 "f50f4e9c56dff67d3682216950db164fc6caaa1418049c59b42bf5e65d31d04f"
   license "MIT"
 
   # Upstream creates releases that use a stable tag (e.g., `v1.2.3`) but are
@@ -14,12 +14,12 @@ class Superfile < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5689f22087e482b856c109aacf8cd6a1f51211d859dd823c82bd59ceaad21d47"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "710ac426a1439694849b20871b5c58b28eabd2c6f05988ae47684751245cadd9"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "5342aeafd08ef3008bc0b7c68c8ee33684bd0b2742738dfabef8115b4d969b23"
-    sha256 cellar: :any_skip_relocation, sonoma:        "dd1666051061f274e7db33614561f001c486f2fc3eb087304d303e1fd06f7188"
-    sha256 cellar: :any_skip_relocation, ventura:       "4935c60a8e658eadbc4ce0bbd485ee29b4f416808ac456279c8b948ee1644cba"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6c2dd35dde21859d5274d373dfc5f8f2b69d5115580d44ff8bb5e756304a6bae"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2effb87953c80ab50e0ab351599c4d9c1f3c89300a1451f8113bb4152d025567"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b823bdd45f7c323030ce9c81fa718443128388012bcbe5f1ba63f7b4f874f6cf"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "851d247dd23aa52231ea96cc9540811df8e410d205df8971f8cc4064a3f90ca4"
+    sha256 cellar: :any_skip_relocation, sonoma:        "9d0a12f90d183d1790101dd58b524550046b93a46e334d87a2dac2611447d4ab"
+    sha256 cellar: :any_skip_relocation, ventura:       "f0d0a9b2f4ea1cedc0a54e58eb5b09942d4ca5ad6bf56e7144afe08597791b76"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "49271ebc391f9d5ea927c28f45cebb7ab8378d31952fd6fd2743c04b935ef828"
   end
 
   depends_on "go" => :build

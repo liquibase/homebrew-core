@@ -1,18 +1,18 @@
 class SpirvLlvmTranslator < Formula
   desc "Tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   homepage "https://github.com/KhronosGroup/SPIRV-LLVM-Translator"
-  url "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v20.1.4.tar.gz"
-  sha256 "f6c414f9384c8f68775d9461e55e7c492f01759f5a1754f30dad4cbfb049c7d7"
+  url "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v21.1.0.tar.gz"
+  sha256 "4f7019a06c731daebbc18080db338964002493ead4cfb440fef95d120c50a170"
   license "Apache-2.0" => { with: "LLVM-exception" }
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "43b9ddacad2ee9e385a07bd12252d071267a027ef005bfbf20ddbc6e1ab3cfca"
-    sha256 cellar: :any,                 arm64_sonoma:  "34cfbbf465218a1a52f8d7f3b6b9d3f8b88a633a721bb26fe06b8e371e96ccdd"
-    sha256 cellar: :any,                 arm64_ventura: "9ea2f2f993d3344ff5d5afe074b6d0014beae2a57a24ff8ff15ca872ca4e383d"
-    sha256 cellar: :any,                 sonoma:        "ae6d69181197cb0e7185eb3a7becf8c194da6187e73a2cff0e67dcb00ede4358"
-    sha256 cellar: :any,                 ventura:       "89c9c6a6f68b5945ae4a77a4e45ef903aef60cf1e0a950c9702eccd0bdcfbd27"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "e4a14e131330aa2e00209a1e50944e08f70295972fbe5a3bc751b3e7654001dc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b6d980ad9fa4920725a3de1b8678200580f79ece3eb7c5b2a332a60d3b4a9cae"
+    sha256 cellar: :any,                 arm64_sequoia: "3bea2165fe9c6efb311333356473424b6bb6271c74add1502d5b26bdb7f5750a"
+    sha256 cellar: :any,                 arm64_sonoma:  "eed9693d15ad1bfdd1d2446a95a8d0649aecb2ef9fe6f1b7e6e714e99401d5b6"
+    sha256 cellar: :any,                 arm64_ventura: "8deefd61c826963f89e93f45c28b0f1bbae6b2eb6fef2bdd6116b2b5f36167d3"
+    sha256 cellar: :any,                 sonoma:        "b076d4727f05f92dd434594d8acd7f1a45206bbc96b1fb59aef5e7c5f9b0119f"
+    sha256 cellar: :any,                 ventura:       "194e3a3a18c5abe679de15088328fe32bcf4436cd784e72ea6fd6a347e9f1ca1"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e9a3660633b0bf3750482f4ab47d3da95aa4c29d8e623902498e6a29b47876f0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1b6b6691faf9a480ed428e8ad26ffd48b38493397a98ea3e1a8671fcab56b7ff"
   end
 
   depends_on "cmake" => :build

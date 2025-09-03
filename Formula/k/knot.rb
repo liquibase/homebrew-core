@@ -1,8 +1,8 @@
 class Knot < Formula
   desc "High-performance authoritative-only DNS server"
   homepage "https://www.knot-dns.cz/"
-  url "https://knot-dns.nic.cz/release/knot-3.4.7.tar.xz"
-  sha256 "dd346ca6f3afabcdc5e9ba09dd667b010590bb66a42f4541021fb9d6f073dacc"
+  url "https://knot-dns.nic.cz/release/knot-3.4.8.tar.xz"
+  sha256 "6730a73dbfc12d79d8000ffe22d36d068b7467e74bee1eb122ac4935ecea49f9"
   license all_of: ["GPL-3.0-or-later", "0BSD", "BSD-3-Clause", "LGPL-2.0-or-later", "MIT"]
 
   livecheck do
@@ -11,13 +11,13 @@ class Knot < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "1fb8278e561ed7d9a99f4ba23c25a88b537dd237e9db452e4b62717c48130841"
-    sha256 arm64_sonoma:  "5234cf8758edf2892799102953dd273394716cc5be1a9841012b269da540d8cb"
-    sha256 arm64_ventura: "a7744ed3ae7ac074e555e500273763bcf8243535b211ee9e2d6bb70dd70ca044"
-    sha256 sonoma:        "bb04dda43aa53b3dbda4ef5aa899c81cccceb6dcaf2cf927a3f4b74a7d24ddc2"
-    sha256 ventura:       "553cdc9c373828a8fb90b87d6f73723f294dc3a0a5021d18eebdccc7b4396750"
-    sha256 arm64_linux:   "9e9a49395d66917fda7c89d86d2df83def6d3d91c4f3a733af2dcf144e6dd806"
-    sha256 x86_64_linux:  "c1f15009c4df1619d610ae555a92c0e1cec16bb65f03183bc7fc25e849127e79"
+    sha256 arm64_sequoia: "e43d4bacf0ad15d1af2e4ae476aba42afac58c882c93e379185f0c1704f4b254"
+    sha256 arm64_sonoma:  "c0c48f14b870826e0a2bc0a8f8890cec65ffae4f2248b3905381732015ef7606"
+    sha256 arm64_ventura: "c3d5026a5980636a322b8eb6af567223695203e352b100273ac492734e6ee4bd"
+    sha256 sonoma:        "d869f8b3e6bc83d0a9e0d2184f41817fda21bf5e928a181e79f5d7461821f573"
+    sha256 ventura:       "d81e4175eedb24395ff43b1818c33f40321c733af0298d58ec9fffe50a181e15"
+    sha256 arm64_linux:   "52f6759f39c941baf95849c3f962a5e44a13eaa6987263e45042ee0cedd7ea2f"
+    sha256 x86_64_linux:  "9222773acdc2894206692782ed44f515f9b0397cfcb9707abe8917a546a863a9"
   end
 
   head do
@@ -69,7 +69,7 @@ class Knot < Formula
     <<~EOS
       server:
         rundir: "#{var}/knot"
-        listen: [ "0.0.0.0@53", "::@53" ]
+        listen: [ "127.0.0.1@53", "::@53" ]
 
       log:
         - target: "stderr"

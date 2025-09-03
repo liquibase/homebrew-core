@@ -2,19 +2,19 @@ class Etcd < Formula
   desc "Key value store for shared configuration and service discovery"
   homepage "https://github.com/etcd-io/etcd"
   url "https://github.com/etcd-io/etcd.git",
-      tag:      "v3.6.1",
-      revision: "a4708beb0f5dfba937145762516ac98f15797940"
+      tag:      "v3.6.4",
+      revision: "5400cdc39b829ee5dadacb77002256cf86357da1"
   license "Apache-2.0"
   head "https://github.com/etcd-io/etcd.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e5debf906d36e65bfdd936fdf3b651b4877a19d68989ad099cbb5b27d14086c0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e5debf906d36e65bfdd936fdf3b651b4877a19d68989ad099cbb5b27d14086c0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e5debf906d36e65bfdd936fdf3b651b4877a19d68989ad099cbb5b27d14086c0"
-    sha256 cellar: :any_skip_relocation, sonoma:        "6ce8aa68745fc23294b4858e1ccfeb45c6b745dca4bafbef7013bc0502d815b3"
-    sha256 cellar: :any_skip_relocation, ventura:       "6ce8aa68745fc23294b4858e1ccfeb45c6b745dca4bafbef7013bc0502d815b3"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "b09d9b69ee4e12d87d2fac5d8dc5e2f9c79dab763aca591264e2fd57e4ab0f11"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "625bb6f50e2ee4ff0be818f89327da7780dd0b2ca1170fd63287e5340c46b154"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "08a2472f8be75f7a366c3cb5152b5c7851baf1500025cc63da143a120fa7e313"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "08a2472f8be75f7a366c3cb5152b5c7851baf1500025cc63da143a120fa7e313"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "08a2472f8be75f7a366c3cb5152b5c7851baf1500025cc63da143a120fa7e313"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d3cb603edd8c51b88965799e288f4f2b13a5474d783a492026cc89455ada0424"
+    sha256 cellar: :any_skip_relocation, ventura:       "d3cb603edd8c51b88965799e288f4f2b13a5474d783a492026cc89455ada0424"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "24dd085dc7b8d7fb59409d80ded252887c9d85f28a8ac8287d4e9ecd7e525434"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "53a7c85c5a5ded8f6093aa0318508032035c49dbd83987e1423d241ec84709c9"
   end
 
   depends_on "go" => :build

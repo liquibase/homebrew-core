@@ -1,10 +1,9 @@
 class Pdnsrec < Formula
   desc "Non-authoritative/recursing DNS server"
   homepage "https://www.powerdns.com/powerdns-recursor"
-  url "https://downloads.powerdns.com/releases/pdns-recursor-5.2.2.tar.bz2"
-  sha256 "f9c95274231ee3c5c94197f6d05011d55abf06b2937535ba8e78e24ea4fbbd6e"
+  url "https://downloads.powerdns.com/releases/pdns-recursor-5.3.0.tar.xz"
+  sha256 "6b9f85b6df17c339cbff448d9824bee6da6a5cf884abd99835d1dafdccdda0e6"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
-  revision 1
 
   livecheck do
     url "https://downloads.powerdns.com/releases/"
@@ -12,16 +11,17 @@ class Pdnsrec < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "f1c32a790a3d511170a0d43ca6a633560ae5fc4b4a8f4af7e71da0df25a85b7c"
-    sha256 arm64_sonoma:  "deeffd24ff65163be3517d0aefd874e7188e38fd32676350cab0bf63f0fda980"
-    sha256 arm64_ventura: "30ccac5a2d9a95a3fdea53f665ae9c1e22112d1fd4414f3dc831764e729ac1c4"
-    sha256 sonoma:        "cdafb6f30983bd1ac6290f2eb38a8b850e2219e47b9ebf7b51eb8656e49c23b0"
-    sha256 ventura:       "a6d7f49b060d760b96a7de7bd3742a80b6fb66c0a04705e97191657611c58b62"
-    sha256 arm64_linux:   "8b8092a66706010bbfe1b6f20cdfe56135bdf8d8fd7e2fdab253a5a7baf62943"
-    sha256 x86_64_linux:  "337e469971505d70d1aebd084b7ff273f69397d0c4efc57f2850d0f499cba161"
+    sha256 arm64_sequoia: "6af01a0b02114906fa491385259e9c0500b2e8ea26fcb0391a0249f6628f4115"
+    sha256 arm64_sonoma:  "f46a8cb127071ff5115a18b7b60a9b351a55b0a827a54523ef819a8843d78326"
+    sha256 arm64_ventura: "16c1f711c5c575ed8ba69d01b9dd1d6e46fccc4291ac352d515d0e46253a9b29"
+    sha256 sonoma:        "fec55e5d001e2fb771789a7eb7b7b881d2dd992edd8d6c46b49f25a5bb0ab56d"
+    sha256 ventura:       "109ccc1f50960db7619a810c0f0fa82865496cbf7dce0cdf5371656777a11de3"
+    sha256 arm64_linux:   "4bf7b1e6155c148ccc40464fab0478bb3867d4dba0436e780f5bf23a21aec583"
+    sha256 x86_64_linux:  "4191d1f1d33a3bb5de04198aa318bf8dd972505c4a95610248ea3e39ce354c9e"
   end
 
   depends_on "pkgconf" => :build
+  depends_on "python@3.13" => :build
   depends_on "rust" => :build
   depends_on "boost"
   depends_on "lua"

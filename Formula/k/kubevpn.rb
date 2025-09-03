@@ -1,19 +1,19 @@
 class Kubevpn < Formula
   desc "Offers a Cloud-Native Dev Environment that connects to your K8s cluster network"
   homepage "https://www.kubevpn.dev"
-  url "https://github.com/kubenetworks/kubevpn/archive/refs/tags/v2.8.0.tar.gz"
-  sha256 "f3a9b545a78d58c52836611c0b3ebbed5df034e1f495966f1b8f681c3730919b"
+  url "https://github.com/kubenetworks/kubevpn/archive/refs/tags/v2.9.7.tar.gz"
+  sha256 "e3ba565f4e5411ff52b2b68929eddbcca3e91a180bd4c3491c3d9023e68e064d"
   license "MIT"
   head "https://github.com/kubenetworks/kubevpn.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "62d960813dcc23e231b78596c22e9fbbe985330e6d074fda79b775cf57b43a5a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6ebe260f2804450997b8723dadc59412fac0d79369f7d23c73d7916a1ac0f139"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "1e082c095b934904385656a662131d5871727931529d1bc0860f6f7912cc4b7f"
-    sha256 cellar: :any_skip_relocation, sonoma:        "d96b1bd4b07eca236f5dd0852b3218aff2af273f025acd349c766135df893335"
-    sha256 cellar: :any_skip_relocation, ventura:       "7cd0d245f988339ad6f38585a507f667f8c5ad62a4effd17d0450a2a67d9b644"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "82462b5fd9bbef86c6999a57ff4587a398bf3e1bf7ff1dc5e2f05ff48ba9986e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8cce44af6ec710f071de628528876966f6ec6c7469ea1d5ecd31342c3fb3f734"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "72931f97f1f5bdce3e8df74e98013e9e05ca727f3b9676dc28ee07ee816e149a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dc7589b468b9d7ae04f172a6c169cf797c1fcd952c5fd794914debc727576cf4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0590cb9e03ebc6e653382b429d4a8cf1de4ffb4edb65fc242fc8ac389150fa28"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7617b6edd35c4df2eaf484847172bbd882a21cf18ccce9db71c0e9559d1e2c64"
+    sha256 cellar: :any_skip_relocation, ventura:       "ac199d4de224de747b3eb422e7f73b3093bd90b1ad468b4c1c4e90fce21b085b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "16ea8bb1dc16904099000ae0b61661b7b7ad037e190fe06b4aad62448f139452"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "725d4a75f0243c9ba35451c9ad03522365ece3f8332a2fb09ed6546c7cbf9fe8"
   end
 
   depends_on "go" => :build

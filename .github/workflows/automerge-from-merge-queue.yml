@@ -264,7 +264,7 @@ jobs:
           cask: false
           test-bot: false
 
-      - run: brew pr-publish "$PR"
+      - run: brew pr-publish --branch=main "$PR"
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ needs.status-check.outputs.pull-number }}

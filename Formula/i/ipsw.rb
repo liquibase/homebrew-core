@@ -1,8 +1,8 @@
 class Ipsw < Formula
   desc "Research tool for iOS & macOS devices"
   homepage "https://blacktop.github.io/ipsw"
-  url "https://github.com/blacktop/ipsw/archive/refs/tags/v3.1.621.tar.gz"
-  sha256 "bde0adeb91f076aa4e34e0c0e520ae9e3e4edc3f58a654bb245ecdea22f5a73c"
+  url "https://github.com/blacktop/ipsw/archive/refs/tags/v3.1.624.tar.gz"
+  sha256 "bfd6154191a5995c96aece8afc08c160c1a32c53dd26b443a358a41bcabdcf0d"
   license "MIT"
   head "https://github.com/blacktop/ipsw.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Ipsw < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3b4799c5578ab48a6ef58161adb1cc67a4f237622a3f088c39365e68809c650c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1747350ac301937ff4d5d61bcca60c39720a46980f64783f798dd985e012e13b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e8eb9693386161cdfd726868dfc09195557573718b5ff1063f3e0d69fedc043d"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ca060535eba7b153690de978c5863f02066918c14773082bf94a2da9c510224e"
-    sha256 cellar: :any_skip_relocation, ventura:       "e88de8770a1617140fac697942afa41bbd61cfad1342a8e696a959aa9642fa17"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "cede7b61d668fac205a0add6266769f86aed924f5437bb30325307edf58120b8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4ba02dd42f62dde7c84888422c7e904b27f6374296113af3519a831112d3c314"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e63743dba9d009ca1a45d7b379f3cb4745cec5292a4acbe889da8edf5814c189"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4a88a8c374ca6d7dc8268a89c44891cdaf0cc6f095228843529a8e4893838386"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f81fb8560f9c6bf8f691c2434c05b9904ba04f20c7c85be10ce67a0269aaa5dc"
+    sha256 cellar: :any_skip_relocation, sonoma:        "12c5dfa012eeaa4419c2bbc02894231a876feff3e33085fea15bf2024d648992"
+    sha256 cellar: :any_skip_relocation, ventura:       "12f31168eea5a7cb9152115f1a0dd70ecc61a4d9d30d564e4e9d8a82dac2cef5"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "99bfadf6d94b4f2a47e82eff1c8971ec4bfb3eb713c853d0c85440782b69ef8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "57563fa37061035a07d5311fbf65eb2bb3d83eb7187cc2e1881ea257477e9367"
   end
 
   depends_on "go" => :build
@@ -34,8 +34,8 @@ class Ipsw < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output(bin/"ipsw version")
+    assert_match version.to_s, shell_output("#{bin}/ipsw version")
 
-    assert_match "MacFamily20,1", shell_output(bin/"ipsw device-list")
+    assert_match "iPad Pro (12.9-inch) (6th gen)", shell_output("#{bin}/ipsw device-list")
   end
 end

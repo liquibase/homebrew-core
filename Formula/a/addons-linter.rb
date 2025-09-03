@@ -1,18 +1,13 @@
 class AddonsLinter < Formula
   desc "Firefox Add-ons linter, written in JavaScript"
   homepage "https://github.com/mozilla/addons-linter"
-  url "https://registry.npmjs.org/addons-linter/-/addons-linter-7.17.0.tgz"
-  sha256 "f2f528beab8d2f3a1e61d6b4bd7b639b993e91844708cc946842c61b74039924"
+  url "https://registry.npmjs.org/addons-linter/-/addons-linter-7.19.0.tgz"
+  sha256 "d31c6c10efdd0c8a12759a5438176cbf093847cd0c36eec48885e6a88991cbc9"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9da46ec379c57c1fd7c94001555e6c74d9c414ddf36a036cfc837bfb22569e86"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9da46ec379c57c1fd7c94001555e6c74d9c414ddf36a036cfc837bfb22569e86"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "9da46ec379c57c1fd7c94001555e6c74d9c414ddf36a036cfc837bfb22569e86"
-    sha256 cellar: :any_skip_relocation, sonoma:        "cd43e16e29dcf895544db836b46a466780a9a8476ffbf3642fcd066be5eb7f87"
-    sha256 cellar: :any_skip_relocation, ventura:       "cd43e16e29dcf895544db836b46a466780a9a8476ffbf3642fcd066be5eb7f87"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "9da46ec379c57c1fd7c94001555e6c74d9c414ddf36a036cfc837bfb22569e86"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9da46ec379c57c1fd7c94001555e6c74d9c414ddf36a036cfc837bfb22569e86"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "2d221cd65220f947418f3a991391129aa05b85d54c9673e4cf20d97e3d8e5ad2"
   end
 
   depends_on "node"
@@ -38,7 +33,6 @@ class AddonsLinter < Formula
         }
       }
     JSON
-
     output = shell_output("#{bin}/addons-linter #{testpath}/manifest.json 2>&1")
     assert_match "BAD_ZIPFILE   Corrupt ZIP", output
   end

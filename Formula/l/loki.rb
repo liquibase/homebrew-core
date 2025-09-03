@@ -1,8 +1,8 @@
 class Loki < Formula
   desc "Horizontally-scalable, highly-available log aggregation system"
   homepage "https://grafana.com/loki"
-  url "https://github.com/grafana/loki/archive/refs/tags/v3.5.1.tar.gz"
-  sha256 "d360561de7ac97d05a6fc1dc0ca73d93c11a86234783dfd9ae92033300caabd7"
+  url "https://github.com/grafana/loki/archive/refs/tags/v3.5.3.tar.gz"
+  sha256 "0a1b9a001ccde90cf870118ccd02a5be4f7ededbac4c8c2ff556f0380cbc559f"
   license "AGPL-3.0-only"
   head "https://github.com/grafana/loki.git", branch: "main"
 
@@ -12,12 +12,12 @@ class Loki < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "79d76962413f065f9e1d9a9eb5afb25f3c03fc3a4cf6145cf22789b230e01ab4"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "511238d11ba14eb2fb571f017780a3e15c711607190ddb8a6cde6de338c81a06"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "c09f1684a1cf09698251550ee42202a33d9afc18537f330f83eb78be38a04f63"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b1d7b27e0684968299c4dcc0a2bd263974d02c27156c99b11a8533dd4048fd1f"
-    sha256 cellar: :any_skip_relocation, ventura:       "24fc02da749458f95bfe6ea226b2d1ed1eccf00f912c4a84bade4424fc9b9130"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6d4daf5f49d2a1d30173f2ef89b1908fb97bfc7cf0a13f8d63db5c5634aac768"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5b6e0eba5a499459004185f254909ad080824863dd7d624c00dbbdf3711e04c7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "31a4c8f23baf1a19d51a24c0724f687cd0ad6e2b5bd0fd1d95e94864d10cc6b4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "761fcea56505e6ff564a6770a808c9ca73681609b672528d543201d638d7d51f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b0e0c9455e38f19d0a77c7cd8f80bc80627de2cd248dfe1877e29377fc55bf09"
+    sha256 cellar: :any_skip_relocation, ventura:       "7918659acf50c654de62b3e800e4e086ba5c1b103426216c519e8e7ec4a05c4f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "01ff8d774462972bcc026112f11e9b537a01e0c3fc1c02ecc6a93b59560fa4b8"
   end
 
   depends_on "go" => :build

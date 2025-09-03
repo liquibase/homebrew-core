@@ -1,21 +1,20 @@
 class Binutils < Formula
   desc "GNU binary tools for native development"
   homepage "https://www.gnu.org/software/binutils/binutils.html"
-  url "https://ftp.gnu.org/gnu/binutils/binutils-2.44.tar.bz2"
-  mirror "https://ftpmirror.gnu.org/binutils/binutils-2.44.tar.bz2"
-  sha256 "f66390a661faa117d00fab2e79cf2dc9d097b42cc296bf3f8677d1e7b452dc3a"
+  url "https://ftpmirror.gnu.org/gnu/binutils/binutils-2.45.tar.bz2"
+  mirror "https://ftp.gnu.org/gnu/binutils/binutils-2.45.tar.bz2"
+  sha256 "1393f90db70c2ebd785fb434d6127f8888c559d5eeb9c006c354b203bab3473e"
   license all_of: ["GPL-2.0-or-later", "GPL-3.0-or-later", "LGPL-2.0-or-later", "LGPL-3.0-only"]
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
-    sha256                               arm64_sequoia: "d536a93de1561cffb928d198ac1fb48a786baa6ed61cc8e2d0fdc6af5bf72801"
-    sha256                               arm64_sonoma:  "72cfbc33daaba41277600107997beb41274f2725ee06e1d335c42209d000aa63"
-    sha256                               arm64_ventura: "4101f3e3a14a52f49d9bc7c351b39b906acf62d37dc3d572ed810959a0bfa192"
-    sha256                               sonoma:        "70c843be6cdcc54590c4e5a7f27ea5cd2604bfc0cb60eba86e519b9b7420bcf5"
-    sha256                               ventura:       "268c62a8bffcb217e0756adf307af666911ab3d9596e660652680363057dc2da"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "6e0554ddadbcca0412f3ee09b452c4fb9c01f6ad0ef3bdc3d28e15b6249c3b5d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ea2efa458ca43f31bb2ce2588b8c095849e6145791a2212cec7df1ae873684c"
+    rebuild 1
+    sha256 arm64_sequoia: "3fb936ff0d64e4bc3530ab07f83417f5dea8c098549ec506f19f1c6ae4962cb6"
+    sha256 arm64_sonoma:  "1a6356d10575b843eafe84253ba51c147334239b37e02d99288d998466912471"
+    sha256 arm64_ventura: "4a1b661cba6a910e35d0691d2d1dda1ed6337e212fb6237a6189dfa99bb45888"
+    sha256 sonoma:        "fb94a53dfab0618b68dcf429dfcd54d5854f74bff87225dc2f6465d9bb278f07"
+    sha256 ventura:       "96dcff59ccbb203e0fa8ccb7a36bc9eaba8fe6a63010bbb77f1238df951bce78"
+    sha256 arm64_linux:   "9d452137d4cfe39d4edbf7e9ae47389039345a3ac6ec85e9b3bcdca6911f3b75"
+    sha256 x86_64_linux:  "a6a1fca273e6ac2ed2309c0f0c4180cf10fae283bc303c58da8ce3771598c1b3"
   end
 
   keg_only "it shadows the host toolchain"
@@ -25,6 +24,8 @@ class Binutils < Formula
 
   uses_from_macos "bison" => :build
   uses_from_macos "zlib"
+
+  skip_clean "etc/ld.so.conf"
 
   link_overwrite "bin/dwp"
 
@@ -63,9 +64,13 @@ class Binutils < Formula
       bin_files = bin.children.select(&:elf?)
       system "strip", *bin_files, *lib.glob("*.a")
     end
+
+    # Allow ld to find brew glibc. A broken symlink falls back to /etc/ld.so.conf
+    (prefix/"etc").install_symlink etc/"ld.so.conf" if OS.linux?
   end
 
   test do
     assert_match "Usage:", shell_output("#{bin}/strings #{bin}/strings")
+    assert_predicate prefix/"etc/ld.so.conf", :symlink? if OS.linux?
   end
 end

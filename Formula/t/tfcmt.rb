@@ -1,18 +1,18 @@
 class Tfcmt < Formula
   desc "Notify the execution result of terraform command"
   homepage "https://suzuki-shunsuke.github.io/tfcmt/"
-  url "https://github.com/suzuki-shunsuke/tfcmt/archive/refs/tags/v4.14.7.tar.gz"
-  sha256 "a4c7407bded6d9d745872fa0813c6dee832bd28d6697a13416d5cf8cc6db4254"
+  url "https://github.com/suzuki-shunsuke/tfcmt/archive/refs/tags/v4.14.10.tar.gz"
+  sha256 "3468fbfe49809acbce8ed4475cd90975c991c8dfa1dcddb82fc6f4ef4baa5c2b"
   license "MIT"
   head "https://github.com/suzuki-shunsuke/tfcmt.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "fd38759529061faca9c17bd9bd4f698709ebc102fb494648490730e240f3be27"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fd38759529061faca9c17bd9bd4f698709ebc102fb494648490730e240f3be27"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "fd38759529061faca9c17bd9bd4f698709ebc102fb494648490730e240f3be27"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7e030f07a67285696d0edd657d313d1aaf6227a58855903cdab41f341a35cb45"
-    sha256 cellar: :any_skip_relocation, ventura:       "7e030f07a67285696d0edd657d313d1aaf6227a58855903cdab41f341a35cb45"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "52b2bc80de16b004369e2ab6000fee4e10ff873ea41f6234b2ba8d84e03fbf81"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "90c870c45611a1196724b03833d9abeb8719e7a012de32bbe4fd74a5295f4654"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "90c870c45611a1196724b03833d9abeb8719e7a012de32bbe4fd74a5295f4654"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "90c870c45611a1196724b03833d9abeb8719e7a012de32bbe4fd74a5295f4654"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a2247d8fd676ae35d8cf4e6ac33474262bfbab5a67842b3db2afce643e6c7337"
+    sha256 cellar: :any_skip_relocation, ventura:       "a2247d8fd676ae35d8cf4e6ac33474262bfbab5a67842b3db2afce643e6c7337"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1bd31f5b512082e9d41ed41d98c3b3dedb1effba34fe22d24be8e059eedc4025"
   end
 
   depends_on "go" => :build

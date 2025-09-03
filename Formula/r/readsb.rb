@@ -1,18 +1,18 @@
 class Readsb < Formula
   desc "ADS-B decoder swiss knife"
   homepage "https://github.com/wiedehopf/readsb"
-  url "https://github.com/wiedehopf/readsb/archive/refs/tags/v3.14.1684.tar.gz"
-  sha256 "19894fe0d0db93da4742b55788bf4744cf08751ca493e988e976d6c5585b5c73"
+  url "https://github.com/wiedehopf/readsb/archive/refs/tags/v3.16.1.tar.gz"
+  sha256 "1bd8379023581dc6d996213103c0a34cc0dbb5ec76daa03b073cd0c74df8620a"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "9312cd416e222b864537454758c812ece3782144c7fdf32edb278dc0a4a77883"
-    sha256 cellar: :any,                 arm64_sonoma:  "287ac0fac293cc384934c1c0e4a4aacb74370c61db9a39da8cf3d00ddbbdbdf2"
-    sha256 cellar: :any,                 arm64_ventura: "7029733377b0baeef1195c060390818b46fb3e72d902af4b3a020e07e01aa640"
-    sha256 cellar: :any,                 sonoma:        "c1780a8358cf1fc0f490e452b0fb8c308ff7f7404ef454115f9c42e8b8e46fe0"
-    sha256 cellar: :any,                 ventura:       "9d921f9880c2aceb6bc9004a9b4597d84149f7c14f3731756d4871e50a6c0b5f"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "3e3b250fbef3b7c08ea7b40194a388d9448796a6a71dd01ccd032552ed95b46d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5ba6e484cce246d739e7b743b4281b1395e6081246e706789e70c0a8d4f81196"
+    sha256 cellar: :any,                 arm64_sequoia: "1ac342173c4d4bd41b74ee610256a3190990aca3a958aa61c74b597b9c42e0c0"
+    sha256 cellar: :any,                 arm64_sonoma:  "aef9cb1e8a2579d11065c3392038460c8d22398f7a609660c06878aa74bb0ad6"
+    sha256 cellar: :any,                 arm64_ventura: "d3d2206670d533217d8938800f717d20c6b09bbb719ddf085e961b8ab15167cc"
+    sha256 cellar: :any,                 sonoma:        "cf1306e7e5231f5d4e072a2356012a49d826e671d495b1330474cf8b7350aa6d"
+    sha256 cellar: :any,                 ventura:       "161fd4c35ead9c4329f270aea5397e89c587f31aa247f825a93a9acccf171a4a"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "e5cfaed5cc5c2db1ca9e54e7d764a1c86bb85d6db92d4ac971793e7b087d94a4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f7f218fbe6454a7533bec3abd735119d0f88733ade00434af3d3d911cef4b886"
   end
 
   depends_on "pkgconf" => :build

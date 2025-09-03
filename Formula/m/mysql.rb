@@ -3,25 +3,26 @@ class Mysql < Formula
   # FIXME: Actual homepage fails audit due to Homebrew's user-agent
   # homepage "https://dev.mysql.com/doc/refman/9.3/en/"
   homepage "https://github.com/mysql/mysql-server"
-  url "https://cdn.mysql.com/Downloads/MySQL-9.3/mysql-9.3.0.tar.gz"
-  sha256 "1a3ee236f1daac5ef897c6325c9b0e0aae486389be1b8001deb3ff77ce682d60"
+  url "https://cdn.mysql.com/Downloads/MySQL-9.4/mysql-9.4.0.tar.gz"
+  sha256 "6bb509c54e58b54abbefa49e296e7220f5e7cfe446914ba3615f594967cfa921"
   license "GPL-2.0-only" => { with: "Universal-FOSS-exception-1.0" }
+  revision 3
 
   livecheck do
     url "https://dev.mysql.com/downloads/mysql/?tpl=files&os=src"
     regex(/href=.*?mysql[._-](?:boost[._-])?v?(\d+(?:\.\d+)+)\.t/i)
   end
 
-  no_autobump! because: :requires_manual_review
+  no_autobump! because: :incompatible_version_format
 
   bottle do
-    sha256 arm64_sequoia: "a1c4bcbfc9cd29ebd827d898ee23fa671d38e53fe38ed941d4de9dc5f2925bab"
-    sha256 arm64_sonoma:  "a85846ee100275d3aff0e1fb367d236efe2f08b01486a4e17d95f44065a99777"
-    sha256 arm64_ventura: "bbd5331e6cad86f69fd249644870e12298fb7700941c4b442766d6b39ad2efcd"
-    sha256 sonoma:        "246637314ceb5efb5f4df6e8e9548523fd24bf99d2ab2249baf55c990323a083"
-    sha256 ventura:       "e3485cdac165beee6846f57b678938929e2339e80fa83f1f16f152130c1f46b1"
-    sha256 arm64_linux:   "6b3feff6a22a3dc3ebc0b52aa20be21de6c15c4508236e6c2c718c6630f235b0"
-    sha256 x86_64_linux:  "4f4f12f8b6e178121b92995ed4a3153dca966f6c304fc74765066761aa86a56e"
+    sha256 arm64_sequoia: "6e82a798b7e2c92925ec4050cb7156f9cbd71f84beb6eabf37e7d3bc3439ab96"
+    sha256 arm64_sonoma:  "6bc623e931afb78577d17893709d8f85349514304c2d41557d407ca3a93e496a"
+    sha256 arm64_ventura: "5bfd1df734e17a2c03cc2615f6422a68cb7b3aacc3d7c9df6196373c019112d0"
+    sha256 sonoma:        "736729ad68bd9a8d8545f9fbbe6e6ea1ad8a1cdeadff3afcd3c338a9ae212a9d"
+    sha256 ventura:       "9e3f3ef3c235272b311b3a30e3fcd0c7a1753f233706b77ed19b3e433ba79a41"
+    sha256 arm64_linux:   "ca126ffce3ec8c7ddaa226d1ffe2e5047b97710c06cfa7a977c6be991c12c477"
+    sha256 x86_64_linux:  "e908866223e6b257efcf569b0aff7e4e620b1a44ffeb4bb74eaf59c3600f94da"
   end
 
   depends_on "bison" => :build
@@ -121,7 +122,10 @@ class Mysql < Formula
     system "cmake", "--install", "build"
 
     cd prefix/"mysql-test" do
-      system "./mysql-test-run.pl", "status", "--vardir=#{buildpath}/mysql-test-vardir"
+      system "./mysql-test-run.pl", "check", "--vardir=#{buildpath}/mysql-test-vardir"
+    ensure
+      status_log_file = buildpath/"mysql-test-vardir/log/main.status/status.log"
+      logs.install status_log_file if status_log_file.exist?
     end
 
     # Remove the tests directory

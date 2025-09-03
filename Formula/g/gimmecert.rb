@@ -7,7 +7,7 @@ class Gimmecert < Formula
   sha256 "eb00848fab5295903b4d5ef997c411fe063abc5b0f520a78ca2cd23f77e3fd99"
   license "GPL-3.0-or-later"
 
-  no_autobump! because: :requires_manual_review
+  no_autobump! because: "`update-python-resources` cannot determine dependencies"
 
   bottle do
     rebuild 1
@@ -36,10 +36,10 @@ class Gimmecert < Formula
   end
 
   test do
-    output1 = shell_output(bin/"gimmecert init")
+    output1 = shell_output("#{bin}/gimmecert init")
     assert_match "CA hierarchy initialised using 2048-bit RSA keys", output1
 
-    output2 = shell_output(bin/"gimmecert status")
+    output2 = shell_output("#{bin}/gimmecert status")
     assert_match "No server certificates have been issued", output2
 
     assert_path_exists testpath/".gimmecert/ca/level1.key.pem"

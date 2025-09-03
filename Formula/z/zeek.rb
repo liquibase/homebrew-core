@@ -1,8 +1,8 @@
 class Zeek < Formula
   desc "Network security monitor"
   homepage "https://zeek.org/"
-  url "https://github.com/zeek/zeek/releases/download/v7.2.1/zeek-7.2.1.tar.gz"
-  sha256 "9dbab6e531aafc7b9b4df032b31b951d4df8c69dc0909a7cc811c1db4165502d"
+  url "https://github.com/zeek/zeek/releases/download/v8.0.1/zeek-8.0.1.tar.gz"
+  sha256 "ee916387e762345a6ffa84514cc3b66761f110d845a08b88e4a8da48db97ce8a"
   license "BSD-3-Clause"
   head "https://github.com/zeek/zeek.git", branch: "master"
 
@@ -12,14 +12,13 @@ class Zeek < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sequoia: "6b9d73f5e6a6d555f41742983f2bbc1ffec5db7584e7b9676c6d8596348062bf"
-    sha256 arm64_sonoma:  "ca30fa586b51db8f92a39c54d40edb011dc98dbfc6ee9895eae972cd892c33a3"
-    sha256 arm64_ventura: "8c4424c2caa16d2e9c93884a9e4f37a66df52a69d6c631fd97caa825f9a765cd"
-    sha256 sonoma:        "1b061c0b27d2fdf90118d4b0c39a4c6aa38ab5f14ae0768385a39f2f5996c454"
-    sha256 ventura:       "0739433183b73bf09561e3f90da4b87c4ab5dafabe615bb169026feb2928440d"
-    sha256 arm64_linux:   "a180c1087293b43eec540f63aea314356d9406c51352fb4a93c7b4616313f8ca"
-    sha256 x86_64_linux:  "40b61706e5d1a6c65ac774635e777a11f2eec6a0bb409465576359420a9e5c99"
+    sha256 arm64_sequoia: "61285c35ac040f8a5707e22b9276582d05f08c7cfc61c63326e51162a9dd7dd4"
+    sha256 arm64_sonoma:  "560df0f425c87cbe002c81bf3785417bd6da70e38a499acd4d140c726ab7b66d"
+    sha256 arm64_ventura: "b2cc15f7c6ea28ed0d8f706b74cf8dbae755939201f693e6415f5638d49a08b8"
+    sha256 sonoma:        "a1d43e5c37abf02f5ac0b68c89dfbb642745bf0a6bda0ddcb63ba9f50c694d34"
+    sha256 ventura:       "adaecd62acee9d5835adb99c88b6f0bb4d52bb58d578f6f4b2fd177d5b9af6b6"
+    sha256 arm64_linux:   "ba60ac1095bca371354b39554b05b6a44d3a615e584bed45d55f8bf97ec4bae3"
+    sha256 x86_64_linux:  "65ffa5d8ec5a743ccd3786eb536dbde0541d591591d71bea3f7c5520e2307d46"
   end
 
   depends_on "bison" => :build
@@ -31,6 +30,7 @@ class Zeek < Formula
   depends_on macos: :mojave
   depends_on "openssl@3"
   depends_on "python@3.13"
+  depends_on "zeromq"
 
   uses_from_macos "krb5"
   uses_from_macos "libpcap"
@@ -47,29 +47,6 @@ class Zeek < Formula
 
     # Avoid references to the Homebrew shims directory
     inreplace "auxil/spicy/hilti/toolchain/src/config.cc.in", "${CMAKE_CXX_COMPILER}", ENV.cxx
-
-    unless build.head?
-      # Benchmarks are not installed, but building them on Linux breaks in the
-      # bundled google-benchmark dependency. Exclude the benchmark targets and
-      # their library dependencies.
-      #
-      # This is fixed on Zeek's `master` branch and will be available with
-      # zeek-8.0. There there is a CMake variable `SPICY_ENABLE_TESTS` which
-      # defaults to `OFF`.
-      inreplace "auxil/spicy/hilti/runtime/CMakeLists.txt",
-        "add_executable(hilti-rt-fiber-benchmark src/benchmarks/fiber.cc)",
-        "add_executable(hilti-rt-fiber-benchmark EXCLUDE_FROM_ALL src/benchmarks/fiber.cc)"
-      inreplace "auxil/spicy/spicy/runtime/tests/benchmarks/CMakeLists.txt",
-        "add_executable(spicy-rt-parsing-benchmark parsing.cc ${_generated_sources})",
-        "add_executable(spicy-rt-parsing-benchmark EXCLUDE_FROM_ALL parsing.cc ${_generated_sources})"
-      inreplace "auxil/spicy/3rdparty/justrx/src/tests/CMakeLists.txt",
-        "add_executable(bench benchmark.cc)",
-        "add_executable(bench EXCLUDE_FROM_ALL benchmark.cc)"
-      (buildpath/"auxil/spicy/3rdparty/CMakeLists.txt").append_lines <<~CMAKE
-        set_target_properties(benchmark PROPERTIES EXCLUDE_FROM_ALL ON)
-        set_target_properties(benchmark_main PROPERTIES EXCLUDE_FROM_ALL ON)
-      CMAKE
-    end
 
     system "cmake", "-S", ".", "-B", "build",
                     "-DBROKER_DISABLE_TESTS=on",

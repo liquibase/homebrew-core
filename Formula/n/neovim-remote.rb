@@ -9,8 +9,6 @@ class NeovimRemote < Formula
   revision 3
   head "https://github.com/mhinz/neovim-remote.git", branch: "master"
 
-  no_autobump! because: :requires_manual_review
-
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sequoia: "9edaf9f4d2feb2e6e4f18dc167944ff8823c9c4068c6e07017d8921ca160b28a"
     sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a9b76e1afa8be0eec8c8fd7197460b4477faaf325cd2fc18c0339ee725b06a8a"
@@ -56,21 +54,19 @@ class NeovimRemote < Formula
   test do
     socket = testpath/"nvimsocket"
     file = testpath/"test.txt"
-    ENV["NVIM_LISTEN_ADDRESS"] = socket
 
     nvim = spawn(
-      { "NVIM_LISTEN_ADDRESS" => socket },
-      Formula["neovim"].opt_bin/"nvim", "--headless", "-i", "NONE", "-u", "NONE", file,
+      Formula["neovim"].opt_bin/"nvim", "--headless", "-i", "NONE", "-u", "NONE", "--listen", socket, file,
       [:out, :err] => "/dev/null"
     )
-    sleep 5
+    sleep 1 until socket.exist? && socket.socket?
 
     str = "Hello from neovim-remote!"
-    system bin/"nvr", "--remote-send", "i#{str}<esc>:write<cr>"
+    system bin/"nvr", "--servername", socket, "--remote-send", "i#{str}<ESC>:write<CR>"
     assert_equal str, file.read.chomp
     assert_equal Process.kill(0, nvim), 1
 
-    system bin/"nvr", "--remote-send", ":quit<cr>"
+    system bin/"nvr", "--servername", socket, "--remote-send", ":quit<CR>"
 
     # Test will be terminated by the timeout
     # if `:quit` was not sent correctly

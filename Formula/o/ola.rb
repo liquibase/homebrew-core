@@ -3,9 +3,9 @@ class Ola < Formula
   include Language::Python::Virtualenv
 
   desc "Open Lighting Architecture for lighting control information"
-  homepage "https://www.openlighting.org/ola/"
+  homepage "https://github.com/OpenLightingProject/ola"
   license all_of: ["GPL-2.0-or-later", "LGPL-2.1-or-later"]
-  revision 5
+  revision 7
 
   stable do
     # TODO: Check if we can use unversioned `protobuf` at version bump
@@ -29,13 +29,14 @@ class Ola < Formula
   no_autobump! because: :requires_manual_review
 
   bottle do
-    sha256                               arm64_sequoia: "6d4182b55d3ec40ac585f082515e7ee1125e42acbc6902e3ab1d15c01721b465"
-    sha256                               arm64_sonoma:  "9b45e675b229a1443b89f643533a07aaf3f9674062bbf6115ba899d1b5388b49"
-    sha256                               arm64_ventura: "98db8a67a41af2686b691188404ac2c3ba49c1e63f20c929f2c37048a63aea12"
-    sha256                               sonoma:        "a548628c89e92f9d84659e771a35e745b44cab0713a49a0885f3a56ed075666c"
-    sha256                               ventura:       "b87bb7a4367d5859724b59883b8912bfeaa05317813dbedba687ba7c2b15d48b"
-    sha256                               arm64_linux:   "2ec0f72ea286942021bc89f5dd8d91bc7cf40efb18fdd0c917daf51fd31a69f5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "74cc94c3489eafd39fe993859da64ea188d1f1d40532fe044c75fe1f27e7ed27"
+    rebuild 1
+    sha256 arm64_sequoia: "bdec6e474a18de3b6d3198aea33920245d9cdabf285bc142b32aafe9a8cd5136"
+    sha256 arm64_sonoma:  "829075716571a9a9bc79c32acee60c5076124e45cf71f22e2110ecefdea74abf"
+    sha256 arm64_ventura: "72a52c9caa891e0e3aa3930f959cf916346d4cbae64abb90d196c338e3b47e29"
+    sha256 sonoma:        "e3a4b0c61c37bcde928fe415fdca94012a61556a47e124842854d1294602c59d"
+    sha256 ventura:       "020535a83d5460524762376c07abd7ac134038f98aead9a63e3c7bdf027b9b71"
+    sha256 arm64_linux:   "afce51d43cc1453c7817aa23a03bf1a90474f682c02c3acea3d1f9c0a8d05091"
+    sha256 x86_64_linux:  "e6404fe986a8605c602a8ad71e19d18a1b8b6ef1bb8c2777295e4d5ac6c12b5d"
   end
 
   head do
@@ -60,20 +61,29 @@ class Ola < Formula
   depends_on "libmicrohttpd"
   depends_on "libusb"
   depends_on "numpy"
-  depends_on "protobuf"
+  depends_on "protobuf@29"
   depends_on "python@3.13"
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
   uses_from_macos "ncurses"
 
+  on_sequoia do
+    # Use LLVM 18 to work around https://github.com/OpenLightingProject/ola/issues/1982
+    # Would be more accurate to check for Xcode 16.3 or clang 1700.0.13.3 as the change
+    # is not related to linker but this doesn't seem available via DSL for dependencies.
+    # Xcode 16.4 doesn't hit this as Apple temporarily reverted LLVM change:
+    # https://developer.apple.com/documentation/xcode-release-notes/xcode-16_4-release-notes#Apple-Clang-Compiler
+    depends_on "llvm@18" => :build if DevelopmentTools.ld64_version == "1167.4.1"
+  end
+
   on_linux do
     depends_on "util-linux"
   end
 
   resource "protobuf" do
-    url "https://files.pythonhosted.org/packages/f7/d1/e0a911544ca9993e0f17ce6d3cc0932752356c1b0a834397f28e63479344/protobuf-5.29.3.tar.gz"
-    sha256 "5da0f41edaf117bde316404bad1a486cb4ededf8e4a54891296f648e8e076620"
+    url "https://files.pythonhosted.org/packages/43/29/d09e70352e4e88c9c7a198d5645d7277811448d76c23b00345670f7c8a38/protobuf-5.29.5.tar.gz"
+    sha256 "bc1463bafd4b0929216c35f437a8e28731a2b7fe3d98bb77a600efced5a15c84"
   end
 
   # Apply open PR to support Protobuf 22+ API
@@ -95,7 +105,7 @@ class Ola < Formula
     # Workaround to build with newer Protobuf due to Abseil C++ standard
     # Issue ref: https://github.com/OpenLightingProject/ola/issues/1879
     inreplace "configure.ac", "-std=gnu++11", "-std=gnu++17"
-    if ENV.compiler == :clang
+    if ENV.compiler.to_s.match?("clang")
       # Workaround until https://github.com/OpenLightingProject/ola/pull/1889
       ENV.append "CXXFLAGS", "-D_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR"
       # Workaround until https://github.com/OpenLightingProject/ola/pull/1890
@@ -103,8 +113,22 @@ class Ola < Formula
       ENV.append "CXXFLAGS", "-D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION"
     end
 
+    # Aligned with dependency conditional. Remove when fixed upstream
+    if DevelopmentTools.ld64_version == "1167.4.1"
+      ENV["CXX"] = Formula["llvm@18"].opt_bin/"clang++"
+      ENV.append_to_cflags "-I#{Formula["protobuf@29"].opt_include} -I#{HOMEBREW_PREFIX}/include"
+    end
+
     # Skip flaky python tests. Remove when no longer running tests
     inreplace "python/ola/Makefile.mk", /^test_scripts \+= \\$/, "skipped_test_scripts = \\"
+    # Skip flaky tests on macOS
+    if OS.mac?
+      # https://github.com/OpenLightingProject/ola/pull/1655#issuecomment-696756941
+      inreplace "common/network/Makefile.mk", %r{\bcommon/network/HealthCheckedConnectionTester }, "#\\0"
+      inreplace "plugins/usbpro/Makefile.mk", %r{\\\n\s*plugins/usbpro/WidgetDetectorThreadTester$}, ""
+      # TODO: SelectServerTester may need confirmation on sporadic failures.
+      inreplace "common/io/Makefile.mk", %r{\bcommon/io/SelectServerTester }, "#\\0"
+    end
 
     venv = virtualenv_create(libexec, python3)
     venv.pip_install resources
@@ -125,7 +149,11 @@ class Ola < Formula
     system "make"
     # Run tests to check the workarounds applied haven't broken basic functionality.
     # TODO: Remove and revert to `--disable-unittests` when workarounds can be dropped.
-    system "make", "check"
+    ENV.deparallelize do
+      system "make", "check"
+    ensure
+      logs.install buildpath/"test-suite.log" if (buildpath/"test-suite.log").exist?
+    end
     system "make", "install"
 
     rewrite_shebang python_shebang_rewrite_info(venv.root/"bin/python"), *bin.children

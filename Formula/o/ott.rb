@@ -27,17 +27,19 @@ class Ott < Formula
   depends_on "pkgconf" => :build
 
   def install
-    opamroot = buildpath/".opam"
-    ENV["OPAMROOT"] = opamroot
+    ENV["OPAMROOT"] = opamroot = buildpath/".opam"
     ENV["OPAMYES"] = "1"
 
-    system "opam", "init", "--no-setup", "--disable-sandboxing"
-    system "opam", "exec", "--", "opam", "install", ".", "--deps-only", "-y", "--no-depexts"
+    # Work around https://github.com/ocaml/ocamlfind/issues/107 when `coq` is installed in build environment
+    ENV.prepend_path "OCAMLPATH", opamroot/"ocaml-system/lib" if Formula["coq"].any_version_installed?
+
+    system "opam", "init", "--compiler=ocaml-system", "--disable-sandboxing", "--no-setup"
+    system "opam", "install", ".", "--deps-only", "--yes", "--no-depexts"
     system "opam", "exec", "--", "make", "world"
 
     bin.install "bin/ott"
     pkgshare.install "examples"
-    (pkgshare/"emacs/site-lisp/ott").install "emacs/ott-mode.el"
+    elisp.install "emacs/ott-mode.el"
   end
 
   test do

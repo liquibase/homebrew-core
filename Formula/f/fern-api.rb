@@ -1,17 +1,19 @@
 class FernApi < Formula
   desc "Stripe-level SDKs and Docs for your API"
   homepage "https://buildwithfern.com/"
-  url "https://registry.npmjs.org/fern-api/-/fern-api-0.65.5.tgz"
-  sha256 "c63091f426990a347b2a4cd0fb6b24c1eee8e58a61aa100132cbe5ece3a839ea"
+  url "https://registry.npmjs.org/fern-api/-/fern-api-0.68.0.tgz"
+  sha256 "18c41b826a750eaa2b330556fba26fe5dabe30b62d049db519b9006f1a760052"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b5d1f6eb6dc8f8df269bf99871391f1f21638657e8191b6bdcf6be769be08581"
+    sha256 cellar: :any_skip_relocation, all: "bca88838802fa8271aadabb7a06d4a6b8c38f8abee5d5106238320c3b63fb9d8"
   end
 
   depends_on "node"
 
   def install
+    # Supress self update notifications
+    inreplace "cli.cjs", "await this.nudgeUpgradeIfAvailable()", "await 0"
     system "npm", "install", *std_npm_args
     bin.install_symlink libexec.glob("bin/*")
   end

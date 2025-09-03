@@ -1,8 +1,8 @@
 class Codex < Formula
   desc "OpenAI's coding agent that runs in your terminal"
   homepage "https://github.com/openai/codex"
-  url "https://github.com/openai/codex/archive/refs/tags/rust-v0.4.0.tar.gz"
-  sha256 "e30f904e3a3e9edac865463b4dd7485ee693afb976bf09bc10806bdb132b1d48"
+  url "https://github.com/openai/codex/archive/refs/tags/rust-v0.29.0.tar.gz"
+  sha256 "512d4ebd7d63ac826c13bd197e425851b08778500bffbbc5a6b92930715897fb"
   license "Apache-2.0"
   head "https://github.com/openai/codex.git", branch: "main"
 
@@ -12,16 +12,17 @@ class Codex < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1dabd214541266dd97a57bef7cb084fbd36903ddb2713ecbe203331b86984ac4"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6da9bf13e8e2129e5beffd69624cfa2a3ee22708873d3cebb77bd20102d02cb9"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "bbfef39f00ba549efca7d652d871ddca50bd95e74d83b8f81060663618b5efeb"
-    sha256 cellar: :any_skip_relocation, sonoma:        "6a117912cf6ecb95cd4724bbd55b45644533862028969905484677a2476cf42c"
-    sha256 cellar: :any_skip_relocation, ventura:       "ffaffd5ac0c8c852c43fbf73e8350b62cd9898a7f5bffbc4adb9bad43d9deebe"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "bfaeaa71f178fac08036ac02bfe2ffe9c6d66a78a859400817dad5155492f703"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e091e97d43e08619d18a505e50fe491340f3dc7479d4a01f52f72e548baf7ee"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "67858f9e4981646dcb716f0cfc7b58e52a18f158b426291b724beda2194fae2c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "46cda57d22731797d47bb6fd73e80b574d296b9f505ef7be097188432516bada"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "e75467bb08cb0715cfd7292cee2b2a6890be5d27b5de71c1f6de36bd50cfc443"
+    sha256 cellar: :any_skip_relocation, sonoma:        "37a6ede397ccd2e7b99570d31092ac4645cfc60ca82c7ad23588f224b7292031"
+    sha256 cellar: :any_skip_relocation, ventura:       "031ecd0af683c8224f4ca5da5520aff1d285f5ba538af8186c29fb136f4db7e2"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "89b849f3ecb4851be31ffa13f48e33de506afd0bc94ac5f55fc291a31f8f9b32"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "248426075ffa010d0e669edf46c948033f614652c95b79df59ad984b309666c5"
   end
 
   depends_on "rust" => :build
+  depends_on "ripgrep"
 
   on_linux do
     depends_on "openssl@3"

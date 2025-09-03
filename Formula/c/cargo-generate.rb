@@ -1,19 +1,19 @@
 class CargoGenerate < Formula
   desc "Use pre-existing git repositories as templates"
   homepage "https://github.com/cargo-generate/cargo-generate"
-  url "https://github.com/cargo-generate/cargo-generate/archive/refs/tags/v0.23.3.tar.gz"
-  sha256 "c12af31c60b7ea53e138e4028a23934873e1385b311f35b46413697bdfdc4e8a"
+  url "https://github.com/cargo-generate/cargo-generate/archive/refs/tags/v0.23.5.tar.gz"
+  sha256 "59ddb9f0715e3e0ec8190e1c158f5cd013a2d19d855d4946970ea40d47b60570"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/cargo-generate/cargo-generate.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "9588d9f3bd24dda034e41947200ee436c009c6b49154fe1a6a57f0926eb539ef"
-    sha256 cellar: :any,                 arm64_sonoma:  "e75aae49736fbab569feee8109226f1ec05bc546b3798676dffa1e0c513a076d"
-    sha256 cellar: :any,                 arm64_ventura: "deec2fcd437ff10b21a1062f7486dc80dace4af4b26a8a074d917d291e0d5fc2"
-    sha256 cellar: :any,                 sonoma:        "ee7ab36f1f870e3d6244e42f351b5fa9e0d4029d75597ccef016f7080c88a78e"
-    sha256 cellar: :any,                 ventura:       "78d637fd0809ac44f4741f22c63bdcfdbca7be78e47fcac3ddab1d86b31ac13a"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "fecca9166bb2c1f7242c43df8dec05883eff4749e8da1edfa88b2bc710c804bf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c0fbe1554f9bd727d311497fe00a1a5f0af0efb3422ada09ad0727bdee3ff2eb"
+    sha256 cellar: :any,                 arm64_sequoia: "f68d984520cf08961e05406b99ac47babc34a4af29d8373cdf805a8d9aa15d8f"
+    sha256 cellar: :any,                 arm64_sonoma:  "3e3d1dfd2e07f1e098ba5b088a028c15d6fe556af0c4d6c8fb0fe021c9f8a568"
+    sha256 cellar: :any,                 arm64_ventura: "2d52c1abed1cb03a8cf02eda228369e9f36fb70336d00db303bb2dd0b9d439f8"
+    sha256 cellar: :any,                 sonoma:        "72008bfba612207a661570dc08d8ebccad9191f3e12f40fab26480c4272c69b5"
+    sha256 cellar: :any,                 ventura:       "650b05e8dcaf802e5feda6b4f46e036ccc875129c0c088a8e0afbdd1943bb1ce"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "9e5372b43ee3e6d61d400774d926cd192c928014eb4bb56e213c74e858200c9f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3f0f024bb1eba7c418b21690dc2703a88cc57645c8c59b2eee67cddc280a9bae"
   end
 
   depends_on "pkgconf" => :build

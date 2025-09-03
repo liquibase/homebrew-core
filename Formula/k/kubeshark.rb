@@ -1,8 +1,8 @@
 class Kubeshark < Formula
   desc "API Traffic Analyzer providing real-time visibility into Kubernetes network"
   homepage "https://www.kubeshark.co/"
-  url "https://github.com/kubeshark/kubeshark/archive/refs/tags/v52.7.8.tar.gz"
-  sha256 "02d518b9d0033862e64f1d7436fcc287970ba2a072a815b44c8191bfc1329d19"
+  url "https://github.com/kubeshark/kubeshark/archive/refs/tags/v52.8.1.tar.gz"
+  sha256 "a621d948a0f28560b494202bd884b39ee0d6de024edfd5ac9a70a0d067ca1310"
   license "Apache-2.0"
   head "https://github.com/kubeshark/kubeshark.git", branch: "master"
 
@@ -15,13 +15,13 @@ class Kubeshark < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "653d103ab81cc6b27c279206b6995933f558fc788be19c9e758e3ac8bd0e22d6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "75f9a2b3f4352584446310817b41349a1468c1486aef4e757be96fe00ff77752"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "5c17db772424fe86efb5f944bf818a69cb3d1504db0f8c5b11b447d0a4b7675a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "cb0be7ced12c2b8d41ac0492bc67423a723ef785cbb5c674343dea9cddf7c884"
-    sha256 cellar: :any_skip_relocation, ventura:       "990281b1ced837cb3e3ea95a3bd923354b45d23a87c141959951496a03c125c7"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "6e392abb9fba2ae3c5159cbab05d1cf77537442ef9b637d472e72109908cd554"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "885ef7fb3f9c89985ad456b95c10b1f03863b61bfbf364b776031dbeaccd5778"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d65e38045ff18f7fc6fc83df77cc9da945ec7e99033d43f91994f0768c2c2e99"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e6672c1ce14d11d27b1c36df869bf88e49873aae7110edd01ecf6463278753bc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6d430d8760d96823fd593c020d1896ac96bd1aedb55c377c2e9323a189e9637e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "6954043a3ea85d11def574d454eda727e637c4f0de7a1e2c174c9094bccefc9a"
+    sha256 cellar: :any_skip_relocation, ventura:       "53507760c14e7f713d99500d962e1f86542416736a50a9af67c2f44af5474915"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "9c36b884d837b3b252c4d7d3e966fac7174b90ec7ef9853fcdcbfc60ea1474d4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "81568116c1e2806963e896671d7239833257a7e37ee5ec885b1a570a0e573e0b"
   end
 
   depends_on "go" => :build

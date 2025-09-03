@@ -1,10 +1,10 @@
 class Ncurses < Formula
   desc "Text-based UI library"
   homepage "https://invisible-island.net/ncurses/announce.html"
-  url "https://ftp.gnu.org/gnu/ncurses/ncurses-6.5.tar.gz"
+  url "https://ftpmirror.gnu.org/gnu/ncurses/ncurses-6.5.tar.gz"
   mirror "https://invisible-mirror.net/archives/ncurses/ncurses-6.5.tar.gz"
   mirror "ftp://ftp.invisible-island.net/ncurses/ncurses-6.5.tar.gz"
-  mirror "https://ftpmirror.gnu.org/ncurses/ncurses-6.5.tar.gz"
+  mirror "https://ftp.gnu.org/gnu/ncurses/ncurses-6.5.tar.gz"
   sha256 "136d91bc269a9a5785e5f9e980bc76ab57428f604ce3e5a5a90cebc767971cc6"
   license "MIT"
 
@@ -36,6 +36,8 @@ class Ncurses < Formula
     # Linux: configure: error: expected a pathname, not ""
     (lib/"pkgconfig").mkpath
 
+    ENV.delete("TERMINFO")
+
     args = [
       "--prefix=#{prefix}",
       "--enable-pc-files",
@@ -49,6 +51,9 @@ class Ncurses < Formula
       "--without-ada",
     ]
     args << "--with-terminfo-dirs=#{share}/terminfo:/etc/terminfo:/lib/terminfo:/usr/share/terminfo" if OS.linux?
+
+    odie "`-std=gnu17` workaround should be removed!" if build.stable? && version > "6.5"
+    ENV.append_to_cflags "-std=gnu17" if OS.linux? && DevelopmentTools.gcc_version("gcc") >= 15
 
     system "./configure", *args
     system "make", "install"

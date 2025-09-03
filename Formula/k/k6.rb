@@ -1,18 +1,18 @@
 class K6 < Formula
   desc "Modern load testing tool, using Go and JavaScript"
   homepage "https://k6.io"
-  url "https://github.com/grafana/k6/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "b0c4b6a8a015387cef962a105e4ce3069e77376df118f25376af89b37c023f2e"
+  url "https://github.com/grafana/k6/archive/refs/tags/v1.2.3.tar.gz"
+  sha256 "f89052128ccf12252fb6d58bb236e348c7f7f9afec80ca73323848a6f6af7ef2"
   license "AGPL-3.0-or-later"
   head "https://github.com/grafana/k6.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a37835c471ced98d9c920a4e30a4b640130ef996b026fd6144b9a8c1b5b68c72"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a37835c471ced98d9c920a4e30a4b640130ef996b026fd6144b9a8c1b5b68c72"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "a37835c471ced98d9c920a4e30a4b640130ef996b026fd6144b9a8c1b5b68c72"
-    sha256 cellar: :any_skip_relocation, sonoma:        "0528425a72c2c5e742396a041aecd015cab7af1c9c620598d216a9458ca18dbd"
-    sha256 cellar: :any_skip_relocation, ventura:       "0528425a72c2c5e742396a041aecd015cab7af1c9c620598d216a9458ca18dbd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e2d0ce5bbf15880b2c35d31108452ae8a149db04929d97cc2eddb2912fb37edf"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5305e17e6dec848193b2f8f52831d3ef68bc14b520e5f61186dd377337e87c2c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5305e17e6dec848193b2f8f52831d3ef68bc14b520e5f61186dd377337e87c2c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "5305e17e6dec848193b2f8f52831d3ef68bc14b520e5f61186dd377337e87c2c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f41123f61400bb4dae6c80f44b01af48377527e3e1e3d129f695e11fb6a34ef3"
+    sha256 cellar: :any_skip_relocation, ventura:       "f41123f61400bb4dae6c80f44b01af48377527e3e1e3d129f695e11fb6a34ef3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c3a2f69f16448e0762e9ae1f2d8c324c42bc1071a6a915648b1173f0dbe78176"
   end
 
   depends_on "go" => :build

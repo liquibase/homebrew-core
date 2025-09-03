@@ -1,19 +1,19 @@
 class Yozefu < Formula
   desc "TUI for exploring data in a Kafka cluster"
   homepage "https://github.com/MAIF/yozefu"
-  url "https://github.com/MAIF/yozefu/archive/refs/tags/v0.0.11.tar.gz"
-  sha256 "a3ea8b1311bac49110b562e00887380d153083563934e7a3e4f0db40d24797e2"
+  url "https://github.com/MAIF/yozefu/archive/refs/tags/v0.0.14.tar.gz"
+  sha256 "3278f215b825bd583e783ee158d23134fee37ebc91fb9f7b648add61a6c82431"
   license "Apache-2.0"
   head "https://github.com/MAIF/yozefu.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "740fb1adc0e08439cf87e92956b123b7ca912456cf153bef89145f3e2dc8ef0f"
-    sha256 cellar: :any,                 arm64_sonoma:  "4794734e52f64d33f4bdf93bd5167763076ea8349a239c98ea5f3e24ebba640e"
-    sha256 cellar: :any,                 arm64_ventura: "c17e22cc084fce1f87e4f9f47b4fcdafe12e13cef90d1cc1691e695f7cb15166"
-    sha256 cellar: :any,                 sonoma:        "ee53201e74efeb8d7a914cce222add5a367e984c7a403a6381bcc97f60461e3d"
-    sha256 cellar: :any,                 ventura:       "82226961b56b73654b133806261d62f091904b0fdea01a074809ae48c644665c"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "c2666e3ac5d0a2995b0eefed79f8ac0314a3310bb6aa6d853148906b47967e0c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "306384d4e23d160565791c9c9990a6fdac9763edcc7d3c4a4e9c6eb20fb588ea"
+    sha256 cellar: :any,                 arm64_sequoia: "b34d677dcb57b39c168958e89021bb69d9f80610b7460c568272e8afd37a3fe1"
+    sha256 cellar: :any,                 arm64_sonoma:  "960527c79b463125c2eddcd28fddd1da8dc0cb9c3816117ce2695f3092b0459c"
+    sha256 cellar: :any,                 arm64_ventura: "f667cc69a4d78b5e210b054703a3ac68f5d1212116bfddc37996b4c94d246e79"
+    sha256 cellar: :any,                 sonoma:        "9fb095d0a8cf2708095bb1eccc2d622d12ff51750262021e3c6e610726269fd2"
+    sha256 cellar: :any,                 ventura:       "c783584c76fefaeb10acdeac0ca5f795e706a3f7e4a671e6120834758e660dd0"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "b2fa38c0f170ed25d0645856fddeea4b3510adf979b7066f3a7f2a2efb468274"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "31e62d4b177daca57cf92125f4bad239373956709b98f52f5118d2a95a5d1cf0"
   end
 
   depends_on "cmake" => :build
@@ -24,14 +24,11 @@ class Yozefu < Formula
   uses_from_macos "llvm" => :build # for libclang
 
   def install
-    # cmake 4 support, remove when https://github.com/fede1024/rust-rdkafka/pull/766 is released
-    # upstream issue, https://github.com/MAIF/yozefu/issues/83
-    ENV["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
-
     # Ensure that the `openssl` crate picks up the intended library.
     ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
     ENV["OPENSSL_NO_VENDOR"] = "1"
 
+    ENV["RUSTFLAGS"] = "--cfg tokio_unstable"
     system "cargo", "install", *std_cargo_args(path: "crates/bin")
   end
 

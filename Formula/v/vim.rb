@@ -2,8 +2,8 @@ class Vim < Formula
   desc "Vi 'workalike' with many additional features"
   homepage "https://www.vim.org/"
   # vim should only be updated every 50 releases on multiples of 50
-  url "https://github.com/vim/vim/archive/refs/tags/v9.1.1500.tar.gz"
-  sha256 "70f0e75bf77af00b870a967fcb325031f0a32d787bc3cacc1ca1729727d0bbc7"
+  url "https://github.com/vim/vim/archive/refs/tags/v9.1.1700.tar.gz"
+  sha256 "7870ae57a21720a88f5171c2d4dbef09db42423ce2d5b45548800c190c5bf01f"
   license "Vim"
   head "https://github.com/vim/vim.git", branch: "master"
 
@@ -25,13 +25,13 @@ class Vim < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "8e98a1c66f2f61846ec8f5ff0c60e37cc6033b6d90c8cf254be95e30fd6c20f8"
-    sha256 arm64_sonoma:  "067fb7e22824b2681445dcd31a23bb26662942aa75d155cf1854ff2da3bca995"
-    sha256 arm64_ventura: "d4b89f8eb1902a2767542085a70ae9268cbfe2a34d8cc256343228c7dba1959a"
-    sha256 sonoma:        "f5c1474a46574ac050139b17a1dbdf7c3f3af8fe4d93db8e8fa78037a8451440"
-    sha256 ventura:       "4ac29cee810aa47789d044a6b80355db15152ad7e6d72ec3104f667167cbd3f1"
-    sha256 arm64_linux:   "ab81128ba81753c8757d6df35a1cbbfd90a4a145c120102bb92a9ee37deb56df"
-    sha256 x86_64_linux:  "19ff7d37615e760e56fbeceaeb5c8f1038637f4378b94ac8f8879a62c940ca75"
+    sha256               arm64_sequoia: "361ff8d971bfd741f792c3494e34fb7baade98ccb46710a829202cbe683c7771"
+    sha256               arm64_sonoma:  "f9e71df6bde31e6fb44dd891e1e68a609595c5cd0d8a515634ae4cf361d6e2c0"
+    sha256               arm64_ventura: "f89d9568babf088f07fb3243aca9394a7c8034d9fcaad7cc15dd30e2b655a673"
+    sha256 cellar: :any, sonoma:        "e1593b2f3550769086fb8df89ff6f188d80b47c2559aeed0b01aad94e71e0d57"
+    sha256 cellar: :any, ventura:       "cde3c2e090d7ae3ab9cbd109879cbd5c6800334b829dda90a8ccda50a2f02648"
+    sha256               arm64_linux:   "b299a4571c7a041b279a4f1d133e52a8ffe818b5bf9b9d56319f3a8cf9c26bcc"
+    sha256               x86_64_linux:  "e41e1958db85869a0ac3a5e6fefa63b8d72b3e441e2400c44278305fba3e27b7"
   end
 
   depends_on "gettext"

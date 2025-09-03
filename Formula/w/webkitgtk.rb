@@ -1,8 +1,8 @@
 class Webkitgtk < Formula
   desc "GTK interface to WebKit"
   homepage "https://webkitgtk.org"
-  url "https://webkitgtk.org/releases/webkitgtk-2.48.3.tar.xz"
-  sha256 "d4dc5970f0fc6a529ff7fd67bcbfab2bbb5e91be789b2e9279640b3217a782c3"
+  url "https://webkitgtk.org/releases/webkitgtk-2.48.5.tar.xz"
+  sha256 "bb64ed9d1cfd58e8b5e89ccad71dd31adfed56336bad7695031ad0b668e1987c"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,8 +11,8 @@ class Webkitgtk < Formula
   end
 
   bottle do
-    sha256 arm64_linux:  "a20463eb5d50e1404ad6c62e5e06b9b232eb1f9f9b52dddc5ba48f044715c570"
-    sha256 x86_64_linux: "07b7feb68e5a235c2d5844ff3e9d6b9ee5f26029a1f4a0f22fc89cbb5390fd88"
+    sha256 arm64_linux:  "412ed8405b51a814f681575b9a0eb87e2d16a91a4011b5b92447355c09ff3aec"
+    sha256 x86_64_linux: "adbd0f99653f6f6e42363b0477c5bd44aa08b19c6c901764f9663a2c65b9f18b"
   end
 
   depends_on "cmake" => :build
@@ -27,6 +27,7 @@ class Webkitgtk < Formula
   depends_on "at-spi2-core"
   depends_on "cairo"
   depends_on "enchant"
+  depends_on "expat"
   depends_on "fontconfig"
   depends_on "freetype"
   depends_on "gdk-pixbuf"

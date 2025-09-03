@@ -1,21 +1,21 @@
 class ProtocGenGrpcJava < Formula
   desc "Protoc plugin for gRPC Java"
   homepage "https://grpc.io/docs/languages/java/"
-  url "https://github.com/grpc/grpc-java/archive/refs/tags/v1.73.0.tar.gz"
-  sha256 "eca44a9f3eb341daf7a01482b96016dfa7d91baee495a697746c4724868a06db"
+  url "https://github.com/grpc/grpc-java/archive/refs/tags/v1.75.0.tar.gz"
+  sha256 "82d76f952bf30b8d6abc94572ac171ae0a8391b1d49bb82d162e39b986c52284"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "7dceeffe15dc656a5435fbe90d14a4bcf88f2c862b5e275542535b0bff9e9545"
-    sha256 cellar: :any,                 arm64_sonoma:  "a8e2aab74094c8c4efc19b814fd01c10590437a13aba81f78321eafe14fac241"
-    sha256 cellar: :any,                 arm64_ventura: "3f39c01a0b50a8e91d03c8a12a30f94b5c58076bce2a56354eeeae01d7330c8d"
-    sha256 cellar: :any,                 sonoma:        "1a076b7c28ceb75364310043c0719d079212f3c8605996fee85944655719517d"
-    sha256 cellar: :any,                 ventura:       "a1db559ddae8aee30e6ab66eb68efd8ecd44baa9e046f0aca336d77cb73a3f29"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "a801355ffe855146dd366358f6426fece82e485dba2c6d9c91d06ba69598318a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d2dacaa34a5f811c69a9b768a21f7234b3163698127afd78793870ffbd8b20ce"
+    sha256 cellar: :any,                 arm64_sequoia: "0de02bca3dec59832a83f8dc7b4e0e523320c48fd0570589565f3afd1d2e82e1"
+    sha256 cellar: :any,                 arm64_sonoma:  "2efdb623faf5ebc549a76b6ba10b6c86b6db00d3d8e47534ffff8e84605fa1f0"
+    sha256 cellar: :any,                 arm64_ventura: "621dfe98c20011488e9aee7e3206d5034199fafa6eab2c91481d990c75df68b0"
+    sha256 cellar: :any,                 sonoma:        "c37f4f21d0034cdb2d73a6c39f6df56f63733d24aa12ac6a3a7641f7f89c81e1"
+    sha256 cellar: :any,                 ventura:       "252be3da05b8893cc57cdbfd036b5de2426ac423803e6340cebe20fbff4ef30b"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "4fe12915bfe3529518c7b2b83b1be03a079d7085c8740008c112be27290ad2f0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "699426e5242961447922152ae2174b6e6f92804b291028ebf36844306bd7a294"
   end
 
-  depends_on "gradle" => :build
+  depends_on "gradle@8" => :build
   depends_on "openjdk" => :build
   depends_on "pkgconf" => :build
   depends_on "abseil"
@@ -36,7 +36,11 @@ class ProtocGenGrpcJava < Formula
       s.gsub! ', "-static-libgcc"', ""
     end
 
-    system "gradle", "--no-daemon", "--project-dir=compiler", "-PskipAndroid=true", "java_pluginExecutable"
+    args = %w[--no-daemon --project-dir=compiler -PskipAndroid=true]
+    # Show extra logs for failures other than slow Intel macOS
+    args += %w[--stacktrace --debug] if !OS.mac? || !Hardware::CPU.intel?
+
+    system "gradle", *args, "java_pluginExecutable"
     bin.install "compiler/build/exe/java_plugin/protoc-gen-grpc-java"
 
     pkgshare.install "examples/src/main/proto/helloworld.proto"

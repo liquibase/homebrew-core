@@ -1,8 +1,8 @@
 class Goimports < Formula
   desc "Go formatter that additionally inserts import statements"
   homepage "https://pkg.go.dev/golang.org/x/tools/cmd/goimports"
-  url "https://github.com/golang/tools/archive/refs/tags/v0.34.0.tar.gz"
-  sha256 "ed3063f864a4c3e12f02dc4553d087b22b3b5f09f881e977613772e3f2324ab9"
+  url "https://github.com/golang/tools/archive/refs/tags/v0.36.0.tar.gz"
+  sha256 "299d2320e8f6adb5b53fb1a32e613b00cd2263237c2c4f8f3a68885040b2cfb9"
   license "BSD-3-Clause"
   head "https://github.com/golang/tools.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Goimports < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "40f11f454ad19955387a7cfc1c44fb36df85617ca3936dc0d560f052fc97c36a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "40f11f454ad19955387a7cfc1c44fb36df85617ca3936dc0d560f052fc97c36a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "40f11f454ad19955387a7cfc1c44fb36df85617ca3936dc0d560f052fc97c36a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "4c154610eea3e2b790e73ccf6f9f897f880d13bc7cf5f585ed66ad9c424af3e6"
-    sha256 cellar: :any_skip_relocation, ventura:       "4c154610eea3e2b790e73ccf6f9f897f880d13bc7cf5f585ed66ad9c424af3e6"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "042d4c7f00027f1fef79d057cde028d6cecbff54454ac4794e4c49c809fd82e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bcb5c1ada6d630e581d5ead881912d3534c9b6e364a9347be5e12d20c61d3b29"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dcee897f215dccdeae2cbb5d7374254718d865920ce6b418f3b0937df14360ee"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dcee897f215dccdeae2cbb5d7374254718d865920ce6b418f3b0937df14360ee"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "dcee897f215dccdeae2cbb5d7374254718d865920ce6b418f3b0937df14360ee"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7eca3d8a9f281abfd24195444704e50b16dbdcdff52011a2a7180c3e0e6c1eb7"
+    sha256 cellar: :any_skip_relocation, ventura:       "7eca3d8a9f281abfd24195444704e50b16dbdcdff52011a2a7180c3e0e6c1eb7"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "943bc566fb3b479edec89dc592ef0142dd81c4c53435e2223cbfff7c5f2cbf25"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "324121c4310c2c457a15c405fd9649052ba97a9c2017b08698a92afc4d01abb3"
   end
 
   depends_on "go"

@@ -30,48 +30,61 @@ jobs:
           name: event_payload
           path: ${{ github.event_path }}
 
-  workflows-label:
+  check-base-branch:
     permissions:
       contents: read
       issues: write
       pull-requests: write
-    if: always() && github.repository_owner == 'Homebrew'
+    if: always() && github.repository_owner == 'Homebrew' && github.actor != 'BrewTestBot'
     runs-on: ubuntu-latest
+    env:
+      PR: ${{ github.event.number }}
     steps:
-      - name: Check pull request changed files
-        id: files
+      - name: Check pull request base branch
+        id: base
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.number }}
         run: |
-          workflow_modified="$(
+          branch="$(
             gh api \
               --header 'Accept: application/vnd.github+json' \
               --header 'X-GitHub-Api-Version: 2022-11-28' \
-              "repos/$GITHUB_REPOSITORY/pulls/$PR/files" \
-              --jq 'any(.[].filename; startswith(".github/workflows"))'
+              "repos/$GITHUB_REPOSITORY/pulls/$PR" \
+              --jq '.base.ref'
           )"
-          # Fail closed.
-          echo "workflow_modified=${workflow_modified:-true}" >> "${GITHUB_OUTPUT}"
+          echo "branch=${branch}" >>"${GITHUB_OUTPUT}"
 
-      # Wait briefly in case of failure to make sure we don't end up
-      # hitting the same API error when trying `gh pr edit`.
-      - if: failure()
-        run: sleep 30
-
-      - name: Label PR
-        if: always() && fromJson(steps.files.outputs.workflow_modified)
+      - name: Change base branch to `main`
+        id: change
+        if: steps.base.outputs.branch == 'master'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.number }}
-        run: gh pr edit --add-label workflows "$PR" --repo "$GITHUB_REPOSITORY"
+        run: gh pr edit "${PR}" --base main --repo "${GITHUB_REPOSITORY}"
+
+      - name: Post comment
+        if: steps.base.outputs.branch == 'master'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |-
+            > [!TIP]
+            > This pull request targets the `master` branch. For future pull requests, please target the `main` branch instead.
+        run: gh pr comment "${PR}" --body "${BODY}" --repo "${GITHUB_REPOSITORY}"
+
+      - name: Post failure comment
+        if: failure() && steps.change.conclusion == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |-
+            > [!CAUTION]
+            > Failed to change base branch to `main`. Please edit your pull request manually to target the `main` branch instead of the `master` branch.
+        run: gh pr comment "${PR}" --body "${BODY}" --repo "${GITHUB_REPOSITORY}"
 
   check-bottle-block:
     permissions:
       contents: read
       issues: write
       pull-requests: write
-    if: always() && github.repository_owner == 'Homebrew'
+    if: always() && github.repository_owner == 'Homebrew' && github.actor != 'BrewTestBot'
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/homebrew/ubuntu22.04:main
@@ -290,7 +303,6 @@ jobs:
                 openfast|\
                 openvino|\
                 pcl|\
-                percona-server|\
                 ponyc|\
                 pytorch|\
                 qt|\
@@ -349,6 +361,7 @@ jobs:
                 numpy|\
                 openblas|\
                 openjpeg|\
+                openssl@3|\
                 p11-kit|\
                 pango|\
                 pcre2|\
@@ -410,6 +423,7 @@ jobs:
                 libcap|\
                 libva|\
                 libxml2|\
+                openssl@3|\
                 python@3.13|\
                 wayland-protocols|\
                 zlib|\
@@ -423,10 +437,46 @@ jobs:
             - label: pip-audit
               pr_body_content: Created by `brew-pip-audit`
 
-            - label: autobump
-              path: \.github/autobump\.txt
-              allow_any_match: true
-
             - label: alias
               path: Aliases/.+
               allow_any_match: true
+
+  # Handle this separately since the `workflows` label affects bottle cache usage
+  # and hardens us against cache poisoning attacks.
+  workflows-label:
+    needs: triage
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    if: always() && github.repository_owner == 'Homebrew'
+    runs-on: ubuntu-latest
+    env:
+      PR: ${{ github.event.number }}
+    steps:
+      - name: Check pull request changed files
+        id: files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          workflow_modified="$(
+            gh api \
+              --header 'Accept: application/vnd.github+json' \
+              --header 'X-GitHub-Api-Version: 2022-11-28' \
+              "repos/$GITHUB_REPOSITORY/pulls/$PR/files" \
+              --jq 'any(.[].filename; startswith(".github/workflows"))'
+          )"
+          # Fail closed.
+          echo "workflow_modified=${workflow_modified:-true}" >> "${GITHUB_OUTPUT}"
+
+      # Wait briefly in case of failure to make sure we don't end up
+      # hitting the same API error when trying `gh pr edit`.
+      - if: failure()
+        run: sleep 30
+
+      - name: Label PR
+        if: always() && fromJson(steps.files.outputs.workflow_modified)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit --add-label workflows "$PR" --repo "$GITHUB_REPOSITORY"
+
